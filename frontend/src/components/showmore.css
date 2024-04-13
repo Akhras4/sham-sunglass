@@ -1,0 +1,46 @@
+.contact-fp-wrap {
+    height: 60px;
+    margin: 0 auto;
+    width: 320px;
+    position: center;
+    margin-top:20px;
+    margin-bottom:170px;
+    
+  }
+  
+  .booton {
+    fill: transparent;
+    stroke-dasharray: 140 540;
+    stroke-dashoffset: -474;
+    stroke-width: 4px;
+    stroke: url('#logo-gradient');
+  }
+  
+  .booton-text {
+    font-family: 'Lato';
+    font-size: 22px;
+    letter-spacing: 2px;
+    line-height: 32px;
+    position: relative;
+    top: -48px;
+    margin-left: 96px;
+  }
+  
+  @keyframes draw {
+    0% {
+      stroke-dasharray: 140 540;
+      stroke-dashoffset: -474;
+      stroke-width: 6px;
+    }
+    100% {
+      stroke-dasharray: 760;
+      stroke-dashoffset: 0;
+      stroke-width: 2px;
+    }
+  }
+  
+  .contact-fp-wrap:hover .booton {
+    cursor: pointer;
+    -webkit-animation: 0.5s draw linear forwards;
+    animation: 0.5s draw linear forwards;
+  }

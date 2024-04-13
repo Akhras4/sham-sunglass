@@ -1,0 +1,110 @@
+nav{
+    display: flex;
+    width:100%;
+    height: 50px;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    background-color: inherit;
+  }
+  .RightSideContiner{
+    display: flex;
+    margin-top: 20px;
+    overflow: visible;
+  }
+  .logo svg{
+  padding: 0px;
+  margin: 0px;
+  }
+  div{
+    overflow: visible;
+  }
+  svg {
+    overflow: visible;
+    z-index:1;
+  }
+  
+  @keyframes animate {
+    0% { stop-color: #9e9b6f; }
+    40% { stop-color: #e78ab1; }
+    100% { stop-color: #3b6e6a; }
+  }
+  #samOptik stop {
+    animation: animate 3s infinite linear;
+  }
+  .search-container {
+    position: relative;
+    width: 250px;
+    margin-right: 20px;
+  }
+  /* Style for the input field */
+  .search-input {
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    padding: 10px 20px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .input-wrapper {
+    position: relative;
+  }
+  
+  /* Style for the input field */
+  .search-input {
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    padding: 10px 40px 10px 20px; /* Adjust right padding for button */
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Style for the search button */
+  .search-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0 10px; /* Adjust padding as needed */
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 0 24px 24px 0;
+    transition: background-color 0.3s ease;
+    --borderWidth: 3px;
+    
+  }
+  .search-button:hover {
+   background-color: black;
+   color: white;
+   
+  }
+  /* Style for the search results */
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: calc(100% - 2px); /* Adjust to match input border width */ 
+  }
+  .search-results li {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: black;
+  }
+  .search-results li:hover {
+    background-color: #f0f0f0;
+    color: black;
+  }
