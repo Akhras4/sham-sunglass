@@ -4,6 +4,7 @@ import Homepage from './components/homepage';
 import Allproduct from './components/allproduct';
 import { useState, useEffect,createContext } from 'react';
 import axios from 'axios'
+import Product from './components/product';
 
 export  const productContext = createContext()
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/products" element={<Allproduct />} />
+            <Route path="/product" element={<Product />} />
           </Routes>
         </productContext.Provider>
       </Router>

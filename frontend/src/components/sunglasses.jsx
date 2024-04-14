@@ -1,8 +1,9 @@
 import React from 'react'
 import { useState,useEffect,useContext } from 'react'
-import { useNavigate } from "react-router-dom";
 import {motion} from 'framer-motion'
 import { productContext } from '../App'
+import { useNavigate } from "react-router-dom";
+
 
 
 export default function Sunglasses( ) {
@@ -27,8 +28,8 @@ export default function Sunglasses( ) {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  const hadelnavgaiton=(id)=>{                //waiting to finish
-      
+  const hadelnavgaiton=(product)=>{                //waiting to finish
+    navigate('/product', { state: { results: product } });
   }
   return (
     <div className='sunglassMainCo'>
@@ -39,7 +40,7 @@ export default function Sunglasses( ) {
   >
         <div className='sunglasscon'>
             {!loading && product.product && product.product.map(product => (
-                <div key={product.id} onClick={() => hadelnavgaiton(product.id)}>
+                <div key={product.id} onClick={() => hadelnavgaiton(product)}>
                     <form>
                         <div className='sunglass'>
                             <h5>{product.title}</h5>

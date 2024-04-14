@@ -1,0 +1,121 @@
+.maincon{
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+    justify-content: flex-end;
+    margin-top: 30px;
+    
+}
+.leftcon{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border:2px solid black;
+    width: 25%;
+    height: 40%;
+    margin-top: 15% ;
+    margin-right: 3%; 
+}
+.rightcon{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 40%;
+    border:2px solid black;
+    margin-top: 100px;
+    margin-left: 1%;
+    margin-right: 30px;
+ 
+}
+.rightcontop{
+    display:flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+.rightconbottom{
+    border-top: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    gap:0px;
+    margin-bottom: 20px;
+    & .buttuncon{
+        display: flex;
+        flex-direction:row;
+        gap:10px;
+    }
+    & button{
+        width: 40px;
+        height: 30px;
+        background-color: white;
+    }
+    & button:hover{
+        background-color: #000000;
+        color: white;
+    }
+}
+.imgcon{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-left: 3%;
+    margin-top: 100px;
+    overflow: hidden;
+}
+.imgcon:hover {
+    overflow-y: auto; 
+}
+.procon{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow-clip-box: auto;
+    width: 70%;
+    & .bigimage{  
+        width: 400px;
+        height: 500px;
+        & img{
+            width: 400px;
+            height: 500px;
+        }
+        
+    }
+
+    & .smallimg{
+        display: flex;
+        margin-right: 10%;
+        flex-direction: column;
+        width: 100px;
+        height: 500px;
+        
+        & img{
+            width: 80px;
+            height: 100px;
+        }
+    }    
+}
+@media screen and (max-width: 1100px) {
+    .procon{
+        flex-direction: column;
+        align-items: flex-start;
+        & .smallimg{
+            display: flex;
+            flex-direction: row;
+        }
+
+}.rightcon{
+    margin-left: 10%;
+    margin-right: 20px;
+ 
+}.leftcon{
+    margin-left: 2% ;
+}
+}
+@media screen and (max-width: 1000px) {
+    .leftcon{
+    visibility: hidden;
+}
+}
+

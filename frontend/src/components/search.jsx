@@ -2,6 +2,7 @@ import React from "react";
 import {useState,useContext } from "react";
 import { productContext } from '../App'
 import './nav.css'
+import { useNavigate } from 'react-router-dom';
 
 export default function Search() {
   const[input,setInput]=useState([])
@@ -9,6 +10,7 @@ export default function Search() {
   const[error,setError] = useState(false)
   const[worning,setWorning] = useState('Search')
   const {product} = useContext(productContext);
+  const navigate = useNavigate();
   const handelSubmit = (e) => {
     e.preventDefault();
     if (input === "") {
@@ -22,9 +24,9 @@ export default function Search() {
           return typeof value === 'string' && value.toLowerCase().includes(searchTermSubmit);
           });
         });
-        setResults(relatedProduct)
+        navigate('/products', { state: { results: relatedProduct } });
       } else {
-        setResults(specificProduct);
+        navigate('/product', { state: { results: specificProduct } });
       }
       
       setInput('');
@@ -42,10 +44,11 @@ export default function Search() {
     setResults(ProductsRelated)
   }
 }
-  const handelClick=(ProuductId)=>{
-    const findProduct = product.product.find(product => product.id === ProuductId);
-    if (findProduct) {
-      setResults([findProduct]);
+  const handelClick=(Prouduct)=>{
+    if (Prouduct) {
+      navigate('/product', { state: { results: Prouduct } });
+      setResults("")
+      setInput("")
   }
   }
   return (
@@ -63,7 +66,7 @@ export default function Search() {
              </form>
             <ul className="search-results" id="searchResults">
             {input && results && results.map(product =><li key={product.id} 
-            onClick={() => handelClick(product.id)}>{product.title}</li>)}
+            onClick={() => handelClick(product)}>{product.title}</li>)}
              </ul>
              </div>
         {error&& <p style={{color:"black"}}>{error}</p>}
