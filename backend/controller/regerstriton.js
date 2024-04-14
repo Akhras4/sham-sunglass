@@ -40,7 +40,7 @@ const singup = (req, res) => {
             })
             .then(() => {
                 sendemailtoclient(email, UserName, emailtoken, PORT);
-                res.status(200).json({redirect: '/info'});
+                res.status(200).json({redirect: 'http://localhost:3002/signup'});
             })
             .catch((saveError) => {
                 if (saveError.name === 'ValidationError') {
