@@ -6,6 +6,8 @@ import Newsunglassproducts from './newsunglassproducts';
 import Sunglasses from './sunglasses';
 import Showmore from './showmore';
 import '../App.css';
+import Usericone from './usericon'
+
 
 
 
@@ -15,6 +17,7 @@ export default function Homepage() {
   return (
     <div>
     <Nav />
+    <Usericone />
     <Video />
     <section>
     <Newsunglassproducts />

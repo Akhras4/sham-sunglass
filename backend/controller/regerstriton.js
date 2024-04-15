@@ -40,7 +40,7 @@ const singup = (req, res) => {
             })
             .then(() => {
                 sendemailtoclient(email, UserName, emailtoken, PORT);
-                res.status(200).json({redirect: 'http://localhost:3002/signup'});
+                res.status(200).json({redirect: 'http://localhost:3002/wait'});
             })
             .catch((saveError) => {
                 if (saveError.name === 'ValidationError') {
@@ -78,11 +78,14 @@ const tokenval = (req, res) => {
             };
             jwt.sign(payload, process.env.MY_SECRET, { algorithm: 'HS256',expiresIn: '4h' }, (err, token) => {
                 if (err) {
-                    res.clearCookie(token);
                     res.status(500).json({ error: "Failed to generate token" });
                 } else {
                     res.cookie("token",token)
-                    res.status(200).json({ redirect:`/user/${newUser._id}`});
+                    res.writeHead(302, {
+                        Location: `http://localhost:3002/`
+                    });
+                    res.end();
+                    //res.status(200).json({ redirect:`http://localhost:3002/user`});//${newUser._id}
                 }
             })
         })

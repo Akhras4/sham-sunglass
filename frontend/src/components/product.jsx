@@ -9,10 +9,16 @@ export default function Product() {
     const location = useLocation();
     const [selectedCart, setSelectedToCard] = useState(null)
     const [selectedFav, setSelectedToFav] = useState(null)
-    const [product, setproducts] = useState([])
-    useEffect(()=>{
-        setproducts(location.state.results);
-    })
+    const [product, setproduct] = useState([])
+    useEffect(() => {
+        if (location.state && location.state.results) {
+            if (Array.isArray(location.state.results) && location.state.results.length > 0) {
+                setproduct(location.state.results[0]); 
+            } else {
+                setproduct(location.state.results);
+            }
+        }
+    }, [location.state.results]);
     const [currentImage, setCurrentImage] = useState(0); 
     const handleWheelChange = (event) => {
         const delta = Math.sign(event.deltaY); 
@@ -30,8 +36,8 @@ export default function Product() {
                 <h4>{product.title}</h4>
                 <p>{product.description}</p>
             </div>
-            <div className='imgcon'>
-            <div className='procon'onMouseEnter={() => setCurrentImage(0)} onWheel={handleWheelChange}>
+            <div className='imgcon'onMouseEnter={() => setCurrentImage(0)} onWheel={handleWheelChange}>
+            <div className='procon'>
                 <div className='bigimage'>
                 {product.image && product.image[currentImage] && (
                     <img src={product.image[currentImage]} id="bigimage" />

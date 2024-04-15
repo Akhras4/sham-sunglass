@@ -21,7 +21,8 @@ export default function Allproduct() {
     }, [location.state, product]);
    
   console.log(location.state)
-  const hadelnavgaiton=(product)=>{               
+  const hadelnavgaiton=(product)=>{ 
+    console.log(product)              
     navigate('/product', { state: { results: product } });
   }
   return (

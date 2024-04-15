@@ -59,12 +59,9 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin-left: 3%;
+    margin-left: 5%;
     margin-top: 100px;
-    overflow: hidden;
-}
-.imgcon:hover {
-    overflow-y: auto; 
+  
 }
 .procon{
     display:flex;
@@ -116,6 +113,7 @@
 @media screen and (max-width: 1000px) {
     .leftcon{
     visibility: hidden;
-}
+}.bigimage{  
+    object-fit: cover;}
 }
 

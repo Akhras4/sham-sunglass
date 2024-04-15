@@ -28,7 +28,7 @@ export default function Signup() {
                 <p className="ps">or</p>
                 <div className="line-bo"></div>
               </div>
-              <Link className="but-acc" id="but-acc" to="#" onClick=''>
+              <Link className="but-acc" id="but-acc" to="/creataccount" onClick=''>
                 Create account
               </Link>
               <p>By signing up, you agree to the <Link id="link-t" to="#">Terms of Service</Link> and <Link to="" id="link-t">Privacy Policy</Link>, including<Link to="" id="link-t"> Cookie Use.</Link></p>

@@ -13,11 +13,13 @@ export default function Search() {
   const navigate = useNavigate();
   const handelSubmit = (e) => {
     e.preventDefault();
-    if (input === "") {
+    if (input =="") {
       return setWorning("Please enter a product name");
     } else {
       const searchTermSubmit = input.toLowerCase();
       const specificProduct = product.product.filter((item) => item && item.title && item.title.toLowerCase() === searchTermSubmit);
+      const specificProductObject = specificProduct ? specificProduct : {};
+      console.log(specificProductObject)
       if (specificProduct.length === 0) {
         const relatedProduct = product.product.filter((item) => {
           return Object.values(item).some((value) => {
@@ -26,7 +28,7 @@ export default function Search() {
         });
         navigate('/products', { state: { results: relatedProduct } });
       } else {
-        navigate('/product', { state: { results: specificProduct } });
+        navigate('/product', { state: { results: specificProductObject } });
       }
       
       setInput('');
