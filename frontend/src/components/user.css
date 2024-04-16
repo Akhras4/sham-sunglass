@@ -1,0 +1,32 @@
+.main {
+  display:flex;
+  flex-direction: row;
+  height: 100vh;
+  padding-top: 7%;
+  column-gap: 150px;
+}
+.LEFT{
+padding-left: 4%;
+width: 60%;
+padding-top: 10%;
+}
+.leftuser{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  padding-bottom: 10%;
+}
+.lef-it{
+  border-bottom: 2px solid black;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 20px;
+ text-align: center;
+}
+.lef-it:hover{
+  color: #ffffff;
+  background-color: #000000;
+  cursor: pointer;
+}
+.Right{
+  display: flex;
+  width: 100%;
+}

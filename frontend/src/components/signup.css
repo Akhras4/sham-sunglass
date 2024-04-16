@@ -42,7 +42,7 @@ h2{
 }
 #but-acc1{
     margin-top: 1%;
-    padding: 5px;
+    padding: 17px
 }
 .line{
     display: flex;
@@ -66,37 +66,35 @@ h2{
     padding: 5px;
     justify-items: center;
 }
-.footer{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: center;
-    gap: 10px;
-    width: 100%;
-    height: 3%;
-    bottom: 0px;
-    margin-top: 50px ;
-}
+
 
 #link-t{
     color: blue !important;
 }
 /* ddialog step1*/
+
 dialog{
     border-color: white;
     border-radius: 20px;
+    z-index: 2;
+    & h1{
+        margin: 0;
+    }
+ 
 }
 #dialog-step{
     display: flex;
     border-radius:10px;
     width: 600px;
     height: 600px;
+    overflow-y: hidden;
 }
 .dialog-f{
     display: flex;
     flex-direction: column;
-    gap: 1%;
+    gap: 10%;
     width: 100%;
+    margin-right: 30px;
 
 }
 .close{
@@ -119,51 +117,53 @@ dialog{
 #dialog-step input{
     border: none;
     outline: none;
-    width: 80%;
+    width: 70%;
     height: 40px;
     font-size: 20px;
 }
-
-.dialog-next{
-    font-size: 20px;
-    border: 2px solid black;
-    border-radius: 20px;
-    width: 30%;
-    height: 4%;
-    text-align: center;
-    padding-top: 4px;
-    margin-top: 3%;
-    background-color:lightblue;
+input:focus-within{
+    background-color: white;
 }
-/* step2*/
-#dialog-step1{
+input:focus{
+    background-color: white;
+}
+dialog::backdrop{
+    background-image: linear-gradient(
+     45deg,
+    magenta,
+    rebeccapurple,
+    dodgerblue,
+    green
+  );
+  opacity: 0.75;
+}
+.but-dialo{
     display: flex;
-    border-radius:10px;
-    width: 600px;
-    height: 600px;
+    justify-content: center;
+    margin-bottom: 20px;
 }
-#dialog-step1 input{
-width: 30px;
-height: 30px;
-}
-.but-back{
-    height: 40px;
-}
-.dialog-f2{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding-top:-20px ;
-}
-.con-che{
-    display: flex;
-    justify-content: space-between;
-}
-.con-che label{
-    width: 50%;
-    height: 50%;
-}
-.con-che input{
-    width: 50%;
-    height: 50%;
+@media screen and (max-width: 700px) {
+    .con-left{
+      display: none;
+        }
+        .con-right{
+            width: 100%;
+            height: 100%;
+            margin: 10% 10% 0px 0px;
+        }
+    dialog{
+        overflow: hidden;
+    }
+    #dialog-step{
+        display: flex;
+        border-radius:10px;
+        width: 100vw;
+        height: 100vh;
+    }
+    #dialog-step input{
+        width: 50%;
+    }
+    #dialog-step label{
+        padding-left: 2px;
+    }
 }

@@ -14,6 +14,7 @@ import User from './components/user';
 import Cookies from 'js-cookie';
 import Usericon from './components/usericon';
 import {jwtDecode} from 'jwt-decode';
+import Test from './components/test';
 
 export  const productContext = createContext()
 function App() {
@@ -25,7 +26,7 @@ function App() {
 
 
   const fetchData = () => {
-    axios.get('http://localhost:3000/api')
+    axios.get('http://localhost:8080/api')
       .then(res => {
         setProduct(res.data);
         setLoading(false)
@@ -40,28 +41,39 @@ function App() {
     setToken(tokenInfo);
 
     if (tokenInfo) {
-        const decodedToken = jwtDecode(tokenInfo);
-        const userId = decodedToken.userId;
-        console.log('User ID:', userId);
-        setuserId(userId)
-    }
-    setIsAuthenticated(!!tokenInfo);
+      const decodedToken = jwtDecode(tokenInfo);
+      const userId = decodedToken.userId;
+      if (decodedToken.exp * 1000 < Date.now()) {
+          Cookies.remove('token');
+          setToken(null); 
+          setuserId(null); 
+          setIsAuthenticated(false); 
+      } else {
+          setuserId(userId);
+          setIsAuthenticated(true);
+      }
+      console.log('User ID:', userId);
+  } else {
+      setIsAuthenticated(false);
+      setuserId(null);
+  }
 
-  },[]);
+  },[token,userid ]);
   
   return (
     <div className="App">  
     <NextUIProvider>
      <Router>
-        <productContext.Provider value={{product, loading ,isAuthenticated,userid}} >
+        <productContext.Provider value={{product, loading,token ,isAuthenticated,userid}} >
           <Routes>
           <Route path="/" element={<Homepage />} />
             <Route path="/products" element={<Allproduct />} />
             <Route path="/product" element={<Product />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/signup" element={ isAuthenticated ? <User /> : <Signup /> } />
             <Route path="/creataccount" element={<Createaccount />} />
             <Route path="/wait" element={< Waitingpage />} />
             <Route path='/user' element={ isAuthenticated ? <User /> : <Signup /> }/>
+            <Route path="/test" element={<Test />} />
           </Routes>
         </productContext.Provider>
       </Router>

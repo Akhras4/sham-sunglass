@@ -7,17 +7,21 @@ import Sunglasses from './sunglasses';
 import Showmore from './showmore';
 import '../App.css';
 import Usericone from './usericon'
+import {useContext} from'react'
+import {productContext} from '../App'
 
 
 
 
 export default function Homepage() {
- 
+  
+ const {isAuthenticated} = useContext(productContext)
+ console.log("isAuthenticated",isAuthenticated)
  
   return (
     <div>
     <Nav />
-    <Usericone />
+    { isAuthenticated ? <Usericone /> : null }
     <Video />
     <section>
     <Newsunglassproducts />

@@ -1,5 +1,6 @@
 {
   "name": "registration-system",
+  "proxy": "http://localhost:8080",
   "version": "1.0.0",
   "description": "registration system using express and mongodb",
   "main": "server.js",

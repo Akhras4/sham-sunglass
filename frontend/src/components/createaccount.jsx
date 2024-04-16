@@ -11,7 +11,7 @@ export default function CreateAccount() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3000/signup', {
+    axios.post('http://localhost:8080/signup', {
         UserName:username,
         email:email,
         Password:password,

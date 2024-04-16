@@ -40,7 +40,7 @@ const singup = (req, res) => {
             })
             .then(() => {
                 sendemailtoclient(email, UserName, emailtoken, PORT);
-                res.status(200).json({redirect: 'http://localhost:3002/wait'});
+                res.status(200).json({redirect: 'http://localhost:3000/wait'});
             })
             .catch((saveError) => {
                 if (saveError.name === 'ValidationError') {
@@ -81,8 +81,9 @@ const tokenval = (req, res) => {
                     res.status(500).json({ error: "Failed to generate token" });
                 } else {
                     res.cookie("token",token)
+                    console.log(token)
                     res.writeHead(302, {
-                        Location: `http://localhost:3002/`
+                        Location: `http://localhost:3000/`
                     });
                     res.end();
                     //res.status(200).json({ redirect:`http://localhost:3002/user`});//${newUser._id}
@@ -165,8 +166,10 @@ const login = (req,res)=>{
                         res.clearCookie(token);
                         res.status(500).json({ error: "Failed to generate token" });
                     } else {
-                        res.cookie("token",token)
-                        res.status(200).json({redirect:`/user/${discover._id}`});
+                        res.cookie("token",token, {
+                            httpOnly: true,})
+                        console.log(token)
+                        res.send( {redirect : `http://localhost:3000/`}) 
                     }
                 });
                }else{
@@ -182,15 +185,17 @@ const login = (req,res)=>{
 
 
 const cookieJWTAuth = (req, res, next) => {
-    const token = req.cookies.token;
+    const token = req.query.token;
     if (!token) {
+        console.log('tokencheck',token)
         res.clearCookie("token");
-        return res.json({ redirectTo:"/login"});
+        return res.json({ redirect:"http://localhost:3000/signup"});
     }
     jwt.verify(token, process.env.MY_SECRET, { algorithm: 'HS256' }, (err, user) => {
         if (err) {
+            console.log(err)
             res.clearCookie("token");
-            return res.json({ redirectTo:"/login"});
+            return res.json({ redirect:"http://localhost:3000/signup"});
         } else {
             req.user = user;
             console.log(user);

@@ -1,0 +1,42 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+#dilo{
+    border-color: white;
+    border-radius: 20px;
+    z-index: 2;
+    & h1{
+        margin: 0;
+    }
+    & button {
+        margin-top: 2rem;
+      }
+      
+      & input {
+        border: 1px solid;
+        padding: 0.3em;
+        width: 100%;
+      }
+      
+      & textarea {
+        width: 100%;
+        min-height: 6em;
+      }
+      
+      & label {
+        display: block;
+        font-size: 1.2rem;
+        margin-top: 1rem;
+      }
+      
+      & select {
+        font-size: 16px;
+      }
+      
+      .postal-code {
+        width: 50%;
+      }
+ 
+}
+
+  
+ 
