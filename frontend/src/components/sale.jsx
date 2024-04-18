@@ -38,6 +38,17 @@ export default function Sale({ children, baseVelocity }) {
         <span>{children}</span>
         <span>{children}</span>
       </motion.div>
+      
+      <div className="New">
+      <motion.div className="scroller" style={{ x }}>
+        <span>{children}</span>
+        <span>{children}</span>
+        <span>{children}</span>
+        <span>{children}</span>
+        <span>{children}</span>
+        <span>{children}</span>
+      </motion.div>
+      </div>
     </div>
   );
 }

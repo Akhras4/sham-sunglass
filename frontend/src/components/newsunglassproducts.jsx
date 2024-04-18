@@ -4,6 +4,7 @@ import { productContext } from '../App'
 import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import { FaShoppingCart } from 'react-icons/fa';
 
 
 export default function Newsunglassproducts() {
@@ -27,16 +28,16 @@ export default function Newsunglassproducts() {
   return (
     <div>
     <div className='newsunglass' >{product.product  && product.product.slice(0, 4).map(item => (
-      <div onClick={() => hadelnavgaiton(item)}>
+      <div >
       <div className='newsunglasscon' key={item._id} >
-        <img id="img" src={item.image[0]} style={{width:"100%",heigh:"80%"}} />
+        <img id="img" src={item.image[0]} style={{width:"100%",heigh:"80%"}} onClick={() => hadelnavgaiton(item)} />
         <p>{item.price}</p>
         <h4>{item.title}</h4>
         <div className='butCon'>
-        <Button variant="primary" onClick={() => handleShowOffcanvas(item)}>
-                  Launch
-                </Button>
-        <button className='fav' onClick={() => setSelectedToFav(item._id)}><i onClick={() => setSelectedToFav(item._id)} class="fa fa-heart" aria-hidden="true"></i></button>
+        <Button variant="dark" onClick={() => handleShowOffcanvas(item)}>
+        <FaShoppingCart />ADD to Cart
+        </Button>
+        
         </div>
       </div>
       </div>

@@ -148,7 +148,7 @@ h2 {
 }
 
 section {
-  padding-top: 30vh;
+  padding-top: 10vh;
   padding-bottom: 85vh;
   position: relative;
 }
@@ -243,6 +243,7 @@ section {
       position: absolute;
       bottom: 0;
       right: 0;
+      z-index: 2;
     }
   }
   .newsunglasscon:after {
@@ -252,7 +253,7 @@ section {
     left: calc(-1 * var(--borderWidth));
     height: calc(100% + var(--borderWidth) * 2);
     width: calc(100% + var(--borderWidth) * 2);
-    background: linear-gradient(60deg, #f79533, #cbf33b, #254a75, #235a2c, #b8d33e, #2fc51c, #07b39b, #6fba82);
+    background: linear-gradient(60deg, #f72e2e, #f3a93b, #254a75, #943d68, #3170b8, #af5754, #07b39b, #6f87ba);
     border-radius: calc(2 * var(--borderWidth));
     z-index: -1;
     animation: animatedgradient 3s ease alternate infinite;

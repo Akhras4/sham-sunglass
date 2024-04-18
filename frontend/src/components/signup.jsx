@@ -38,7 +38,7 @@ export default function Signup() {
         <Nav />
         <div className="con-main">
           <div className="con-left">
-            <img src="https://i.postimg.cc/L84K23G6/x.avif" width="80%" height="80%" alt="Logo" />
+            <img src="https://i.postimg.cc/44WxgQtW/sam-letter-original-monogram-logo-260nw-1839641632.webp" width="80%" height="80%" alt="Logo" />
           </div>
           <div className="con-right">
             <div className="con-signup">

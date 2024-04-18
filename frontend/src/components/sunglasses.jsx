@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import axios from 'axios'
+import { FaShoppingCart } from 'react-icons/fa';
 
 
 export default function Sunglasses( ) {
@@ -64,7 +65,7 @@ export default function Sunglasses( ) {
                 <p>{productItem.price}</p>
               </div>
               <Button variant="primary" onClick={() => handleShowOffcanvas(productItem)}>
-                  Launch
+              <FaShoppingCart />ADD to Cart
                 </Button>
             </div>
           ))}

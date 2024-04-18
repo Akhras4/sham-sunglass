@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState ,useEffect ,useContext} from 'react'
 import {productContext} from '../App'
+import {motion} from 'framer-motion'
 export default function Shoppingcartuser() {
   const { userid, product } = useContext(productContext);
   const [shoppingcart, setShoppingCart] = useState([]);
