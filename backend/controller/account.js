@@ -2,11 +2,14 @@
 const { model, Error } = require('mongoose');
 const users = require("../modules/user");
 const userinfo = require("../modules/userinfo");
+const mongoose = require('mongoose');
 
 const account=(req,res)=>{
     if ( req.method === "GET" ){
         const userid = req.params.id;
        users.findOne({_id:userid})
+           .populate('userinfo')
+            .exec()
              .then(user=>{
                 userinfo.findOne({user_id:userid})
                 .then(userinfo=>{
@@ -16,17 +19,17 @@ const account=(req,res)=>{
                         username:user.UserName,
                         email:user.email,
                         phoneNumber:user.phoneNumber,
-                        userinfo:null,
+                        address: user.userinfo || null,
                      } ) 
-                    }
+                    }console.log(user.userinfo )
                     res.status(200).json(
                      {userid,
                         username:user.UserName,
                         email:user.email,
                         phoneNumber:user.phoneNumber,
-                        address:[...user.userinfo],
+                        address: user.userinfo || null,
 
-                    } )
+                    } ) 
 
                 }).catch((err)=>{
                       res.status(200).json( {userid,username:user.UserName,email:user.email,phoneNumber:user.phoneNumber} )
@@ -38,45 +41,31 @@ const account=(req,res)=>{
 request is made to the `/user/:id/account` endpoint. Here's a breakdown of what the code is doing: */
 if (req.method === "POST") {
     const userId = req.params.id;
-    console.log(userId);
     const { name, street, postalCode, city, country } = req.body;
-    console.log(name);
     users.findOne({ _id: userId })
         .then(user => {
-            userinfo.findOne({ user_id: userId })
-                .then(userInfo => {
-                    if (!userInfo) {
-                        userInfo = new userinfo({
-                            user_id: userId,
-                            name,
-                            street,
-                            postalCode,
-                            city,
-                            country
-                        });
-                    } else {
-                        userInfo.name = name;
-                        userInfo.street = street;
-                        userInfo.postalCode = postalCode;
-                        userInfo.city = city;
-                        userInfo.country = country;
-                    }
-                    userInfo.save()
-                        .then(() => {
-                            res.status(200).json({ redirect: 'http://localhost:3000/user' });
-                        })
-                        .catch(err => {
-                            console.error("Error saving userinfo:", err);
-                            res.status(500).send("Something went wrong, please try again.");
-                        });
+            userinfo.findOneAndUpdate(
+                { user_id: userId },
+                { name, street, postalCode, city, country },
+                { new: true, upsert: true } // Add upsert: true to create new document if not found
+            )
+                .then(updatedUserInfo => {
+                    return users.findOneAndUpdate(
+                        { _id: userId },
+                        { userinfo: updatedUserInfo._id }, 
+                        { new: true }
+                    ).populate('userinfo').exec();
+                })
+                .then(populatedUser => {
+                    res.status(200).json({ address: populatedUser.userinfo });
                 })
                 .catch(err => {
-                    console.error("Error finding userinfo:", err);
+                    console.error("Error:", err);
                     res.status(500).send("Something went wrong, please try again.");
                 });
         })
         .catch(err => {
-            console.error("Error finding user:", err);
+            console.error("Error:", err);
             res.status(500).send("Something went wrong, please try again.");
         });
 }

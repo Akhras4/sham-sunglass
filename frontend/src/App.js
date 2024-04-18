@@ -14,7 +14,8 @@ import User from './components/user';
 import Cookies from 'js-cookie';
 import Usericon from './components/usericon';
 import {jwtDecode} from 'jwt-decode';
-import Test from './components/test';
+import Logout from './components/logout'
+;
 
 export  const productContext = createContext()
 function App() {
@@ -32,16 +33,17 @@ function App() {
         setLoading(false)
       })
       .catch(err => {
-        console.log(err);
       });
   };
   useEffect(() => {
     fetchData();
     const tokenInfo = Cookies.get('token');
+    console.log('Received token:', tokenInfo);
     setToken(tokenInfo);
 
     if (tokenInfo) {
       const decodedToken = jwtDecode(tokenInfo);
+      console.log('Decoded token:', decodedToken);
       const userId = decodedToken.userId;
       if (decodedToken.exp * 1000 < Date.now()) {
           Cookies.remove('token');
@@ -52,7 +54,6 @@ function App() {
           setuserId(userId);
           setIsAuthenticated(true);
       }
-      console.log('User ID:', userId);
   } else {
       setIsAuthenticated(false);
       setuserId(null);
@@ -72,8 +73,10 @@ function App() {
             <Route path="/signup" element={ isAuthenticated ? <User /> : <Signup /> } />
             <Route path="/creataccount" element={<Createaccount />} />
             <Route path="/wait" element={< Waitingpage />} />
-            <Route path='/user' element={ isAuthenticated ? <User /> : <Signup /> }/>
-            <Route path="/test" element={<Test />} />
+            <Route path='/user' element={ <User /> }/>
+            <Route path='/logout' element={ <Logout /> }/>
+
+           
           </Routes>
         </productContext.Provider>
       </Router>

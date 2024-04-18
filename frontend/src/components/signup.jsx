@@ -31,7 +31,6 @@ export default function Signup() {
     .catch(errors => {
         const Errors = errors.response.data.errors;
         setErr(Errors )
-        console.log(Errors)
     });
   };
   return (

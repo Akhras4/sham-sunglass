@@ -73,7 +73,8 @@ const usersSchema = new mongoose.Schema({
     isValid: { type: Boolean, default: false },
     emailtoken: { type: String },
     books:[{ type: mongoose.Schema.Types.ObjectId, ref: 'books' }],
-    userinfo:[{ type: mongoose.Schema.Types.ObjectId, ref: 'userinfo' }]
+    userinfo: [{ type: mongoose.Schema.Types.ObjectId, ref: 'userinfo' }],
+    shoppingCart: { type: mongoose.Schema.Types.ObjectId, ref: 'ShoppingCart' }
 });
 
 const users = mongoose.model('users', usersSchema);

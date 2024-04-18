@@ -16,7 +16,7 @@ import {productContext} from '../App'
 export default function Homepage() {
   
  const {isAuthenticated} = useContext(productContext)
- console.log("isAuthenticated",isAuthenticated)
+
  
   return (
     <div>

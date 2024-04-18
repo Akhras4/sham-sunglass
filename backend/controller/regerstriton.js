@@ -207,18 +207,24 @@ const cookieJWTAuth = (req, res, next) => {
 
 const logout=(req,res)=>{
     if(req.method==="GET"){
-        res.clearCookie('token');
-        res.json({ redirectTo:"/login"});
+        res.cookie('token','', { expires: new Date(0) })
+        console.log('token')
+        res.json({ redirect:'http://localhost:3000/'});
     }
 }
 
 
 
 const user=(req,res)=>{
-if (req.method==="GET"){
-    const UserName = req.query.UserName;
- return res.json({ UserName })
-}
+    if (req.method === "GET") {
+        if (req.cookies && req.cookies.token) {
+            console.log('Token cookie cleared');
+            res.json({ redirect: 'http://localhost:3000/' });
+        } else {
+            console.log('No token cookie found');
+            res.json({ redirect: 'http://localhost:3000/' });
+        }
+    }
 }
 
 module.exports = {

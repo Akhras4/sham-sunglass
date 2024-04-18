@@ -1,21 +1,26 @@
 import React from 'react'
 import axios from 'axios'
-import { useState, useRef,useContext } from 'react';
+import { useState, useRef,useContext ,useEffect } from 'react';
 import './address.css'
 import {productContext} from '../App'
 
-export default function Address(val,userid) {
-    const {token}=useContext(productContext)
-    console.log(userid)
-    console.log(val)
-    const userinfo = val ? val.value : '';
+export default function Address(value) {
+    const {token,userid}=useContext(productContext)
+    const [address,setaddress]=useState([value])
     const dialogRef = useRef(null);
     const [name, setName] = useState('');
-  const [streetAddress, setStreetAddress] = useState('');
-  const [postalCode, setPostalCode] = useState('');
-  const [city, setCity] = useState('');
-  const [ country, setCountry] = useState('');
-  const [err,setErr]=useState('')
+    const [streetAddress, setStreetAddress] = useState('');
+    const [postalCode, setPostalCode] = useState('');
+    const [city, setCity] = useState('');
+    const [ country, setCountry] = useState('');
+    const [err,setErr]=useState('')
+    useEffect(() => {
+        if (value) {
+            setaddress(value);
+            console.log(value)
+            
+        }
+    }, [value]);
 
     const showDialog = () => {
         dialogRef.current.showModal();
@@ -26,8 +31,7 @@ export default function Address(val,userid) {
     };
 
     const handleSubmitinfo = (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
-        
+        e.preventDefault(); 
         axios.post( `http://localhost:8080/${userid}?token=${token}`, {
             name: name,
             street: streetAddress,
@@ -37,7 +41,9 @@ export default function Address(val,userid) {
         })
         .then(response => {
             console.log(response);
-            window.location.href = response.data.redirect;
+            setaddress(response.data.address);
+            closeDialog();
+            
         })
         .catch(errors => {
             const Errors = errors.response.data.errors;
@@ -47,18 +53,40 @@ export default function Address(val,userid) {
     };
     return (
         <div>
-            <h1>Your Address:</h1>
-            {userinfo && userinfo.address ? (
-                <div>
-                    <p>{userinfo}</p>
+        <h1>Your Address:</h1>
+        {(address && address.value && address.value.length > 0) || (address && address.length > 0) ? (
+    <>
+        {address && address.length > 0 ? (
+            address.map(addressItem => (
+                <div key={addressItem._id}>
+                    <p>Name: {addressItem.name}</p>
+                    <p>Street: {addressItem.street}</p>
+                    <p>Postal Code: {addressItem.postalCode}</p>
+                    <p>City: {addressItem.city}</p>
+                    <p>Country: {addressItem.country}</p>
                 </div>
-            ) : (
+            ))
+        ) : (
+            address.value.map(addressItem => (
+                <div key={addressItem._id}>
+                    <p>Street: {addressItem.street}</p>
+                    <p>City: {addressItem.city}</p>
+                    <p>Postal Code: {addressItem.postalCode}</p>
+                    <p>Country: {addressItem.country}</p>
+                </div>
+            ))
+        )}
+            <button type="button" onClick={() => showDialog()} className="btn btn-primary">update your address</button>
+        </>
+         ) : (
                 <div>
                     <p>No Address</p>
                     <button type="button" onClick={() => showDialog()} className="btn btn-primary" >Primary button</button>
+                    </div>
+            )}
+        
                     <dialog id="dilo" ref={dialogRef} >
                         <form onSubmit={handleSubmitinfo} >
-                            <form>
                                 <div>
                                     <label htmlFor="name">Name</label>
                                     <input
@@ -124,12 +152,8 @@ export default function Address(val,userid) {
                                     />
                                 </div>
                                 <button type="submit" class="btn btn-outline-danger">Save</button>
-                            </form>
-
                             {err && <p>{err}</p>}
                         </form>
                     </dialog>
-                </div>
-            )}
         </div>
 )}

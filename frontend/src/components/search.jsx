@@ -19,7 +19,6 @@ export default function Search() {
       const searchTermSubmit = input.toLowerCase();
       const specificProduct = product.product.filter((item) => item && item.title && item.title.toLowerCase() === searchTermSubmit);
       const specificProductObject = specificProduct ? specificProduct : {};
-      console.log(specificProductObject)
       if (specificProduct.length === 0) {
         const relatedProduct = product.product.filter((item) => {
           return Object.values(item).some((value) => {

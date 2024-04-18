@@ -13,7 +13,6 @@ const userinfoSchema = new mongoose.Schema({
     postalCode: {
         type: String,
         required: true,
-        match: /^[0-9]{5}(?:-[0-9]{4})?$/
     },
     country: {
         type: String,
@@ -31,6 +30,6 @@ const userinfoSchema = new mongoose.Schema({
    
 });
 
-const userinfo = mongoose.model('userinf', userinfoSchema);
+const userinfo = mongoose.model('userinfo', userinfoSchema);
 
 module.exports = userinfo

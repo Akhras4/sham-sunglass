@@ -4,11 +4,8 @@ import { useContext,useState,useEffect } from 'react';
 import Nav from './nav';
 import './product.css'
 import { useLocation } from 'react-router-dom';
-
 export default function Product() {
     const location = useLocation();
-    const [selectedCart, setSelectedToCard] = useState(null)
-    const [selectedFav, setSelectedToFav] = useState(null)
     const [product, setproduct] = useState([])
     useEffect(() => {
         if (location.state && location.state.results) {
@@ -27,6 +24,7 @@ export default function Product() {
             setCurrentImage(newIndex);
         }
     };
+   
   return (
     <div>
         <Nav />

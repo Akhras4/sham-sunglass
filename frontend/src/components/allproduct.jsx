@@ -14,15 +14,11 @@ export default function Allproduct() {
     useEffect(() => {
       if (location.state && location.state.results) {
         setproducts(location.state.results);
-        console.log(location.state.results)
       } else {
         setproducts(product.product);
       }
     }, [location.state, product]);
-   
-  console.log(location.state)
-  const hadelnavgaiton=(product)=>{ 
-    console.log(product)              
+  const hadelnavgaiton=(product)=>{               
     navigate('/product', { state: { results: product } });
   }
   return (

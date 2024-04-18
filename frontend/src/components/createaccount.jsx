@@ -24,7 +24,6 @@ export default function CreateAccount() {
         const validationErrors = errors.response.data.errors;
         const errorArray = Object.entries(validationErrors).map(([key, value]) => ({ field: key, message: value }));
         seterr(errorArray)
-        console.log(err)
     });
   };
 
