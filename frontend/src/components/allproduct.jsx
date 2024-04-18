@@ -4,6 +4,8 @@ import { useContext,useState,useEffect } from 'react';
 import Nav from './nav';
 import './allproduct.css'
 import { useLocation,useNavigate } from 'react-router-dom';
+import { FaShoppingCart } from 'react-icons/fa';
+import Button from 'react-bootstrap/Button';
 export default function Allproduct() {
     const {product} = useContext(productContext);
     const location = useLocation();
@@ -32,8 +34,9 @@ export default function Allproduct() {
           <p>{item.price}</p>
           <h4>{item.title}</h4>
           <div className='butCon'>
-          <button className='cart' onClick={() => setSelectedToCard(item._id)}>Card</button>
-          <button className='fav' onClick={() => setSelectedToFav(item._id)}>Fav</button>
+                <Button variant="dark" >
+              <FaShoppingCart />ADD to Cart
+              </Button>
           </div>
         </div>
         </div>
