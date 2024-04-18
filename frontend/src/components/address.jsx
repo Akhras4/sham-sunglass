@@ -81,7 +81,7 @@ export default function Address(value) {
          ) : (
                 <div>
                     <p>No Address</p>
-                    <button type="button" onClick={() => showDialog()} className="btn btn-primary" >Primary button</button>
+                    <button type="button" onClick={() => showDialog()} className="btn btn-primary" >Add Address</button>
                     </div>
             )}
         

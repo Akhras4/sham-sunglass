@@ -81,7 +81,7 @@ export default function Sunglasses( ) {
               <img onClick={() => hadelnavgaiton(selectedProduct)} src={selectedProduct.image[0]} style={{ width: "100%", height: "80%" }} />
             <h5>{selectedProduct.title}</h5>
             <h5>{selectedProduct.color}</h5>
-            <Button variant="primary" onClick={() => handleAddToCart(selectedProduct)}>
+            <Button variant="primary" onClick={() => {handleAddToCart(selectedProduct);handleCloseOffcanvas()}} >
               Add to Cart
             </Button>
           </>
