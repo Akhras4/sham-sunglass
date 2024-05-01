@@ -12,7 +12,8 @@
     "test": "",
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "publish": "npm publish --access public"
+    "publish": "npm publish --access public",
+    "build":"npm run build"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
