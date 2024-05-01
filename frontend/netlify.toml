@@ -5,8 +5,6 @@ from="/*"
 to="/index.html"
 
 status=200
-{
-  "build": {
-    "command": "npm run build"
-  }
-}
+[build]
+  command = "npm run build"
+  publish = "/opt/build/repo/public"
