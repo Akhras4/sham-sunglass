@@ -11,6 +11,7 @@ export default function Logout() {
     axios.get(`http://localhost:8080/logout?token=${token}`)
     .then(response => {
       deleteCookie('token')
+      localStorage.clear()
       window.location.href = response.data.redirect;
       
     })

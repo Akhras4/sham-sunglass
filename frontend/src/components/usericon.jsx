@@ -12,7 +12,7 @@ export default function Usericon() {
   return (
     <div>
         <div className='usericoncon' onClick={()=>{handelclick()}}>
-            <img className='imageuser' src='../public/images/user.png' alt='ggg'  />
+            <img className='imageuser' src='https://i.postimg.cc/T3kCPZSw/user.png' alt='ggg'  />
         </div>
     </div>
   )

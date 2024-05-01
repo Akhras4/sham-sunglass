@@ -8,16 +8,15 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import axios from 'axios'
 import { FaShoppingCart } from 'react-icons/fa';
 
-
 export default function Sunglasses( ) {
-  const { product, loading, userid } = useContext(productContext);
+  const { product, loading, userid,isAuthenticated } = useContext(productContext);
   const [isVisible, setIsVisible] = useState(false);
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const navigate = useNavigate()
   useEffect(() => {
     function handleScroll() {
-      const threshold = 1600;
+      const threshold = 2600;
       if (window.scrollY > threshold) {
         setIsVisible(true);
       } else {
@@ -38,17 +37,17 @@ export default function Sunglasses( ) {
     setSelectedProduct(productItem);
     setShowOffcanvas(true);
   };
-  const handleAddToCart = (productId) => {
+ const handleAddToCart = (productId) => {
     const size = "M";
     axios.post(`http://localhost:8080/cart/${userid}`,{productId,size })
     .then(response => {
       console.log(response.data);
+      handleCloseOffcanvas ()
     })
     .catch(error => {
       console.log(error.response.data)
     });
 };
- 
     return (
       <div className='sunglassMainCo'>
       <motion.div
@@ -78,10 +77,10 @@ export default function Sunglasses( ) {
         <Offcanvas.Body>
         {selectedProduct && (
           <>
-              <img onClick={() => hadelnavgaiton(selectedProduct)} src={selectedProduct.image[0]} style={{ width: "100%", height: "80%" }} />
+            <img onClick={() => hadelnavgaiton(selectedProduct)} src={selectedProduct.image[0]} style={{ width: "90%", height: "60%" }} />
             <h5>{selectedProduct.title}</h5>
             <h5>{selectedProduct.color}</h5>
-            <Button variant="primary" onClick={() => {handleAddToCart(selectedProduct);handleCloseOffcanvas()}} >
+            <Button variant="primary"  onClick={() => { if( isAuthenticated ) { handleAddToCart(selectedProduct)}}} >
               Add to Cart
             </Button>
           </>

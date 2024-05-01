@@ -167,9 +167,13 @@ const login = (req,res)=>{
                         res.status(500).json({ error: "Failed to generate token" });
                     } else {
                         res.cookie("token",token, {
-                            httpOnly: true,})
+                            path: '/',
+                            domain: 'localhost',
+                            secure: process.env.NODE_ENV === 'production', // Set to true for production
+                            sameSite: 'strict',
+                          });
                         console.log(token)
-                        res.send( {redirect : `http://localhost:3000/`}) 
+                        res.json({ redirect:"http://localhost:3000/" , token }).res.status(200).json({ token });
                     }
                 });
                }else{

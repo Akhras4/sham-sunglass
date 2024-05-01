@@ -6,10 +6,12 @@
     right: 20px;
     z-index: 2;
     border-radius: 50%;
-    background-color: black;
+    background-color: rgb(0, 0, 0);
 }
 .imageuser{
     width: 80px;
     height: 80px;
-    color: white;
+    background-color: rgb(255, 252, 252);
+    border-radius: 50%;
+    z-index: 2;
 }

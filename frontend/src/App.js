@@ -37,7 +37,8 @@ function App() {
   };
   useEffect(() => {
     fetchData();
-    const tokenInfo = Cookies.get('token');
+    let tokenInfo = Cookies.get('token');
+     if(! tokenInfo){ tokenInfo = localStorage.getItem('token');}
     console.log('Received token:', tokenInfo);
     setToken(tokenInfo);
 

@@ -26,4 +26,7 @@ router.post(`/:id`,DoThis.cookieJWTAuth,account.account)
 router.post("/cart/:id", CartController.addToCart);
 router.get("/cart/:id", CartController.shoppingcart);
 
+
+router.post("/removeFromCart/:id", CartController.removeFromCart);
+
 module.exports = router;

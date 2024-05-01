@@ -5,13 +5,14 @@ import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { FaShoppingCart } from 'react-icons/fa';
+import axios from 'axios';
 
 
 export default function Newsunglassproducts() {
   const [isVisible, setIsVisible] = useState(false);
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const {product} = useContext(productContext);
+  const {product ,isAuthenticated ,userid} = useContext(productContext);
   const [selectedCart, setSelectedToCard] = useState(null)
   const [selectedFav, setSelectedToFav] = useState(null)
   const navigate = useNavigate()
@@ -23,6 +24,17 @@ export default function Newsunglassproducts() {
     setSelectedProduct(productItem);
     setShowOffcanvas(true);
   };
+  const handleAddToCart = (productId) => {
+    const size = "M";
+    axios.post(`http://localhost:8080/cart/${userid}`,{productId,size })
+    .then(response => {
+      console.log(response.data);
+      handleCloseOffcanvas ()
+    })
+    .catch(error => {
+      console.log(error.response.data)
+    });
+};
   
 
   return (
@@ -50,11 +62,11 @@ export default function Newsunglassproducts() {
         <Offcanvas.Body>
           {selectedProduct && (
             <>
-            <img src={selectedProduct.image[0]} style={{ width: "100%", height: "80%" }} />
+            <img src={selectedProduct.image[0]} onClick={() => hadelnavgaiton(selectedProduct)} style={{ width: "100%", height: "80%" }} />
               <h5>{selectedProduct.title}</h5>
               <h5>{selectedProduct.discription}</h5>
               <p>{selectedProduct.price}</p>
-              <Button variant="primary"  onClick={() => console.log("Add to cart:", selectedProduct)}>
+              <Button variant="primary"  onClick={() => { if( isAuthenticated ) { handleAddToCart(selectedProduct)}}}>
                 Add to Cart
               </Button>
             </>

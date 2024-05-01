@@ -24,8 +24,14 @@ export default function Signup() {
     axios.post('http://localhost:8080/login', {
         email:email,
         Password:password,
+    
     })
     .then(response => {
+      const token = response.data.token;
+      console.log(token)
+      if (token) {
+        localStorage.setItem('token', token);
+      }
       window.location.href = response.data.redirect;
     })
     .catch(errors => {
