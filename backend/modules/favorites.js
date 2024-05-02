@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-
-const cartItemSchema = new mongoose.Schema({
+const product = require('../modules/product');
+const favItemSchema = new mongoose.Schema({
   productId: { type: mongoose.Schema.Types.ObjectId, ref: 'sunglass', required: true },
   size: { type: String },
   product: { type: mongoose.Schema.Types.ObjectId, ref: 'sunglass' },
@@ -8,7 +8,7 @@ const cartItemSchema = new mongoose.Schema({
 
 const favoritesSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
-  items: [cartItemSchema]
+  items: [favItemSchema]
 });
 
 const favorites = mongoose.model('favorites', favoritesSchema);

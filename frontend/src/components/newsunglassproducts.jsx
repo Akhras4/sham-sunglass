@@ -6,8 +6,6 @@ import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { FaShoppingCart } from 'react-icons/fa';
 import axios from 'axios';
-
-
 export default function Newsunglassproducts() {
   const [isVisible, setIsVisible] = useState(false);
   const [showOffcanvas, setShowOffcanvas] = useState(false);
@@ -19,7 +17,7 @@ export default function Newsunglassproducts() {
   const hadelnavgaiton=(product)=>{               
     navigate('/product', { state: { results: product } });
   }
-    const handleCloseOffcanvas = () => setShowOffcanvas(false);
+  const handleCloseOffcanvas = () => setShowOffcanvas(false);
   const handleShowOffcanvas = (productItem) => {
     setSelectedProduct(productItem);
     setShowOffcanvas(true);
@@ -35,7 +33,31 @@ export default function Newsunglassproducts() {
       console.log(error.response.data)
     });
 };
-  
+const handleAddToWishList= (productId)=>{
+  if(selectedFav!==null){  
+   const findIndex= selectedFav.items.findIndex(item=>item.productId===productId)
+   if(findIndex!== -1){
+   axios.post(`http://localhost:8080/wishList/removeFromWishList/${userid}`,{productId})
+    .then(res =>{
+     setSelectedToFav(res.data.favorites)
+     console.log(selectedFav)
+  })
+  .catch(err =>{console.log(err)})
+ }else{addToWishList(productId)}
+}else{
+  addToWishList(productId)
+}
+}
+const addToWishList =(productId)=>{
+  axios.post(`http://localhost:8080/wishList/${userid}`,{productId})
+  .then(res=>{
+   setSelectedToFav(res.data.favorites)
+   console.log(selectedFav)
+  })
+  .catch(err =>{
+
+  })
+}
 
   return (
     <div>
@@ -49,7 +71,15 @@ export default function Newsunglassproducts() {
         <Button variant="dark" onClick={() => handleShowOffcanvas(item)}>
         <FaShoppingCart />ADD to Cart
         </Button>
-        
+        {selectedFav && selectedFav.items.some(items => items.productId === item._id) ? (
+                    <Button variant="danger" onClick={() =>  { handleAddToWishList(item._id) } }>
+                        Add to fav
+                    </Button>
+                ) : (
+                    <Button variant="black" onClick={() => { handleAddToWishList(item._id) } }>
+                        remove from fav
+                    </Button>
+                )}
         </div>
       </div>
       </div>

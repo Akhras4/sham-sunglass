@@ -1,5 +1,5 @@
 const users = require('../modules/user');
-const product = require('../modules/product');
+ 
 const ShoppingCart = require('../modules/shoppingcart');
 
 const addToCart = (req, res) => {
@@ -71,31 +71,6 @@ const removeFromCart = (req, res) => {
           });
   }
 };
-
-const addToFavorites = (req, res) => {
-  const userId = req.params.id;
-  const { productId, size } = req.body;
-
-  users.findById(userId)
-      .then(user => {
-          if (!user) {
-              throw new Error('User not found');
-          }
-          const newItem = {
-              productId: productId,
-              size: size
-          };
-          user.favorites.push(newItem);
-          return user.save();
-      })
-      .then((savedUser) => {
-          res.status(200).json({ user: savedUser });
-      })
-      .catch(error => {
-          res.status(500).json({ error: error.message });
-      });
-};
-
 const shoppingcart=(req,res)=>{
     if (req.method==="GET"){
     userId=req.params.id;

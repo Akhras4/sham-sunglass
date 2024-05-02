@@ -3,6 +3,7 @@ const DoThis=require("../controller/regerstriton")
 const router=Router()
 const account=require("../controller/account")
 const CartController = require("../controller/shopping")
+const Fav = require("../controller/wishlist")
 
 
 router.get("/api",DoThis.redirecttologin)
@@ -28,5 +29,10 @@ router.get("/cart/:id", CartController.shoppingcart);
 
 
 router.post("/removeFromCart/:id", CartController.removeFromCart);
+
+
+router.post("/wishList/:id",Fav.addToFavorites)
+router.get('/wishList/:id',)
+router.post('/wishList/removeFromWishList/:id',Fav.removeItem)
 
 module.exports = router;

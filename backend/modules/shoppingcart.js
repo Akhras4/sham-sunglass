@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const product = require('../modules/product');
 
 const cartItemSchema = new mongoose.Schema({
   productId: { type: mongoose.Schema.Types.ObjectId, ref: 'sunglass', required: true },
