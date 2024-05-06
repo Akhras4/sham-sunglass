@@ -24,6 +24,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token,setToken]=useState('')
   const [userid,setuserId]=useState('')
+  const[favorites,setFavorites]=useState(null)
 
 
   const fetchData = () => {
@@ -39,12 +40,12 @@ function App() {
     fetchData();
     let tokenInfo = Cookies.get('token');
      if(! tokenInfo){ tokenInfo = localStorage.getItem('token');}
-    console.log('Received token:', tokenInfo);
+     console.log('Received token:', tokenInfo);
     setToken(tokenInfo);
 
     if (tokenInfo) {
       const decodedToken = jwtDecode(tokenInfo);
-      console.log('Decoded token:', decodedToken);
+      // console.log('Decoded token:', decodedToken);
       const userId = decodedToken.userId;
       if (decodedToken.exp * 1000 < Date.now()) {
           Cookies.remove('token');
@@ -54,19 +55,31 @@ function App() {
       } else {
           setuserId(userId);
           setIsAuthenticated(true);
+          getFav(userId)
       }
   } else {
       setIsAuthenticated(false);
       setuserId(null);
   }
-
   },[token,userid ]);
+
+
+  const getFav=(userid)=>{
+    axios.get(`http://localhost:8080/wishList/${userid}`)
+    .then(res =>{
+      setFavorites(res.data.favorites)
+      console.log(res.data.favorites)
+    })
+    .catch(err =>{
+      console.log(err)
+    })
+   }
   
   return (
     <div className="App">  
     <NextUIProvider>
      <Router>
-        <productContext.Provider value={{product, loading,token ,isAuthenticated,userid}} >
+        <productContext.Provider value={{product, loading,token ,isAuthenticated,userid,favorites}} >
           <Routes>
           <Route path="/" element={<Homepage />} />
             <Route path="/products" element={<Allproduct />} />

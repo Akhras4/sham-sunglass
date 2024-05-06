@@ -161,7 +161,7 @@ const login = (req,res)=>{
                     UserName: discover.UserName
                 };
                 console.log(discover)
-                jwt.sign(payload, process.env.MY_SECRET, { algorithm: 'HS256',expiresIn: '4h' }, (err, token) => {
+                jwt.sign(payload, process.env.MY_SECRET, { algorithm: 'HS256',expiresIn: '1h' }, (err, token) => {
                     if (err) {
                         res.clearCookie(token);
                         res.status(500).json({ error: "Failed to generate token" });

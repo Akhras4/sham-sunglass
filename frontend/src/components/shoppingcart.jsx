@@ -65,13 +65,15 @@ export default function Shoppingcartuser() {
     <h1>Shopping Cart</h1>
     <div className='maincosh'>
     {productShoppingCart.map(product => (
-      <div key={product._id} className='maincosh'>
+      <div key={product._id} className='maincoshitem'>
+        
         <div  onClick={() =>  hadelnavgaiton(product)}>
         <div className='title'>
-        <h2>{product.title}</h2>
+        <h4>{product.title}</h4>
         </div>
+        <div className='content'>
         <div className='mahesh'>
-        <img src={product.image[0]} alt={product.title} style={{width:'50px',height:'50px'}}/>
+        <img src={product.image[0]} alt={product.title} style={{width:'150px',height:'150px'}}/>
         </div> 
         <div className='det'>
         <p>Category: {product.category}</p>
@@ -80,7 +82,8 @@ export default function Shoppingcartuser() {
         <p>Count: {product.count}</p>
         </div>
         </div>
-        <Button variant="primary" onClick={()=> removeFromCart(product._id)} >
+        </div>
+        <Button variant="danger" onClick={()=> removeFromCart(product._id)} >
               del
        </Button>
       </div>

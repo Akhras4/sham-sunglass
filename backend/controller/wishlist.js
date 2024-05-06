@@ -78,4 +78,22 @@ const removeItem =(req,res) =>{
   });
 }
 
-module.exports ={ addToFavorites, removeItem }
+const getFav= (req,res)=>{
+    const userId =req.params.id
+    users.findById(userId)
+    .populate({
+        path:"favorites",
+        populat:{
+            path:"items.product",
+        }
+    })
+    .then(favData =>{
+        res.status(200).json({favorites:favData.favorites})
+    })
+    .catch(err =>{
+
+    })
+}
+
+
+module.exports ={ addToFavorites, removeItem,getFav}

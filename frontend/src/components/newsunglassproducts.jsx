@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState,useContext } from 'react'
+import { useState,useContext,useEffect } from 'react'
 import { productContext } from '../App'
 import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
@@ -10,9 +10,12 @@ export default function Newsunglassproducts() {
   const [isVisible, setIsVisible] = useState(false);
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const {product ,isAuthenticated ,userid} = useContext(productContext);
-  const [selectedCart, setSelectedToCard] = useState(null)
-  const [selectedFav, setSelectedToFav] = useState(null)
+  const {product ,isAuthenticated ,userid ,favorites} = useContext(productContext);
+ const [selectedFav, setSelectedToFav] = useState()
+  // console.log(favorites,"favorites")
+  useEffect(()=>{
+    setSelectedToFav(favorites)
+  })
   const navigate = useNavigate()
   const hadelnavgaiton=(product)=>{               
     navigate('/product', { state: { results: product } });
@@ -72,13 +75,14 @@ const addToWishList =(productId)=>{
         <FaShoppingCart />ADD to Cart
         </Button>
         {selectedFav && selectedFav.items.some(items => items.productId === item._id) ? (
-                    <Button variant="danger" onClick={() =>  { handleAddToWishList(item._id) } }>
-                        Add to fav
-                    </Button>
+                  <Button variant="danger"  onClick={() => { handleAddToWishList(item._id) } }>
+                   Add to fav
+                  </Button>
+                    
                 ) : (
-                    <Button variant="black" onClick={() => { handleAddToWishList(item._id) } }>
-                        remove from fav
-                    </Button>
+                  <Button variant="black"  onClick={() =>  { handleAddToWishList(item._id) } }>
+                   remove fav
+                  </Button>
                 )}
         </div>
       </div>

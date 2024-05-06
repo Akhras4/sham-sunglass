@@ -32,7 +32,7 @@ router.post("/removeFromCart/:id", CartController.removeFromCart);
 
 
 router.post("/wishList/:id",Fav.addToFavorites)
-router.get('/wishList/:id',)
+router.get('/wishList/:id',Fav.getFav)
 router.post('/wishList/removeFromWishList/:id',Fav.removeItem)
 
 module.exports = router;
