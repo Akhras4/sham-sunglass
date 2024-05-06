@@ -4,6 +4,7 @@ import {productContext } from '../App'
 import {motion} from 'framer-motion'
 import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
+import { MdRemoveShoppingCart } from "react-icons/md";
 
 export default function Shoppingcartuser() {
   const { userid, product } = useContext(productContext);
@@ -66,13 +67,12 @@ export default function Shoppingcartuser() {
     <div className='maincosh'>
     {productShoppingCart.map(product => (
       <div key={product._id} className='maincoshitem'>
-        
-        <div  onClick={() =>  hadelnavgaiton(product)}>
+        <div  >
         <div className='title'>
         <h4>{product.title}</h4>
         </div>
         <div className='content'>
-        <div className='mahesh'>
+        <div className='mahesh' onClick={() =>  hadelnavgaiton(product)}>
         <img src={product.image[0]} alt={product.title} style={{width:'150px',height:'150px'}}/>
         </div> 
         <div className='det'>
@@ -81,11 +81,12 @@ export default function Shoppingcartuser() {
         <p>Lens: {product.lens}</p>
         <p>Count: {product.count}</p>
         </div>
+        <div>
+        <MdRemoveShoppingCart  style={{color:'red',fontSize: '30px',marginLeft:'40px'}} onClick={()=> removeFromCart(product._id)}/>
+          </div>
         </div>
         </div>
-        <Button variant="danger" onClick={()=> removeFromCart(product._id)} >
-              del
-       </Button>
+        
       </div>
     ))}
     <Button variant="primary" >

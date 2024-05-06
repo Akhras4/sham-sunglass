@@ -24,7 +24,6 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token,setToken]=useState('')
   const [userid,setuserId]=useState('')
-  const[favorites,setFavorites]=useState(null)
 
 
   const fetchData = () => {
@@ -55,31 +54,18 @@ function App() {
       } else {
           setuserId(userId);
           setIsAuthenticated(true);
-          getFav(userId)
       }
   } else {
       setIsAuthenticated(false);
       setuserId(null);
   }
   },[token,userid ]);
-
-
-  const getFav=(userid)=>{
-    axios.get(`http://localhost:8080/wishList/${userid}`)
-    .then(res =>{
-      setFavorites(res.data.favorites)
-      console.log(res.data.favorites)
-    })
-    .catch(err =>{
-      console.log(err)
-    })
-   }
   
   return (
     <div className="App">  
     <NextUIProvider>
      <Router>
-        <productContext.Provider value={{product, loading,token ,isAuthenticated,userid,favorites}} >
+        <productContext.Provider value={{product, loading,token ,isAuthenticated,userid}} >
           <Routes>
           <Route path="/" element={<Homepage />} />
             <Route path="/products" element={<Allproduct />} />
@@ -89,8 +75,6 @@ function App() {
             <Route path="/wait" element={< Waitingpage />} />
             <Route path='/user' element={ <User /> }/>
             <Route path='/logout' element={ <Logout /> }/>
-
-           
           </Routes>
         </productContext.Provider>
       </Router>

@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import { FaShoppingCart } from 'react-icons/fa';
+
 export default function Favorites() {
     const { userid, product } = useContext(productContext);
     // const [selectedFav, setSelectedToFav] = useState(null)

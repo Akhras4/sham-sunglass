@@ -89,6 +89,7 @@ const getFav= (req,res)=>{
     })
     .then(favData =>{
         res.status(200).json({favorites:favData.favorites})
+        console.log('favorites',favData.favorites)
     })
     .catch(err =>{
 

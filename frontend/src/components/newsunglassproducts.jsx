@@ -1,21 +1,25 @@
 import React from 'react'
 import { useState,useContext,useEffect } from 'react'
 import { productContext } from '../App'
+import { favContext } from './homepage'
 import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { FaShoppingCart } from 'react-icons/fa';
 import axios from 'axios';
+import { MdFavorite } from "react-icons/md";
 export default function Newsunglassproducts() {
   const [isVisible, setIsVisible] = useState(false);
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const {product ,isAuthenticated ,userid ,favorites} = useContext(productContext);
- const [selectedFav, setSelectedToFav] = useState()
-  // console.log(favorites,"favorites")
+  const {product ,isAuthenticated ,userid } = useContext(productContext);
+  const{favorites}=useContext(favContext)
+ const [selectedFav, setSelectedToFav] = useState(favorites)
+ const [isProcessing, setIsProcessing] = useState(false);
+   console.log(favorites,"favorites fromm home")
   useEffect(()=>{
     setSelectedToFav(favorites)
-  })
+  },[favorites])
   const navigate = useNavigate()
   const hadelnavgaiton=(product)=>{               
     navigate('/product', { state: { results: product } });
@@ -37,6 +41,8 @@ export default function Newsunglassproducts() {
     });
 };
 const handleAddToWishList= (productId)=>{
+  if (isProcessing) return;
+  setIsProcessing(true);
   if(selectedFav!==null){  
    const findIndex= selectedFav.items.findIndex(item=>item.productId===productId)
    if(findIndex!== -1){
@@ -46,6 +52,10 @@ const handleAddToWishList= (productId)=>{
      console.log(selectedFav)
   })
   .catch(err =>{console.log(err)})
+  .finally(() => {
+    // Operation completed, set isProcessing to false
+    setIsProcessing(false);
+  });
  }else{addToWishList(productId)}
 }else{
   addToWishList(productId)
@@ -58,8 +68,12 @@ const addToWishList =(productId)=>{
    console.log(selectedFav)
   })
   .catch(err =>{
-
+    console.log(err); 
   })
+  .finally(() => {
+    // Operation completed, set isProcessing to false
+    setIsProcessing(false);
+  });
 }
 
   return (
@@ -74,16 +88,10 @@ const addToWishList =(productId)=>{
         <Button variant="dark" onClick={() => handleShowOffcanvas(item)}>
         <FaShoppingCart />ADD to Cart
         </Button>
-        {selectedFav && selectedFav.items.some(items => items.productId === item._id) ? (
-                  <Button variant="danger"  onClick={() => { handleAddToWishList(item._id) } }>
-                   Add to fav
-                  </Button>
-                    
-                ) : (
-                  <Button variant="black"  onClick={() =>  { handleAddToWishList(item._id) } }>
-                   remove fav
-                  </Button>
-                )}
+        <MdFavorite
+    onClick={() => { handleAddToWishList(item._id) }}
+    style={{fontSize: '30px',cursor: isProcessing ? "" : 'pointer', color: selectedFav && selectedFav.items.some(items => items.productId === item._id) ? 'red' : 'black' }}
+/>
         </div>
       </div>
       </div>
