@@ -4,6 +4,7 @@ import './signup.css'
 import Nav from './nav'
 import axios from 'axios'
 import CloseButton from 'react-bootstrap/CloseButton';
+import {motion} from 'framer-motion';
 
 export default function Signup() {
   const dialogRef = useRef(null);
@@ -43,9 +44,14 @@ export default function Signup() {
     <div>
         <Nav />
         <div className="con-main">
-          <div className="con-left">
-            <img src="https://i.postimg.cc/44WxgQtW/sam-letter-original-monogram-logo-260nw-1839641632.webp" width="80%" height="80%" alt="Logo" />
-          </div>
+          <motion.div 
+          initial={{ x: -1500 }}
+          animate={{ x: 0 }}
+          transition={{ duration: 0.5 }}
+          className='con-left'
+          >
+            <img src="https://i.postimg.cc/ZnCCGx5b/Frame-1-1.png" width="80%" height="80%" alt="Logo" />
+          </motion.div>
           <div className="con-right">
             <div className="con-signup">
               <h3 >Join today.</h3>

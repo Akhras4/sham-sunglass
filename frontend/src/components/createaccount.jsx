@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Nav from './nav';
+import './creareaccount.css';
+import {motion} from 'framer-motion';
 
 export default function CreateAccount() {
   const [username, setUsername] = useState('');
@@ -28,20 +30,37 @@ export default function CreateAccount() {
   };
 
   return (
-    <div>
-     
+    <div className='background'>
+     <Nav />
+     <div className="maincreatcon">
+      <motion.div
+      initial={{ x: -1500 }}
+      animate={{ x: 0 }}
+      transition={{ duration: 0.5 }}
+      className='rightcreatcon'
+      >
+           <img src='https://i.postimg.cc/wB4ZLHTq/Frame-1-2.png' width="100%" height="100%" alt="Logo" /> 
+     </motion.div>
+      <div className='leftcreatcon'>
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <input type="tel" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-        <button type="submit">Create Account</button>
+      <label for="username">Username</label>
+        <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} class="asd" />
+        <label for="email">Email</label>
+        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} class="asd"/>
+        <label for="password">Password</label>
+        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} class="asd" />
+        <label for="phoneNumber">Phone Number</label>
+        <input type="tel" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}class="asd" />
+        <input id="btn" type="submit" value="Register Now" class="mainbox"></input>
+        <label for="">already have account</label>
       </form>
       <ul>
   {err && err.map((error, index) => (
     <li key={index}>{error.message}</li>
   ))}
 </ul>
+</div>
+</div>
 </div>
   );
 }
