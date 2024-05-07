@@ -148,7 +148,6 @@ h2 {
 }
 
 section {
-  padding-top: 10vh;
   padding-bottom: 85vh;
   position: relative;
 }
@@ -198,6 +197,28 @@ section {
   color: yellow;
 }
 
+.parallaxV {
+  overflow: hidden;
+  letter-spacing: -2px;
+  line-height: 3; 
+  margin: 0;
+  white-space: nowrap;
+}
+
+.parallaxV .scroller {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 64px; 
+  display: flex;
+  flex-direction: column; 
+}
+
+.parallaxV img {
+  display: block; 
+  margin-bottom: 20px; 
+  color: yellow;
+  margin-right: 25rem;
+}
 
 
 

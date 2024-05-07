@@ -96,16 +96,19 @@ nav{
     list-style: none;
     margin: 0;
     padding: 0;
-    width: calc(100% - 2px); /* Adjust to match input border width */ 
+    width: calc(100% - 3px); /* Adjust to match input border width */
+    border-radius: 3px; 
   }
   .search-results li {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    /* transition: background-color 0.3s ease; */
+    background-color: white;
+    border-radius: 3px;
     color: black;
   }
   .search-results li:hover {
-    background-color: #f0f0f0;
-    color: black;
+    background-color: #353535;
+    color: rgb(255, 255, 255);
   }

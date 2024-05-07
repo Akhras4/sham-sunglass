@@ -85,7 +85,6 @@ export default function Favorites() {
         <p>Category: {product.category}</p>
         <p>Price: {product.price}</p>
         <p>Lens: {product.lens}</p>
-        <p>Count: {product.count}</p>
         </div>
         </div>
         <Button variant="danger" onClick={()=> removeFromWishList(product._id)} >
