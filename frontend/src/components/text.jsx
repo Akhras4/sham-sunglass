@@ -29,7 +29,7 @@ export default function Text() {
       >
         <div className='text-left'>
             <span className='span1'>SAM</span>
-            <span className='span2'><img src='https://i.postimg.cc/D03CmyDG/Untitled-1.png'/></span>
+            {/* <span className='span2'><img src='https://i.postimg.cc/D03CmyDG/Untitled-1.png'/></span> */}
             <span className='span3'>OPTIK</span>
             
         </div>
@@ -38,7 +38,7 @@ export default function Text() {
         <motion.div
         initial={{ x: 1500 }}
         animate={{ x: isVisible ? 0 : 1200 }}
-        transition={{ duration: 0.5,delay: 0.3 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
         className='text-right'
       >
         <div className='text-right'>

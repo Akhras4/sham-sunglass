@@ -14,7 +14,7 @@
 .text-leftcon{
 width: 80%;
 height: 100%;
-margin-left: 15%;
+margin-left: 10%;
 
 
 & span{
@@ -23,14 +23,14 @@ margin-left: 15%;
 & .span1{
     padding-left: -10%;
 }
-& .span2{
+/* & .span2{
     padding-left: 10%;
     & img{
         width:80% ;
          height:80%;
         object-fit: contain;
     }
-}
+} */
 & .span3{
     padding-left: 40%;
 }
@@ -53,6 +53,5 @@ padding-top: 50px;
     object-fit: contain;
     
 }
-
-    }
+}
   
