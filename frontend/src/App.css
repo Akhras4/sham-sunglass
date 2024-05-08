@@ -315,30 +315,41 @@ section {
   justify-content: center;
   align-items: center;
 scroll-behavior: smooth;
-
-
 }
-.sunglass{
+
+.sunglass ,.sunglasscontent{
   width: 22vw;
   height:400px;
   font-size:50px;
   background-color:black;
   object-fit: cover;
   background-color: #dfe1e5;
-  position: relative;
   padding-top: 2px;
+  position: relative;
+  & .saleinfo{
+    display: flex;
+    gap:10px;
+  }
   & .butCon{
     display: flex;
     flex-direction: row;
-    
-
   }
+   /* & .imageflex{
+    position: relative;
+  } */
+  & #fav{
+    position: absolute ;
+    top:0;
+    right: 0;
+    z-index: 2;
+    padding-top: 0;
+    height: fit-content;
+    background-color: #a1bdda;
+    cursor: pointer;
+  } 
   
 }
-
-.sparkle-container {
-  position: fixed;
-  top: 50vh; 
-  left: 50vw; 
-  transform: translate(-50%, -50%); 
+.saleinfo{
+  display: flex;
+  gap:10px;
 }

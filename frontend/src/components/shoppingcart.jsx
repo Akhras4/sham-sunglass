@@ -77,7 +77,14 @@ export default function Shoppingcartuser() {
         </div> 
         <div className='det'>
         <p>Category: {product.category}</p>
-        <p>Price: {product.price}</p>
+        {product.isOnSale ? ( 
+                  <>
+                    <div className='saleinfo'><p style={{ textDecoration: 'line-through', color: 'red' }}> {product.price}</p>
+                    <p style={{  backgroundColor:'yellow'}}> {product.salePrice}</p></div>
+                  </>
+                ) : (
+                  <p>Price: {product.price}</p>
+        )}
         <p>Lens: {product.lens}</p>
         <p>Count: {product.count}</p>
         </div>

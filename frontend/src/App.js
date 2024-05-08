@@ -73,7 +73,7 @@ function App() {
             <Route path="/signup" element={ isAuthenticated ? <User /> : <Signup /> } />
             <Route path="/creataccount" element={<Createaccount />} />
             <Route path="/wait" element={< Waitingpage />} />
-            <Route path='/user' element={ <User /> }/>
+            <Route path='/user' element={isAuthenticated ? <User /> : <Signup />  }/>
             <Route path='/logout' element={ <Logout /> }/>
           </Routes>
         </productContext.Provider>

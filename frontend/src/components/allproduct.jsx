@@ -31,7 +31,14 @@ export default function Allproduct() {
         <div onClick={()=>hadelnavgaiton(item)}>
         <div className='newsunglassconAll' key={product._id} >
           <img id="img" src={item.image[0]} style={{width:"100%",heigh:"80%"}} />
-          <p>{item.price}</p>
+          {item.isOnSale ? ( 
+                  <>
+                    <div className='saleinfo'><p style={{ textDecoration: 'line-through', color: 'red' }}> {item.price}</p>
+                    <p style={{  backgroundColor:'yellow'}}> {item.salePrice}</p></div>
+                  </>
+                ) : (
+                  <p>Price: {item.price}</p>
+                )}
           <h4>{item.title}</h4>
           <div className='butCon'>
                 <Button variant="dark" >
