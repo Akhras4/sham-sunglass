@@ -8,13 +8,14 @@ import { FaShoppingCart } from 'react-icons/fa';
 
 export default function Favorites() {
     const { userid, product } = useContext(productContext);
-    // const [selectedFav, setSelectedToFav] = useState(null)
+     const [selectedFav, setSelectedToFav] = useState(null)
     const [productFav, setProductFav] = useState([]);
     const navigate = useNavigate()
     useEffect(()=>{
     axios.get(`http://localhost:8080/wishList/${userid}`)
     .then((res)=>{
         setProductFav(res.data.favorites.items)
+        setSelectedToFav(res.data.favorites)
         let productIds = res.data.favorites.items.map(item => item.productId);
         getProductDetails(productIds);
     })
@@ -43,7 +44,7 @@ export default function Favorites() {
         console.log(productDetailsArray,"productDetailsArray");
       }
       const hadelnavgaiton=(product)=>{                //waiting to finish
-        navigate('/product', { state: { results: product } });
+        navigate('/product', { state: { results: product ,favorites:selectedFav } });
       }
       const removeFromWishList=(productId) =>{
         axios.post(`http://localhost:8080/wishList/removeFromWishList/${userid}`,{productId})
@@ -52,7 +53,7 @@ export default function Favorites() {
             setProductFav(res.data.favorites)
             let productIdsRef = res.data.favorites.items.map(item => item.productId);
             getProductDetails(productIdsRef);
-            console.log(productFav)
+            console.log(productFav,'productFav')
       })
       .catch(err =>{
         console.log(err)
@@ -83,6 +84,7 @@ export default function Favorites() {
         </div> 
         <div className='det'>
         <p>Category: {product.category}</p>
+        <p>Lens: {product.lens}</p>
         {product.isOnSale ? ( 
                   <>
                     <div className='saleinfo'><p style={{ textDecoration: 'line-through', color: 'red' }}> {product.price}</p>
@@ -91,7 +93,6 @@ export default function Favorites() {
                 ) : (
                   <p>Price: {product.price}</p>
         )}
-        <p>Lens: {product.lens}</p>
         </div>
         </div>
         <Button variant="danger" onClick={()=> removeFromWishList(product._id)} >

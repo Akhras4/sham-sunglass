@@ -7,11 +7,14 @@ import './user.css'
 import Address from './address'
 import Shoppingcartuser from './shoppingcart'
 import Favorites from './favorites'
+import {useLocation} from 'react-router-dom'
 export default function User() {
   const[userdetail,setuserdetail]=useState(null)
   const[useraddress,setuseraddress]=useState(null)
   const {userid,token}=useContext(productContext)
   const [activeComponent, setActiveComponent] = useState();
+  const [selectedFav, setSelectedToFav] = useState(null)
+  const location = useLocation();
   const handleClick = (component) => {
     setActiveComponent(component);
   };
@@ -32,9 +35,19 @@ export default function User() {
     });
 }, []);
 
+ useEffect(() => {
+   if (location.state && location.state.results) {
+     setSelectedToFav(location.state.favorites)
+     console.log(location.state.favorites,"location.state.favorites")
+   } else {
+     setSelectedToFav(location.state.favorites)
+     console.log(location.state.favorites,"fromser")
+   }
+ }, [location.state])
+
   return (
     <div>
-      <Nav />
+      <Nav favorites={selectedFav} />
      <div className='main'>
           <div className='LEFT'>
             <div className='leftuser'>

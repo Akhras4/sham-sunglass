@@ -1,16 +1,30 @@
 import React from "react";
-import {useState,useContext } from "react";
+import {useState,useContext,useEffect } from "react";
 import { productContext } from '../App'
 import './nav.css'
 import { useNavigate } from 'react-router-dom';
+import { favContext } from './homepage'
 
-export default function Search() {
+export default function Search({ favoritesch }) {
   const[input,setInput]=useState([])
   const[results,setResults]=useState([])
   const[error,setError] = useState(false)
   const[worning,setWorning] = useState('Search')
   const {product} = useContext(productContext);
+  const{favorites}=useContext(favContext)||[]
+  const[Fav,setFav]=useState(favorites)
   const navigate = useNavigate();
+  // console.log("favoritesch",favoritesch)
+  useEffect(()=>{
+    if(favoritesch){
+      setFav(favoritesch)
+      console.log("Fav",Fav)
+    }else{
+      setFav(favorites)
+      console.log("favorites",favorites)
+    }
+  },[favoritesch,favorites])
+
   const handelSubmit = (e) => {
     e.preventDefault();
     if (input =="") {
@@ -25,9 +39,11 @@ export default function Search() {
           return typeof value === 'string' && value.toLowerCase().includes(searchTermSubmit);
           });
         });
-        navigate('/products', { state: { results: relatedProduct } });
+        console.log("fav from serch",Fav)
+        navigate('/products', { state: { results: relatedProduct ,favorites:Fav } });
       } else {
-        navigate('/product', { state: { results: specificProductObject } });
+       console.log("fav from serch",Fav)
+        navigate('/product', { state: { results: specificProductObject ,favorites:Fav} });
       }
       
       setInput('');
@@ -47,7 +63,7 @@ export default function Search() {
 }
   const handelClick=(Prouduct)=>{
     if (Prouduct) {
-      navigate('/product', { state: { results: Prouduct } });
+      navigate('/product', { state: { results: Prouduct ,favorites:Fav } });
       setResults("")
       setInput("")
   }

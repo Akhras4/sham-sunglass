@@ -4,34 +4,92 @@ import { useContext,useState,useEffect } from 'react';
 import Nav from './nav';
 import './product.css'
 import { useLocation } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import { FaShoppingCart } from 'react-icons/fa';
+import axios from 'axios'
+import Usericon from './usericon';
+import { BsBookmark } from "react-icons/bs";
 export default function Product() {
+    const { userid,token, isAuthenticated }=useContext(productContext)
+    const [selectedFav, setSelectedToFav] = useState(null)
+    const [isProcessing, setIsProcessing] = useState(false);
     const location = useLocation();
     const [product, setproduct] = useState([])
     useEffect(() => {
         if (location.state && location.state.results) {
             if (Array.isArray(location.state.results) && location.state.results.length > 0) {
-                setproduct(location.state.results[0]); 
+                setproduct(location.state.results[0]);
+                setSelectedToFav(location.state.favorites)
+                 console.log(selectedFav)
             } else {
                 setproduct(location.state.results);
+                setSelectedToFav(location.state.favorites)
+                console.log(selectedFav)
             }
         }
     }, [location.state.results]);
-    const [currentImage, setCurrentImage] = useState(0); 
+    const [currentImage, setCurrentImage] = useState(0);
     const handleWheelChange = (event) => {
-        const delta = Math.sign(event.deltaY); 
+        const delta = Math.sign(event.deltaY);
         const newIndex = currentImage + delta;
         if (newIndex >= 0 && newIndex < product.image.length) {
             setCurrentImage(newIndex);
         }
     };
-   
+    const handleAddToCart = (productId) => {
+        const size = "M";
+        axios.post(`http://localhost:8080/cart/${userid}`,{productId,size })
+        .then(response => {
+          console.log(response.data);
+          
+        })
+        .catch(error => {
+          console.log(error.response.data)
+        });
+    }
+    const handleAddToWishList= (productId)=>{
+        if (isProcessing) return;
+        setIsProcessing(true);
+        if(selectedFav!==null){  
+         const findIndex= selectedFav.items.findIndex(item=>item.productId===productId)
+         if(findIndex!== -1){
+         axios.post(`http://localhost:8080/wishList/removeFromWishList/${userid}`,{productId})
+          .then(res =>{
+           setSelectedToFav(res.data.favorites)
+           console.log(selectedFav)
+        })
+        .catch(err =>{console.log(err)})
+        .finally(() => {
+          // Operation completed, set isProcessing to false
+          setIsProcessing(false);
+        });
+       }else{addToWishList(productId)}
+      }else{
+        addToWishList(productId)
+      }
+      }
+      const addToWishList =(productId)=>{
+        axios.post(`http://localhost:8080/wishList/${userid}`,{productId})
+        .then(res=>{
+         setSelectedToFav(res.data.favorites)
+         console.log(selectedFav)
+        })
+        .catch(err =>{
+          console.log(err); 
+        })
+        .finally(() => {
+          // Operation completed, set isProcessing to false
+          setIsProcessing(false);
+        });
+      }
   return (
     <div>
-        <Nav />
+        <Nav favorites={selectedFav} />
+        { isAuthenticated ? <Usericon /> : null }
         <div className='maincon'>
            
             <div className='leftcon'>
-                <h4>{product.title}</h4>
+                <h5>{product.title}</h5>
                 <p>{product.description}</p>
             </div>
             <div className='imgcon'onMouseEnter={() => setCurrentImage(0)} onWheel={handleWheelChange}>
@@ -52,16 +110,22 @@ export default function Product() {
         </div>
             <div className='rightcon'>
                 <div className="rightcontop">
-                     <h4>{product.brand}:{product.title}</h4>
+                     <h5>{product.brand}:{product.title}</h5>
                      <p>{product.price}</p>
                      <div>
-                        <h4>Color :{product.color}</h4>
-                        <h4>Lens :{product.lens}</h4>
+                        <h5>Color :{product.color}</h5>
+                        <h5>Lens :{product.lens}</h5>
+                        {<div className="favicon">
+                <BsBookmark 
+                     onClick={() => { handleAddToWishList(product._id) }}
+                    style={{fontSize: '30px',cursor: isProcessing ? "" : 'pointer', color: selectedFav && selectedFav.items.some(items => items.productId === product._id) ? 'red' : 'black' }}
+                />
+                </div> }
                      </div>
                 </div>
                 <div className="rightconbottom">
                     <div>
-                        <h4>size :</h4>
+                        <h5>size :</h5>
                     </div>
                 <div className='buttuncon'>
                      {product.size  && product.size.map((size, index) => (
@@ -69,6 +133,10 @@ export default function Product() {
                         ))}
                  </div>
                 </div>
+                <Button variant="dark" onClick={() => handleAddToCart(product)}>
+        <FaShoppingCart />ADD to Cart
+        </Button>
+               
             </div>
         </div>
 

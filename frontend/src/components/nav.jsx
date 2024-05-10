@@ -7,7 +7,7 @@ import './nav.css'
 import {productContext} from '../App'
 
 
-export default function Nav() {
+export default function Nav({ favorites }) {
     const { isAuthenticated } = useContext(productContext);
     useEffect(() => {
         const t1 = gsap.timeline({ default: { ease: "power4.out", duration: 0.7 } });
@@ -124,7 +124,7 @@ export default function Nav() {
     </div>
     </Link>
 <div className="RightSideContiner">
-   <Search />
+   <Search favoritesch={favorites} />
    {isAuthenticated ? (
    <Link to="/logout">
     <div id='LOGINcon'>

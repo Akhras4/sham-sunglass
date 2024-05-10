@@ -3,6 +3,7 @@ import axios from 'axios';
 import Nav from './nav';
 import './creareaccount.css';
 import {motion} from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export default function CreateAccount() {
   const [username, setUsername] = useState('');
@@ -52,7 +53,7 @@ export default function CreateAccount() {
         <label for="phoneNumber">Phone Number</label>
         <input type="tel" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}class="asd" />
         <input id="btn" type="submit" value="Register Now" class="mainbox"></input>
-        <label for="">already have account</label>
+        <Link to='/signup'>already have account</Link>
       </form>
       <ul>
   {err && err.map((error, index) => (

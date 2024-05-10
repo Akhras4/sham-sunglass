@@ -1,7 +1,20 @@
 import React from 'react'
 import "./showmore.css"
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { favContext } from './homepage'
+import { useContext,useEffect,useState } from 'react'
+
+
 export default function Showmore() {
+    const{favorites}=useContext(favContext)|| []
+    const [selectedFav, setSelectedToFav] = useState(favorites)
+useEffect(()=>{
+    setSelectedToFav(favorites)
+},[favorites])
+    const navigate = useNavigate()
+    const hadelnavgaiton=()=>{              
+        navigate('/products', { state: { favorites:selectedFav } });
+      }
   return (
       <div>
           <div class="contact-fp-wrap">
@@ -22,9 +35,7 @@ export default function Showmore() {
                   
                   <rect class="booton" height="60" width="320"  />
               </svg>
-              <Link to="/products" style={{textDecoration:"none",color:"black"}}>
-              <div class="booton-text">Show More</div>
-              </Link>
+              <div class="booton-text"  onClick={hadelnavgaiton}>Show More</div>
           </div>
       </div>
   )

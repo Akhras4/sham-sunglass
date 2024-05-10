@@ -2,7 +2,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './components/homepage';
 import Allproduct from './components/allproduct';
-import { useState, useEffect,createContext } from 'react';
+import { useState, useEffect,createContext,useContext } from 'react';
 import axios from 'axios'
 import Product from './components/product';
 import Signup from './components/signup';
@@ -15,7 +15,8 @@ import Cookies from 'js-cookie';
 import Usericon from './components/usericon';
 import {jwtDecode} from 'jwt-decode';
 import Logout from './components/logout'
-;
+
+
 
 export  const productContext = createContext()
 function App() {
@@ -24,6 +25,9 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token,setToken]=useState('')
   const [userid,setuserId]=useState('')
+ 
+  
+  
 
 
   const fetchData = () => {
@@ -60,16 +64,17 @@ function App() {
       setuserId(null);
   }
   },[token,userid ]);
+
   
   return (
     <div className="App">  
     <NextUIProvider>
      <Router>
-        <productContext.Provider value={{product, loading,token ,isAuthenticated,userid}} >
+        <productContext.Provider value={{product, loading,token ,isAuthenticated,userid }} >
           <Routes>
           <Route path="/" element={<Homepage />} />
             <Route path="/products" element={<Allproduct />} />
-            <Route path="/product" element={<Product />} />
+            <Route path="/product" element={<Product />} /> 
             <Route path="/signup" element={ isAuthenticated ? <User /> : <Signup /> } />
             <Route path="/creataccount" element={<Createaccount />} />
             <Route path="/wait" element={< Waitingpage />} />

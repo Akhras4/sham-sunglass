@@ -11,6 +11,7 @@ import {useContext,useEffect,createContext,useState} from'react'
 import {productContext} from '../App'
 import Text from './text'
 import axios from 'axios'
+import App from '../App'
 
 
 
@@ -21,22 +22,21 @@ export default function Homepage() {
  const[favorites,setFavorites]=useState(null)
  useEffect(()=>{
   getFav(userid)
- },[userid])
+ },[userid  ])
  const getFav=(userid)=>{
   axios.get(`http://localhost:8080/wishList/${userid}`)
   .then(res =>{
     setFavorites(res.data.favorites)
-    console.log(res.data.favorites)
+    console.log("favorites home",res.data.favorites)
   })
   .catch(err =>{
     console.log(err)
   })
  }
 
- 
   return (
     <div>
-    <favContext.Provider value={{favorites}} >
+    <favContext.Provider value={{favorites,getFav }} >
     <Nav />
     { isAuthenticated ? <Usericone /> : null }
     <Video />

@@ -13,6 +13,8 @@ nav{
     margin-top: 20px;
     overflow: visible;
     margin-right: 20px;
+    width: fit-content;
+    height: fit-content;
   }
   .logo svg{
   padding: 0px;

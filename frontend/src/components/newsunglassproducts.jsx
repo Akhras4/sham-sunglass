@@ -13,7 +13,7 @@ export default function Newsunglassproducts() {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const {product ,isAuthenticated ,userid } = useContext(productContext);
-  const{favorites}=useContext(favContext)
+  const{favorites,getFav}=useContext(favContext)
  const [selectedFav, setSelectedToFav] = useState(favorites)
  const [isProcessing, setIsProcessing] = useState(false);
    console.log(favorites,"favorites fromm home")
@@ -22,7 +22,7 @@ export default function Newsunglassproducts() {
   },[favorites])
   const navigate = useNavigate()
   const hadelnavgaiton=(product)=>{               
-    navigate('/product', { state: { results: product } });
+    navigate('/product', { state: { results: product,favorites:selectedFav } });
   }
   const handleCloseOffcanvas = () => setShowOffcanvas(false);
   const handleShowOffcanvas = (productItem) => {
@@ -49,6 +49,7 @@ const handleAddToWishList= (productId)=>{
    axios.post(`http://localhost:8080/wishList/removeFromWishList/${userid}`,{productId})
     .then(res =>{
      setSelectedToFav(res.data.favorites)
+     getFav(userid)
      console.log(selectedFav)
   })
   .catch(err =>{console.log(err)})
@@ -65,6 +66,7 @@ const addToWishList =(productId)=>{
   axios.post(`http://localhost:8080/wishList/${userid}`,{productId})
   .then(res=>{
    setSelectedToFav(res.data.favorites)
+   getFav(userid)
    console.log(selectedFav)
   })
   .catch(err =>{

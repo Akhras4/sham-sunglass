@@ -58,7 +58,7 @@ export default function Shoppingcartuser() {
      });
     }
   const hadelnavgaiton=(product)=>{                //waiting to finish
-    navigate('/product', { state: { results: product } });
+    navigate('/product', { state: { results: product} });
   }
 
   return (

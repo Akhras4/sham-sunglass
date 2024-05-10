@@ -15,7 +15,7 @@ export default function Sunglasses( ) {
   const [isVisible, setIsVisible] = useState(false);
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const{favorites}=useContext(favContext)
+  const{favorites,getFav}=useContext(favContext)
   const [selectedFav, setSelectedToFav] = useState(favorites)
   const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate()
@@ -34,8 +34,8 @@ export default function Sunglasses( ) {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [favorites]);
-  const hadelnavgaiton=(product)=>{                //waiting to finish
-    navigate('/product', { state: { results: product } });
+  const hadelnavgaiton=(product)=>{
+    navigate('/product', { state: { results: product ,favorites:selectedFav } });
   }
 
   const handleCloseOffcanvas = () => setShowOffcanvas(false);
@@ -63,6 +63,7 @@ const handleAddToWishList= (productId)=>{
    axios.post(`http://localhost:8080/wishList/removeFromWishList/${userid}`,{productId})
     .then(res =>{
      setSelectedToFav(res.data.favorites)
+     getFav(userid)
      console.log(selectedFav)
   })
   .catch(err =>{console.log(err)})
@@ -79,6 +80,7 @@ const addToWishList =(productId)=>{
   axios.post(`http://localhost:8080/wishList/${userid}`,{productId})
   .then(res=>{
    setSelectedToFav(res.data.favorites)
+   getFav(userid)
    console.log(selectedFav)
   })
   .catch(err =>{
