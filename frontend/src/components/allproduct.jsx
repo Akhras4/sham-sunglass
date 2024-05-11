@@ -91,8 +91,10 @@ const addToWishList =(productId)=>{
   });
 }
   return (
-    <div> 
+    <div > 
+    
       <Nav favorites={selectedFav}/>
+      <div className='allproductcon'> 
       { isAuthenticated ? <Usericon /> : null }
       <div className='continer'>
         <div className='newsunglassAll' >{products  && products.slice(0, 40).map(item => (
@@ -138,6 +140,7 @@ const addToWishList =(productId)=>{
           )}
         </Offcanvas.Body>
       </Offcanvas>
+      </div>
       </div>
   )
 }

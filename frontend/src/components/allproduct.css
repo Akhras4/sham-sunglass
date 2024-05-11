@@ -1,10 +1,12 @@
 body{
-    background-color: rgb(255, 255, 255);
+    background-color: #ffffff; 
     width:100vw;
     height:100vh;
 }
+
 .continer{
     margin:15%;
+    
 }
 .newsunglassAll{
     display: grid;
@@ -22,7 +24,7 @@ body{
       display:flex;
       width: 350px;
       height:400px;
-      background-color:rgb(216, 222, 223);
+      background-color:rgb(255, 255, 255);
       object-fit: contain;
       --borderWidth: 3px;
       position: relative;
@@ -57,7 +59,7 @@ body{
       left: calc(-1 * var(--borderWidth));
       height: calc(100% + var(--borderWidth) * 2);
       width: calc(100% + var(--borderWidth) * 2);
-      background: linear-gradient(60deg, #f79533, #cbf33b, #254a75, #235a2c, #b8d33e, #2fc51c, #07b39b, #6fba82);
+      background: linear-gradient(60deg, #141312, #cbf33b, #023064, #235a2c, #d7f74a, #c5221c, #b3073b, #43d4b5);
       border-radius: calc(2 * var(--borderWidth));
       z-index: -1;
       animation: animatedgradient 3s ease alternate infinite;

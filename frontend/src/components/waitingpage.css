@@ -1,0 +1,291 @@
+
+div.mainwait {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: purple;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+div.mid {
+    width: 50%;
+    height: 50%;
+  width: 600px;
+  margin-top: 8%;
+  margin-right: 10%;
+  & h1{
+    font-size: 3rem;
+    color:#F5D76A
+  }
+}
+
+/* Circle Beat */
+#circleBeat {
+  z-index: -1000;
+  background: #F5D76A;
+  border-radius: 10000px;
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  display: block;
+  transform: translate(-50%, -50%);
+  animation: circleBeatAnim 1s 1.2s forwards;
+}
+.text-leftcon-wait{
+    width: 50%;
+    height: 50%;
+    display: flex;
+
+}
+
+/* Animations */
+#aj-head {
+  opacity: 0;
+  transform: scale(0.5);
+  transform-origin: center;
+  animation: appear .7s ease-in-out forwards;
+}
+/* Transformations Default */
+#glassesR {
+  transform: translateY(35px) scaleY(.50);
+  animation: glassesAnimR 3s .6s forwards;
+  -webkit-animation-fill-mode: forwards;/* Safari 4.0 - 8.0 */
+}
+#glassesL {
+  transform: translateY(35px) scaleY(.50);
+  animation: glassesAnim 1.5s .6s forwards;
+  -webkit-animation-fill-mode: forwards;/* Safari 4.0 - 8.0 */
+}
+#earringsR {
+  transform: translateY(-5px);
+  animation: earringsAnimR 3s .6s forwards;
+  -webkit-animation-fill-mode: forwards;/* Safari 4.0 - 8.0 */
+}
+#earringsL {
+  transform: translateY(-5px);
+  animation: earringsAnim 1.5s .6s forwards;
+  -webkit-animation-fill-mode: forwards;/* Safari 4.0 - 8.0 */
+}
+#face{
+  transform: translateY(50px) scaleY(.64);
+  animation: faceAnim 3s .6s ;
+  -webkit-animation-fill-mode: forwards;/* Safari 4.0 - 8.0 */
+}
+#bangsR {
+  transform: translateY(55px) scaleY(.64);
+  animation: bangsAnim 3s .6s forwards;
+  -webkit-animation-fill-mode: forwards;/* Safari 4.0 - 8.0 */
+}
+#bangsL {
+  transform: translateY(50px) scale(.80);
+  animation: bangsAnim 3s .6s forwards;
+  -webkit-animation-fill-mode: forwards;/* Safari 4.0 - 8.0 */
+}
+#hairBack {
+  transform: translate(0px, 20px) scaleY(.80) ;
+  animation: hairBackAnim 3s .6s forwards;
+  -webkit-animation-fill-mode: forwards;/* Safari 4.0 - 8.0 */
+}
+
+/* Headbang */
+@keyframes glassesAnim {
+  20% {
+    transform: translateY(-10px) scaleY(1);
+  }
+  40% {
+    transform: translateY(-10px) scaleY(1);
+  }
+  60% {
+    transform: translateY(25px) scaleY(.7);
+  }
+  80% {
+    transform: translateY(-10px) scaleY(1);
+  }
+  100% {
+    transform: translateY(0px) scaleY(1);
+  }
+}
+
+@keyframes glassesAnimR {
+  10% {
+    transform: translateY(-10px) scaleY(1);
+  }
+  20% {
+    transform: translateY(-10px) scaleY(1);
+  }
+  30% {
+    transform: translateY(25px) scaleY(.7);
+  }
+  40% {
+    transform: translateY(-10px) scaleY(1);
+  }
+  50% {
+    transform: translateY(0px) scaleY(1);
+  }
+  60% {
+    transform: translateY(20px) scaleY(.1);
+  }
+  70% {
+    transform:  scaleY(1);
+  }
+  100% {
+    transform:  scaleY(1);
+  }
+}
+
+@keyframes faceAnim {
+  10% {
+    transform: translateY(-5px) scaleY(1.1);
+  }
+  20% {
+    transform: translateY(-5px) scaleY(1.1);
+  }
+  30% {
+    transform: translateY(30px) scaleY(.8);
+  }
+  40% {
+    transform: translateY(-5px) scaleY(1);
+  }
+  50% {
+    transform: translateY(0px) scaleY(1);
+  }
+  60% {
+    transform: rotateZ(2deg);
+  }
+  70% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(0deg);
+  }
+}
+
+@keyframes bangsAnim {
+  10% {
+    transform: translateY(5px) scaleY(1);
+  }
+  20% {
+    transform: translateY(5px) scaleY(1);
+  }
+  30% {
+    transform: translateY(38px) scaleY(.7);
+  }
+  40% {
+    transform: translateY(-5px) scaleY(1);
+  }
+  50% {
+    transform: translateY(0px) scaleY(1);
+  }
+  60% {
+      transform: rotateZ(2deg);
+  }
+  70% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(0deg);
+  }
+}
+@keyframes hairBackAnim {
+  10% {
+    transform: translateY(5px) scaleY(1);
+  }
+  20% {
+    transform: translateY(5px) scaleY(1);
+  }
+  30% {
+    transform: translateY(-2px) scaleY(.85);
+  }
+  40% {
+    transform: translateY(10px) scaleY(1);
+  }
+  50% {
+    transform: translateY(5px) scaleY(1);
+  }
+  60% {
+      transform: rotateZ(1deg);
+  }
+  70% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(0deg);
+  }
+}
+@keyframes earringsAnim {
+  20% {
+    transform: translateY(-10px) scaleY(1);
+  }
+  40% {
+    transform: translateY(-10px) scaleY(1);
+  }
+  60% {
+    transform: translateY(5px) scaleY(1);
+  }
+  80% {
+    transform: translateY(-5px) scaleY(1);
+  }
+  100% {
+    transform: translateY(0px) scaleY(1);
+  }
+}
+@keyframes earringsAnimR {
+  10% {
+    transform: translateY(-10px) scaleY(1);
+  }
+  20% {
+    transform: translateY(-10px) scaleY(1);
+  }
+  30% {
+    transform: translateY(5px) scaleY(1);
+  }
+  40% {
+    transform: translateY(-5px) scaleY(1);
+  }
+  50% {
+    transform: translateY(0px) scaleY(1);
+  }
+  60% {
+    transform: translate(-2px, 3px);
+  }
+  70% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Wink Animation */
+@keyframes winkAnim {
+  20% {
+    transform: rotateZ(2deg);
+  }
+  30% {
+      transform: rotateZ(0deg);
+  }
+  100% {
+      transform: rotateZ(0deg);
+  }
+}
+
+/* Circle Beat Animation */
+@keyframes circleBeatAnim {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1000);
+    opacity: 0;
+  }
+}
+
+
+@keyframes appear {
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

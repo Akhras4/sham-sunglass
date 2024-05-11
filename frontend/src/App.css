@@ -1,7 +1,7 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 body{
-  background-color: white; 
+  background-color: #ffffff; 
   height: 100vh;
   width: 100vw;
   font-family: "Poppins";
@@ -29,7 +29,7 @@ body{
 * {
   font-family: "Plaster", sans-serif;
   font-style: normal;
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased; 
 
 }
 
@@ -226,8 +226,8 @@ section {
   display: grid;
   padding-bottom: 50px;
   
-  grid-template-areas: " a a  " 
-                       " a a  ";
+  grid-template-areas: " a a a " 
+                       " a a a ";
                        justify-items: center;
                        justify-content: center;
                        
@@ -238,7 +238,7 @@ section {
     display:flex;
     width: 350px;
     height:400px;
-    background-color:rgb(216, 222, 223);
+    background-color:rgb(255, 255, 255);
     object-fit: contain;
     --borderWidth: 3px;
     position: relative;
@@ -274,7 +274,7 @@ section {
     left: calc(-1 * var(--borderWidth));
     height: calc(100% + var(--borderWidth) * 2);
     width: calc(100% + var(--borderWidth) * 2);
-    background: linear-gradient(60deg, #f72e2e, #f3a93b, #254a75, #943d68, #3170b8, #af5754, #07b39b, #6f87ba);
+    background: linear-gradient(60deg,#141312, #cbf33b, #023064, #235a2c, #d7f74a, #c5221c, #b3073b, #43d4b5);
     border-radius: calc(2 * var(--borderWidth));
     z-index: -1;
     animation: animatedgradient 3s ease alternate infinite;
@@ -323,7 +323,7 @@ scroll-behavior: smooth;
   font-size:50px;
   background-color:black;
   object-fit: cover;
-  background-color: #dfe1e5;
+  background-color: #ffffff;
   padding-top: 2px;
   position: relative;
   & .saleinfo{

@@ -80,7 +80,7 @@ const addToWishList =(productId)=>{
 
   return (
     <div>
-    <div className='newsunglass' >{product.product  && product.product.slice(0, 4).map(item => (
+    <div className='newsunglass' >{product.product  && product.product.slice(0, 6).map(item => (
       <div >
       <div className='newsunglasscon' key={item._id} >
         <img id="img" src={item.image[0]} style={{width:"100%",heigh:"80%"}} onClick={() => hadelnavgaiton(item)} />
