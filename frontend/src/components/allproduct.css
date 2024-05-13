@@ -1,26 +1,24 @@
 body{
-    background-color: #ffffff; 
     width:100vw;
     height:100vh;
 }
 
-.continer{
+/* .continer{
     margin:15%;
     
-}
+} */
 .newsunglassAll{
     display: grid;
     padding-bottom: 50px;
-    
+    padding-top: 15%;
     grid-template-areas: " a a a " 
                          " a a a ";
                          justify-items: center;
                          justify-content: center;
                          
       gap:40px;
-      
-   @import url('https://fonts.googleapis.com/css?family=Raleway:200');
-  }.newsunglassconAll{
+  }
+  .newsunglassconAll{
       display:flex;
       width: 350px;
       height:400px;

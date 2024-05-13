@@ -1,6 +1,6 @@
 import React from 'react'
 import { productContext } from '../App'
-import { useContext,useState,useEffect } from 'react';
+import { useContext,useState,useEffect,useRef  } from 'react';
 import Nav from './nav';
 import './product.css'
 import { useLocation } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { FaShoppingCart } from 'react-icons/fa';
 import axios from 'axios'
 import Usericon from './usericon';
 import { BsBookmark } from "react-icons/bs";
+import Footer from './footer'
 export default function Product() {
     const { userid,token, isAuthenticated }=useContext(productContext)
     const [selectedFav, setSelectedToFav] = useState(null)
@@ -29,13 +30,25 @@ export default function Product() {
         }
     }, [location.state.results]);
     const [currentImage, setCurrentImage] = useState(0);
+    const imgContainerRef = useRef(null);
     const handleWheelChange = (event) => {
+      event.preventDefault();
         const delta = Math.sign(event.deltaY);
         const newIndex = currentImage + delta;
-        if (newIndex >= 0 && newIndex < product.image.length) {
-            setCurrentImage(newIndex);
+        const imgContainer = imgContainerRef.current;
+        if (imgContainer && imgContainer.contains(event.target)) {
+            event.preventDefault(); 
+            if (newIndex >= 0 && newIndex < product.image.length) {
+                setCurrentImage(newIndex);
+            }
         }
     };
+    const handleMouseEnter = () => {
+      document.body.style.overflow = 'hidden';
+  };
+    const handleMouseLeave = () => {
+      document.body.style['overflow-y'] = 'auto'
+  };
     const handleAddToCart = (productId) => {
         const size = "M";
         axios.post(`http://localhost:8080/cart/${userid}`,{productId,size })
@@ -87,13 +100,13 @@ export default function Product() {
         <Nav favorites={selectedFav} />
         { isAuthenticated ? <Usericon /> : null }
         <div className='maincon'>
-           
             <div className='leftcon'>
                 <h5>{product.title}</h5>
                 <p>{product.description}</p>
             </div>
-            <div className='imgcon'onMouseEnter={() => setCurrentImage(0)} onWheel={handleWheelChange}>
-            <div className='procon'>
+            <div className='imgcon'>
+            <div className='procon'ref={imgContainerRef}  onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} 
+                onWheel={handleWheelChange}>
                 <div className='bigimage'>
                 {product.image && product.image[currentImage] && (
                     <img src={product.image[currentImage]} id="bigimage" />
@@ -139,7 +152,7 @@ export default function Product() {
                
             </div>
         </div>
-
+        <Footer />
     </div>
   )
 }

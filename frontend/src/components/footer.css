@@ -1,0 +1,29 @@
+div .footerCon{
+    width:100vw;
+    height: 60vh;
+    background-color: purple;
+}
+div .footerConMain{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:3%;
+    color:white;
+    margin: 6%;
+    padding-top: 1%;
+}
+div .img-con-footer{
+    display: flex;
+    gap:10px;
+    flex-wrap: wrap;
+}
+div .Privacy{
+padding-top: 1%;
+display:flex;
+justify-content: space-around;
+background-color: black;
+width:100%;
+height: 30%;
+gap:10%
+
+}

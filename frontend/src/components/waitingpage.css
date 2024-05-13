@@ -7,6 +7,7 @@ div.mainwait {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  padding-top: 10%;
 }
 
 div.mid {

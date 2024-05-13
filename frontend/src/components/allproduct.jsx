@@ -11,6 +11,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import axios from 'axios';
 import Usericon from './usericon';
 import { MdFavorite } from "react-icons/md";
+import Footer from './footer'
 export default function Allproduct() {
     const [showOffcanvas, setShowOffcanvas] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -141,6 +142,7 @@ const addToWishList =(productId)=>{
         </Offcanvas.Body>
       </Offcanvas>
       </div>
+      <Footer />
       </div>
   )
 }

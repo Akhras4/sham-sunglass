@@ -12,6 +12,7 @@ import {productContext} from '../App'
 import Text from './text'
 import axios from 'axios'
 import App from '../App'
+import Footer from './footer'
 
 
 
@@ -55,6 +56,7 @@ export default function Homepage() {
       <Sunglasses  />
       <Showmore />
     </section>
+    <Footer />
     </favContext.Provider>
   </div>
    
