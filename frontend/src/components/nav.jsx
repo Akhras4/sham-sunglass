@@ -1,14 +1,27 @@
-import React, { Component ,useEffect ,useContext } from 'react';
+import React, { Component ,useEffect ,useContext,useState } from 'react';
 import { gsap } from 'gsap';
 import base64ImageData from './ImageData';
 import Search from './search';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate } from 'react-router-dom';
 import './nav.css'
 import {productContext} from '../App'
+import { favContext } from './homepage';
 
 
 export default function Nav({ favorites }) {
-    const { isAuthenticated } = useContext(productContext);
+    const { isAuthenticated,userId } = useContext(productContext);
+    // const {favorites }=useContext(favContext)|| []
+    // // console.log(favContextFavorites,"favContextFavorites nav")
+    // // console.log(favorites,"favorites nav")
+    // // if(!favorites){favorites=favContextFavorites}
+  const{ favorites:favoritesPro }=useContext(favContext) || { favoritesPro: null }
+  const [Fav,setFav]=useState(favoritesPro ? favoritesPro : null)
+  useEffect(()=>{
+    if(!favorites){
+    setFav(favoritesPro)}
+  },[favorites])
+  console.log("navfav", favoritesPro);
+  console.log("navfav", Fav);
     useEffect(() => {
         const t1 = gsap.timeline({ default: { ease: "power4.out", duration: 0.7 } });
         t1.from("#SAM path, #OPTIK path", {
@@ -64,7 +77,11 @@ export default function Nav({ favorites }) {
             });
         }
 
-    }, []); 
+    }, []);
+    const navgat =useNavigate()
+    const handelclick=()=>{
+        navgat('/user',{state:{results:userId, favorites:Fav}})
+      } 
 
 
     return (
@@ -195,8 +212,7 @@ export default function Nav({ favorites }) {
                 </svg>
         </div>
         </Link>
-        <Link to="/user">
-        <div id="SHOPPING">
+        <div id="SHOPPING" onClick={()=>{handelclick()}}>
             <svg width="117" height="33" viewBox="0 0 117 33" fill="none">
                 <g id="Frame 1" clip-path="url(#clip0_1_2)">
                 <rect width="117" height="33" fill="inherit"/>
@@ -226,7 +242,6 @@ export default function Nav({ favorites }) {
                 </defs>
                 </svg>
         </div>
-        </Link>
 </div>
 
     </nav>

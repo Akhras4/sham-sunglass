@@ -26,14 +26,19 @@ export default function Homepage() {
  },[userid  ])
  const getFav=(userid)=>{
   axios.get(`http://localhost:8080/wishList/${userid}`)
-  .then(res =>{
-    setFavorites(res.data.favorites)
-    console.log("favorites home",res.data.favorites)
+  .then(res => {
+    if (res.data && res.data.favorites) {
+      setFavorites(res.data.favorites);
+      console.log("favorites home", res.data.favorites);
+    } else {
+      console.log("No favorites found");
+    }
   })
-  .catch(err =>{
-    console.log(err)
-  })
- }
+  .catch(err => {
+    console.error("Error fetching favorites:", err);
+  });
+};
+ 
 
   return (
     <div>

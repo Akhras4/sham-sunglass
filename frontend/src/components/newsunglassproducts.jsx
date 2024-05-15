@@ -13,7 +13,7 @@ export default function Newsunglassproducts() {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const {product ,isAuthenticated ,userid } = useContext(productContext);
-  const{favorites,getFav}=useContext(favContext)
+  const{favorites,getFav}=useContext(favContext) || {favorites:null}
  const [selectedFav, setSelectedToFav] = useState(favorites)
  const [isProcessing, setIsProcessing] = useState(false);
    console.log(favorites,"favorites fromm home")
@@ -54,7 +54,6 @@ const handleAddToWishList= (productId)=>{
   })
   .catch(err =>{console.log(err)})
   .finally(() => {
-    // Operation completed, set isProcessing to false
     setIsProcessing(false);
   });
  }else{addToWishList(productId)}
@@ -73,11 +72,9 @@ const addToWishList =(productId)=>{
     console.log(err); 
   })
   .finally(() => {
-    // Operation completed, set isProcessing to false
     setIsProcessing(false);
   });
 }
-
   return (
     <div>
     <div className='newsunglass' >{product.product  && product.product.slice(0, 6).map(item => (
@@ -90,10 +87,15 @@ const addToWishList =(productId)=>{
         <Button variant="dark" onClick={() => handleShowOffcanvas(item)}>
         <FaShoppingCart />ADD to Cart
         </Button>
-        <MdFavorite
-    onClick={() => { handleAddToWishList(item._id) }}
-    style={{fontSize: '30px',cursor: isProcessing ? "" : 'pointer', color: selectedFav && selectedFav.items.some(items => items.productId === item._id) ? 'red' : 'black' }}
-/>
+        </div>
+        <div id="fav" onClick={() => { handleAddToWishList(item._id) }}>
+                  <MdFavorite
+                   className="hoverEffect"
+                    style={{
+                       fontSize: '30px',
+                        cursor: isProcessing ? "" : 'pointer',
+                        color: selectedFav && selectedFav.items.some(items => items.productId === item._id) ? 'red' : 'white' }}
+                  />
         </div>
       </div>
       </div>

@@ -135,7 +135,8 @@ const handleMove = (direction) => {
                 </div>
                 <div id="fav" onClick={() => { handleAddToWishList(productItem._id) }}>
                   <MdFavorite
-                    style={{ fontSize: '30px', cursor: isProcessing ? "" : 'pointer', color: selectedFav && selectedFav.items.some(items => items.productId === productItem._id) ? 'red' : 'black' }}
+                  className="hoverEffect"
+                    style={{ fontSize: '30px',borderColor:'black', cursor: isProcessing ? "" : 'pointer', color: selectedFav && selectedFav.items.some(items => items.productId === productItem._id) ? 'red' : 'white' }}
                   />
                 </div>
               </div>
