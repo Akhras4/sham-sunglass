@@ -3,11 +3,11 @@
   flex-direction: row;
   height: 100vh;
   padding-top: 7%;
-  column-gap: 8%;
+  column-gap: 6%;
 }
 .LEFT{
 padding-left: 4%;
-width: 60%;
+width: 50%;
 padding-top: 10%;
 }
 .leftuser{
@@ -27,19 +27,43 @@ padding-top: 10%;
   cursor: pointer;
 }
 .Right{
-  display: flex;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap:1%;
 }
-.maincoshitem{
+ .shopping-Con{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap:4%;
+} 
+.order-Detail{
+  display: flex;
+  flex-direction: column;
+  height: 40%;
+  margin-left: 10px;
+  padding-left: 10px;
+  width: 40%;
+}
+.maincoshitem,.order-Detail-content{
   background-color:rgb(255, 255, 255);
     object-fit: contain;
     --borderWidth: 3px;
     position: relative;
     border-radius: var(--borderWidth);
     margin-bottom: 5px;
-    width: 500px;
 }
-.maincoshitem ::after{
+.maincoshitem{
+  width: 100% ;
+}
+.order-Detail-content{
+ padding: 10%;
+ display: flex;
+ flex-direction: column;
+}
+.maincoshitem ::after,.order-Detail-content ::after{
   content: '';
   position: absolute;
   top: calc(-1 * var(--borderWidth));

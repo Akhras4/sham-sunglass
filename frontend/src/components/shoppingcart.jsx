@@ -10,6 +10,7 @@ export default function Shoppingcartuser() {
   const { userid, product } = useContext(productContext);
   const [shoppingcart, setShoppingCart] = useState([]);
   const [productShoppingCart, setProductShoppingCart] = useState([]);
+  const [total, setTotal] = useState(0);
   const navigate = useNavigate()
   useEffect(() => {
     axios.get(`http://localhost:8080/cart/${userid}`)
@@ -18,7 +19,7 @@ export default function Shoppingcartuser() {
         // console.log(res.data.shoppingCart)
         let productIds = res.data.shoppingCart.items.map(item => item.productId);
         getProductDetails(productIds);
-        //  console.log(getProductDetails,"productIds")
+          console.log(productIds,"productIds")
       })
       .catch(err => {
         console.log(err);
@@ -26,18 +27,24 @@ export default function Shoppingcartuser() {
   }, [userid]);
   const getProductDetails = (productIds) => {
     const productCounts = {};
+    let totalPrice = 0;
     productIds.forEach(productId => {
-      productCounts[productId] = (productCounts[productId] || 0) + 1;
+      productCounts[productId] = (productCounts[productId] || 0) + 1 ;
+      console.log(productCounts ,"productCounts");
     });
     const productDetailsArray = productIds.reduce((acc, productId) => {
       const productItem = product.product.find(product => product._id === productId);
       if (productItem) {
-        const existingProduct = acc.find(item => item._id === productId);
-        if (existingProduct) {
-          existingProduct.count += 1;
+        const existingProductIndex = acc.findIndex(item => item._id === productId);
+        if (existingProductIndex !== -1) {
+          acc[existingProductIndex].count = productCounts[productId];
         } else {
           acc.push({ ...productItem, count: productCounts[productId] });
         }
+        const itemPrice = productItem.isOnSale ? Number(productItem.salePrice) : Number(productItem.price)
+        console.log(itemPrice,"itemPrice")
+        totalPrice += itemPrice ; 
+        setTotal(totalPrice);
       }
       return acc;
     }, []);
@@ -51,7 +58,9 @@ export default function Shoppingcartuser() {
         console.log(res.data.shoppingCart)
        let productIdsRef = res.data.shoppingCart.items.map(item => item.productId);
        getProductDetails(productIdsRef);
-       //  console.log(getProductDetails,"productIds")
+       if (res.data.shoppingCart.items.length === 0) {
+        setTotal(0); 
+    }
      })
      .catch(err => {
        console.log(err);
@@ -63,8 +72,9 @@ export default function Shoppingcartuser() {
 
   return (
   <div >
-    <h1>Shopping Cart</h1>
+    <div className='shopping-Con'>
     <div className='maincosh'>
+    <h1>Shopping Cart</h1>
     {productShoppingCart.map(product => (
       <div key={product._id} className='maincoshitem'>
         <div  >
@@ -96,9 +106,19 @@ export default function Shoppingcartuser() {
         
       </div>
     ))}
+    </div>
+    <div className='order-Detail'>
+    <h1>Order Detail</h1>
+    <div className='order-Detail-content'>
+    <h4>total </h4>
+    <p>Subtotal : { total }</p>
+    <p> Delivery : { total }</p>
+    <p>Total (VAT included) : { total }</p>
     <Button variant="primary" >
-              pay
+              Go To Checkout 
       </Button>
+    </div>
+    </div>
     </div>
   </div>
   );
