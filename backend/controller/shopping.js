@@ -24,9 +24,9 @@ const addToCart = (req, res) => {
                 productId: productId,
                 size: size
             };
-            user.shoppingCart.items.push(newItem);
-            return  Promise.all([user.save(), user.shoppingCart.save()]);
+            user.shoppingCart.items.push(newItem);  
         }
+        return  Promise.all([user.save(), user.shoppingCart.save()]);
     })
     .then((savedUser) => {
         res.status(200).json({ user: savedUser });
