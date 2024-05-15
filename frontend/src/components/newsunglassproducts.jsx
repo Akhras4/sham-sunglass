@@ -94,7 +94,7 @@ const addToWishList =(productId)=>{
                     style={{
                        fontSize: '30px',
                         cursor: isProcessing ? "" : 'pointer',
-                        color: selectedFav && selectedFav.items.some(items => items.productId === item._id) ? 'red' : 'white' }}
+                        color: selectedFav && selectedFav.items &&selectedFav.items.some(items => items.productId === item._id) ? 'red' : 'white' }}
                   />
         </div>
       </div>

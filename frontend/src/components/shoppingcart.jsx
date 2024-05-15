@@ -28,12 +28,10 @@ export default function Shoppingcartuser() {
   const getProductDetails = (productIds) => {
     const productCounts = {};
     let totalPrice = 0;
-
     productIds.forEach(productId => {
       productCounts[productId] = (productCounts[productId] || 0) + 1 ;
       console.log(productCounts ,"productCounts");
     });
-
     const productDetailsArray = productIds.reduce((acc, productId) => {
       const productItem = product.product.find(product => product._id === productId);
       if (productItem) {
@@ -60,7 +58,9 @@ export default function Shoppingcartuser() {
         console.log(res.data.shoppingCart)
        let productIdsRef = res.data.shoppingCart.items.map(item => item.productId);
        getProductDetails(productIdsRef);
-       //  console.log(getProductDetails,"productIds")
+       if (res.data.shoppingCart.items.length === 0) {
+        setTotal(0); 
+    }
      })
      .catch(err => {
        console.log(err);
@@ -72,8 +72,9 @@ export default function Shoppingcartuser() {
 
   return (
   <div >
-    <h1>Shopping Cart</h1>
+    <div className='shopping-Con'>
     <div className='maincosh'>
+    <h1>Shopping Cart</h1>
     {productShoppingCart.map(product => (
       <div key={product._id} className='maincoshitem'>
         <div  >
@@ -105,10 +106,19 @@ export default function Shoppingcartuser() {
         
       </div>
     ))}
-    <p>total {total}</p>
+    </div>
+    <div className='order-Detail'>
+    <h1>Order Detail</h1>
+    <div className='order-Detail-content'>
+    <h4>total </h4>
+    <p>Subtotal : { total }</p>
+    <p> Delivery : { total }</p>
+    <p>Total (VAT included) : { total }</p>
     <Button variant="primary" >
-              pay
+              Go To Checkout 
       </Button>
+    </div>
+    </div>
     </div>
   </div>
   );
