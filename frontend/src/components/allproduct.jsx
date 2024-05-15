@@ -115,6 +115,7 @@ const addToWishList =(productId)=>{
                   <FaShoppingCart />ADD to Cart
                 </Button>
                 <MdFavorite
+                    className="hoverEffect"
                     onClick={() => { handleAddToWishList(item._id) }}
                     style={{fontSize: '30px',cursor: isProcessing ? "" : 'pointer', color: selectedFav && selectedFav.items.some(items => items.productId === item._id) ? 'red' : 'black' }}
                 />

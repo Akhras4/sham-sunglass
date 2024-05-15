@@ -18,7 +18,6 @@ export default function User() {
   const handleClick = (component) => {
     setActiveComponent(component);
   };
-
   useEffect(() => {
     console.log('token',token)
     axios.get(`http://localhost:8080/user/${userid}?token=${token}`)
@@ -34,7 +33,6 @@ export default function User() {
         }
     });
 }, []);
-
  useEffect(() => {
    if (location.state && location.state.results) {
      setSelectedToFav(location.state.favorites)

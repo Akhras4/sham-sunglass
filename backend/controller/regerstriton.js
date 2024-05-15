@@ -9,6 +9,7 @@ const PORT = process.env.PORT ;
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const { render } = require('ejs');
+const ejs = require('ejs');
 
 const redirecttologin =( req,res) =>{
 if(req.method==="GET"){
@@ -96,25 +97,26 @@ const tokenval = (req, res) => {
 };
 
 
-async function sendemailtoclient(email,UserName,emailtoken,PORT){
-    console.log(emailtoken)
+async function sendemailtoclient(email, UserName, emailtoken, PORT) {
+    const verificationLink = `http://localhost:${PORT}/VerificationEmail?emailtoken=${emailtoken}`;
+
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465,
         secure: true,
         auth: {
             user: process.env.Appemail,
-            pass: process.env.AppPassword, 
+            pass: process.env.AppPassword,
         },
     });
 
     try {
+        const renderedHtml = await ejs.renderFile('views/emails/VerificationEmail.ejs', { UserName, verificationLink });
         const info = await transporter.sendMail({
             from: '"registration-system 👻" <aboakhras4@gmail.com>',
             to: email,
-            subject: "Hello ✔",
-            text: `Hello ${UserName}`,
-            html: `<b>Hello ${UserName}</b> <a href="http://localhost:${PORT}/VerificationEmail?emailtoken=${emailtoken}">Verification Link</a>`
+            subject: "Email Verification",
+            html: renderedHtml
         });
         HoldingUntileRedirect(email)
         console.log("Message sent: %s", info.messageId);
