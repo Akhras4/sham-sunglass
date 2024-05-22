@@ -1,4 +1,5 @@
 const express=require("express");
+const http = require('http');
 const routes = require("./roots/roots");
 const mongoose=require("mongoose");
 const bodyParser = require('body-parser');
@@ -9,6 +10,7 @@ const cors = require('cors');
 
 
 const app = express();
+const server = http.createServer(app);
 app.use(cors(
   {
     origin: 'http://localhost:3000',
@@ -17,6 +19,13 @@ app.use(cors(
 ));
 
 app.use(cookieParser());
+app.use(
+  bodyParser.json({
+      verify: function(req, res, buf) {
+          req.rawBody = buf;
+      }
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
@@ -38,6 +47,7 @@ app.use('/images', express.static('images'));
 
 const PORT = process.env.PORT ;
 const password=process.env.password
+const MSKS=process.env.MSKS
 
 const urldb=`mongodb+srv://akhras:${password}@akhras.yjxfgn6.mongodb.net/`
 mongoose.connect(urldb)
@@ -52,6 +62,6 @@ app.use('/', routes);
 
 
 
-app.listen(PORT, () =>
+server.listen(PORT, () =>
   console.log(`Server started at http://localhost:${PORT}`)
 );

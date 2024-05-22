@@ -26,10 +26,6 @@ function App() {
   const [token,setToken]=useState('')
   const [userid,setuserId]=useState('')
  
-  
-  
-
-
   const fetchData = () => {
     axios.get('http://localhost:8080/api')
       .then(res => {
