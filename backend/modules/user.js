@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const moment = require("moment");
-
+const order = require('./order');
 const usersSchema = new mongoose.Schema({
     UserName: {
         type: String,
@@ -75,7 +75,8 @@ const usersSchema = new mongoose.Schema({
     books:[{ type: mongoose.Schema.Types.ObjectId, ref: 'books' }],
     userinfo: [{ type: mongoose.Schema.Types.ObjectId, ref: 'userinfo' }],
     shoppingCart: { type: mongoose.Schema.Types.ObjectId, ref: 'ShoppingCart' },
-    favorites: { type: mongoose.Schema.Types.ObjectId, ref: 'favorites' }
+    favorites: { type: mongoose.Schema.Types.ObjectId, ref: 'favorites' },
+    order: [{ type: mongoose.Schema.Types.ObjectId, ref: 'order' }]
 });
 
 const users = mongoose.model('users', usersSchema);

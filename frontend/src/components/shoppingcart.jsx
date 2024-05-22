@@ -1,10 +1,9 @@
 import axios from 'axios'
 import React, { useState ,useEffect ,useContext} from 'react'
 import {productContext } from '../App'
-import {motion} from 'framer-motion'
 import { useNavigate } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
 import { MdRemoveShoppingCart } from "react-icons/md";
+import CheckoutButton from './CheckoutButton'
 
 export default function Shoppingcartuser() {
   const { userid, product } = useContext(productContext);
@@ -15,11 +14,11 @@ export default function Shoppingcartuser() {
   useEffect(() => {
     axios.get(`http://localhost:8080/cart/${userid}`)
       .then(res => {
-         setShoppingCart(res.data.shoppingCart.items);
+        setShoppingCart(res.data.shoppingCart.items);
         // console.log(res.data.shoppingCart)
         let productIds = res.data.shoppingCart.items.map(item => item.productId);
         getProductDetails(productIds);
-          console.log(productIds,"productIds")
+        console.log(productIds, "productIds")
       })
       .catch(err => {
         console.log(err);
@@ -29,8 +28,8 @@ export default function Shoppingcartuser() {
     const productCounts = {};
     let totalPrice = 0;
     productIds.forEach(productId => {
-      productCounts[productId] = (productCounts[productId] || 0) + 1 ;
-      console.log(productCounts ,"productCounts");
+      productCounts[productId] = (productCounts[productId] || 0) + 1;
+      console.log(productCounts, "productCounts");
     });
     const productDetailsArray = productIds.reduce((acc, productId) => {
       const productItem = product.product.find(product => product._id === productId);
@@ -42,8 +41,8 @@ export default function Shoppingcartuser() {
           acc.push({ ...productItem, count: productCounts[productId] });
         }
         const itemPrice = productItem.isOnSale ? Number(productItem.salePrice) : Number(productItem.price)
-        console.log(itemPrice,"itemPrice")
-        totalPrice += itemPrice ; 
+        console.log(itemPrice, "itemPrice")
+        totalPrice += itemPrice;
         setTotal(totalPrice);
       }
       return acc;
@@ -51,21 +50,21 @@ export default function Shoppingcartuser() {
     setProductShoppingCart(productDetailsArray);
     console.log(productDetailsArray);
   }
-  const removeFromCart =(productId) =>{
-      axios.post(`http://localhost:8080/removeFromCart/${userid}`,{productId})
+  const removeFromCart = (productId) => {
+    axios.post(`http://localhost:8080/removeFromCart/${userid}`, { productId })
       .then(res => {
         setShoppingCart(res.data.shoppingCart.items);
         console.log(res.data.shoppingCart)
-       let productIdsRef = res.data.shoppingCart.items.map(item => item.productId);
-       getProductDetails(productIdsRef);
-       if (res.data.shoppingCart.items.length === 0) {
-        setTotal(0); 
-    }
-     })
-     .catch(err => {
-       console.log(err);
-     });
-    }
+        let productIdsRef = res.data.shoppingCart.items.map(item => item.productId);
+        getProductDetails(productIdsRef);
+        if (res.data.shoppingCart.items.length === 0) {
+          setTotal(0);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
   const hadelnavgaiton=(product)=>{                //waiting to finish
     navigate('/product', { state: { results: product} });
   }
@@ -114,12 +113,11 @@ export default function Shoppingcartuser() {
     <p>Subtotal : { total }</p>
     <p> Delivery : { total }</p>
     <p>Total (VAT included) : { total }</p>
-    <Button variant="primary" >
-              Go To Checkout 
-      </Button>
+    <CheckoutButton total={{ total }}productShoppingCart={{productShoppingCart}}></CheckoutButton>
     </div>
     </div>
     </div>
+    <CheckoutButton total={{ total }}productShoppingCart={{productShoppingCart}}></CheckoutButton>
   </div>
   );
 }

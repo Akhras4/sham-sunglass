@@ -53,10 +53,12 @@ export default function User() {
                 <div className='lef-us'>{userdetail && userdetail.email}</div>
              </div>  
           <div className='LEFTbtt'>
+            <div className='lef-it'onClick={() => handleClick('userdetail')}>User Details</div>
              <div className='lef-it'onClick={() => handleClick('Component2')}>shoppingbag</div>
              <div className='lef-it'onClick={() => handleClick('Component3')}>your faverit item</div>
              <div  className='lef-it' onClick={() => handleClick('Component1')}>Address</div>
-            <div  className='lef-it'>your prushes</div>
+             <div  className='lef-it'>your Order</div>
+             <div  className='lef-it'>your prushes</div>
           </div>
     </div>
     <div className='Right'>

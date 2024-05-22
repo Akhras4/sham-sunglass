@@ -5,7 +5,7 @@ import './address.css'
 import {productContext} from '../App'
 
 export default function Address(value) {
-    const {token,userid}=useContext(productContext)
+    const {token,userid}= useContext(productContext)
     const [address,setaddress]=useState([value])
     const dialogRef = useRef(null);
     const [name, setName] = useState('');
@@ -29,7 +29,6 @@ export default function Address(value) {
     const closeDialog = () => {
         dialogRef.current.close();
     };
-
     const handleSubmitinfo = (e) => {
         e.preventDefault(); 
         axios.post( `http://localhost:8080/${userid}?token=${token}`, {
@@ -84,7 +83,6 @@ export default function Address(value) {
                     <button type="button" onClick={() => showDialog()} className="btn btn-primary" >Add Address</button>
                     </div>
             )}
-        
                     <dialog id="dilo" ref={dialogRef} >
                         <form onSubmit={handleSubmitinfo} >
                                 <div>
