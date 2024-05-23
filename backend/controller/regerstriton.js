@@ -191,24 +191,23 @@ const login = (req,res)=>{
 
 
 const cookieJWTAuth = (req, res, next) => {
-    // const token = req.query.token;
-    // if (!token) {
-    //     console.log('tokencheck',token)
-    //     res.clearCookie("token");
-    //     return res.json({ redirect:"http://localhost:3000/signup"});
-    // }
-    // jwt.verify(token, process.env.MY_SECRET, { algorithm: 'HS256' }, (err, user) => {
-    //     if (err) {
-    //         console.log(err)
-    //         res.clearCookie("token");
-    //         return res.json({ redirect:"http://localhost:3000/signup"});
-    //     } else {
-    //         req.user = user;
-    //         console.log(user);
-    //         next();
-    //     }
-    // });
-    next()
+    const token = req.query.token;
+    if (!token) {
+        console.log('tokencheck',token)
+        res.clearCookie("token");
+        return res.json({ redirect:"http://localhost:3000/signup"});
+    }
+    jwt.verify(token, process.env.MY_SECRET, { algorithm: 'HS256' }, (err, user) => {
+        if (err) {
+            console.log(err)
+            res.clearCookie("token");
+            return res.json({ redirect:"http://localhost:3000/signup"});
+        } else {
+            req.user = user;
+            console.log(user);
+            next();
+        }
+    });
 };
 
 
