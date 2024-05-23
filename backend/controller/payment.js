@@ -5,6 +5,9 @@ const Order = require('../modules/order');
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const users =require('../modules/user')
 const mongoose = require('mongoose'); 
+const express = require('express');
+const nodemailer = require('nodemailer');
+const ejs = require('ejs');
 
 // Endpoint to create a Stripe Checkout session
 const createPaymentIntent = (req, res) => {
@@ -73,6 +76,8 @@ const webhook =  (req, res) => {
     })
     .then(user => {
         const items = user.shoppingCart.items;
+        const email=user.email
+        const UserName=user.UserName
         console.log("User's shopping cart items:", items);
         
         const newOrderItems = items.map(item => ({
@@ -88,7 +93,9 @@ const webhook =  (req, res) => {
         
         const newOrder = new Order({
             userId: user._id,
-            items: newOrderItems
+            items: newOrderItems,
+            shippingStatus: 'pending', 
+            trackingNumber: null
         });
         
         if (user.order && Array.isArray(user.order)) {
@@ -98,10 +105,11 @@ const webhook =  (req, res) => {
             console.log("User doesn't have existing orders. Creating a new order array...");
             user.order = [newOrder._id]; 
         }
-        
+        user.shoppingCart = {};
         return Promise.all([newOrder.save(), user.save()])
             .then(([savedOrder, savedUser]) => {
                 console.log('Order created and associated with user:', savedOrder);
+                order(email,UserName,items,newOrder._id)
                 return savedOrder;
             });
     })
@@ -117,5 +125,31 @@ const webhook =  (req, res) => {
         res.status(200).end();
     }
 };
+
+
+async function order(email, UserName,items,orderNumber) {
+    const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+            user: process.env.Appemail,
+            pass: process.env.AppPassword,
+        },
+    });
+
+    try {
+        const renderedHtml = await ejs.renderFile('views/emails/order.ejs', { UserName, items, orderNumber });
+        const info = await transporter.sendMail({
+            from: '"order " <aboakhras4@gmail.com>',
+            to: email,
+            subject: "Order",
+            html: renderedHtml
+        });
+        console.log("Message sent: %s", info.messageId);
+    } catch (error) {
+        console.error("Error sending email:", error);
+    }
+}
 
 module.exports = { createPaymentIntent,webhook};
