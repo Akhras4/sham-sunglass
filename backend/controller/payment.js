@@ -5,7 +5,6 @@ const Order = require('../modules/order');
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const users =require('../modules/user')
 const mongoose = require('mongoose'); 
-const express = require('express');
 const nodemailer = require('nodemailer');
 const ejs = require('ejs');
 
@@ -14,21 +13,40 @@ const createPaymentIntent = (req, res) => {
     if (req.method === "POST") {
         const { total, productShoppingCart } = req.body;
         const userid='661dbc7a87b819759df37872'
-        const amount=Object.values(total)
-        console.log(amount, "amount", "productShoppingCart", productShoppingCart);
-        const productShoppingCarts =  Object.values(productShoppingCart);
-        console.log(typeof(total))
-        console.log(productShoppingCart)
+        const amount=Object.values(total).flat()
+        // console.log(amount, "amount", "productShoppingCart", productShoppingCart);
+        let productShoppingCarts = [];
+        if (Array.isArray(productShoppingCart)) {
+            productShoppingCarts = productShoppingCart;
+        } else if (typeof productShoppingCart === 'object' && productShoppingCart !== null) {
+            productShoppingCarts = Object.values(productShoppingCart).flat();
+        } else {
+            return res.status(400).json({ error: "Invalid format for productShoppingCart" });
+        }
+        
+        console.log(productShoppingCarts)
         console.log(typeof(productShoppingCarts))
+        let totalPrice=0;
+        productShoppingCarts.forEach(item =>{
+            itemPrice  = item.isOnSale ? Number(item.salePrice) : Number(item.price)
+        console.log(itemPrice , "itemPrice ")
+        totalPrice += itemPrice ;
+       
+})
+console.log(totalPrice , "totalPrice ")
+console.log(amount[0],"amount.values")
+if (totalPrice==amount[0]){
+    console.log(amount , "amount ")
         const lineItems = productShoppingCarts.map(item => ({
                 price_data: {
                     currency: 'eur',
                     product_data: {
                         name: item.description || 'Product',
+                         images: [item.image[0]],
                     },
-                    unit_amount: amount * 100, // price is in cents
+                    unit_amount: item.isOnSale ? Number(item.salePrice) * 100 : Number(item.price) * 100, // price is in cents
                 },
-                quantity: 10,
+                quantity: item.count,
             })) 
         stripe.checkout.sessions.create({
             payment_method_types: ['card','ideal'],
@@ -43,7 +61,6 @@ const createPaymentIntent = (req, res) => {
    
         .then(session => {
             console.log("Session created:", session);
-            
             res.json({sessionId: session.id, checkoutUrl: session.url});
         })
         .catch(error => {
@@ -51,6 +68,10 @@ const createPaymentIntent = (req, res) => {
             res.status(500).json({ error: "Failed to create checkout session" });
         });
     }
+}else{
+    console.log("Someting Wrong Please Try Agine")
+    res.status(500).json({ error: "Failed to create checkout session" });
+}
 };
 const webhook =  (req, res) => {
         const sig = req.headers['stripe-signature'];
