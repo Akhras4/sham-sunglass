@@ -11,6 +11,7 @@ title:{type: String,},
 description:{type: String,},
 salePrice: {type: String,default: null },
 isOnSale: {type: Boolean,default: false },
+deleveryAt:{type:String},
 })
 const sunglass = mongoose.model('sunglass', sunglassSchema);
 module.exports =  sunglass

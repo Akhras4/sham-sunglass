@@ -4,6 +4,7 @@ const stripe = require('stripe')(MSKS);
 const Order = require('../modules/order');
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const users =require('../modules/user')
+const product=require('../modules/product')
 const mongoose = require('mongoose'); 
 const nodemailer = require('nodemailer');
 const ejs = require('ejs');
@@ -12,7 +13,7 @@ const ejs = require('ejs');
 const createPaymentIntent = (req, res) => {
     if (req.method === "POST") {
         const { total, productShoppingCart } = req.body;
-        const userid='661dbc7a87b819759df37872'
+        const userid='66509dacb436753a97eaf6e4'
         const amount=Object.values(total).flat()
         // console.log(amount, "amount", "productShoppingCart", productShoppingCart);
         let productShoppingCarts = [];
@@ -23,15 +24,13 @@ const createPaymentIntent = (req, res) => {
         } else {
             return res.status(400).json({ error: "Invalid format for productShoppingCart" });
         }
-        
         console.log(productShoppingCarts)
         console.log(typeof(productShoppingCarts))
         let totalPrice=0;
         productShoppingCarts.forEach(item =>{
             itemPrice  = item.isOnSale ? Number(item.salePrice) : Number(item.price)
         console.log(itemPrice , "itemPrice ")
-        totalPrice += itemPrice ;
-       
+        totalPrice += itemPrice ;  
 })
 console.log(totalPrice , "totalPrice ")
 console.log(amount[0],"amount.values")
@@ -90,58 +89,98 @@ const webhook =  (req, res) => {
                 console.error('Invalid user ID:', userId);
                 return res.status(400).send('Invalid user ID');
             }
-    users.findById(userId)
-    .populate({
-        path: 'shoppingCart',
-        populate: { path: 'items.product' }
-    })
-    .then(user => {
-        const items = user.shoppingCart.items;
-        const email=user.email
-        const UserName=user.UserName
-        console.log("User's shopping cart items:", items);
-        
-        const newOrderItems = items.map(item => ({
-            productId: item.productId,
-            size: item.size,
-            product: item.product
-        }));
-        const isValidOrder = Array.isArray(newOrderItems) && newOrderItems.every(item => !!item.productId);
-        if (!isValidOrder) {
-            console.error('Invalid order items:', newOrderItems);
-            return res.status(400).send('Invalid order items');
-        }
-        
-        const newOrder = new Order({
-            userId: user._id,
-            items: newOrderItems,
-            shippingStatus: 'pending', 
-            trackingNumber: null
-        });
-        
-        if (user.order && Array.isArray(user.order)) {
-            console.log("User already has existing orders. Pushing the new order...");
-            user.order.push(newOrder._id);
-        } else {
-            console.log("User doesn't have existing orders. Creating a new order array...");
-            user.order = [newOrder._id]; 
-        }
-        user.shoppingCart = {};
-        return Promise.all([newOrder.save(), user.save()])
-            .then(([savedOrder, savedUser]) => {
-                console.log('Order created and associated with user:', savedOrder);
-                order(email,UserName,items,newOrder._id)
-                return savedOrder;
+            users.findById(userId)
+            .populate({
+                path: 'shoppingCart',
+                populate: { path: 'items.product' }
+            })
+            .then(user => {
+                if (!user || !user.shoppingCart || !user.shoppingCart.items) {
+                    throw new Error('User or shopping cart not found');
+                }
+                const items = user.shoppingCart.items;
+                const email = user.email;
+                console.log(email)
+                const UserName = user.UserName;
+                const productPromises = items.map(item => product.findById(item.productId));
+                return Promise.all(productPromises).then(products => ({ user, items, products, email, UserName }));
+            })
+            .then(({ user, items, products, email, UserName }) => {
+                console.log("email",email)
+                if (!products || products.length === 0) {
+                    throw new Error('No products found');
+                }
+                const deliveryAt3Items = [];
+                const deliveryAt10Items = [];
+                products.forEach((product, index) => {
+                    if (!product) {
+                        console.error('Product not found for item:', items[index]);
+                        return;
+                    }
+                    const deliveryAt = product.deleveryAt;
+                    console.log(`Product ${product._id} deliveryAt: ${deliveryAt}`); 
+                    const item = items[index];
+                    if (deliveryAt === "3") {
+                        deliveryAt3Items.push(item);
+                    } else if (deliveryAt === "10") {
+                        deliveryAt10Items.push(item);
+                    }
+                });
+                console.log("deliveryAt3Items:", deliveryAt3Items);
+                console.log("deliveryAt10Items:", deliveryAt10Items);
+                const createOrder = (orderItems) => {
+                    const isValidOrder = orderItems.every(item => !!item.productId);
+                    if (!isValidOrder) {
+                        console.error('Invalid order items:', orderItems);
+                        return Promise.reject('Invalid order items');
+                    }
+                    const newOrder = new Order({
+                        userId: user._id,
+                        items: orderItems,
+                        shippingStatus: 'pending',
+                        trackingNumber: null
+                    });
+                    return newOrder.save().then(savedOrder => {
+                        console.log('Order created:', savedOrder);
+                        return savedOrder;
+                    }).catch(err => {
+                        console.error('Error saving order:', err);
+                        throw err;
+                    });
+                };
+                const promises = [];
+                if (deliveryAt3Items.length > 0) {
+                    promises.push(createOrder(deliveryAt3Items));
+                }
+                if (deliveryAt10Items.length > 0) {
+                    promises.push(createOrder(deliveryAt10Items));
+                }
+                return Promise.all(promises)
+                    .then(savedOrders => ({ user, savedOrders,email,items ,UserName  }));
+            })
+            .then(({ user, savedOrders, email, items ,UserName  }) => {
+                console.log(email)
+                if (savedOrders.length > 0) {
+                    console.log('Saved orders:', savedOrders);
+                    user.shoppingCart.items = [];
+                    user.order = user.order || [];
+                    user.order = [...user.order, ...savedOrders.map(order => order._id)];
+                    user.shoppingCart = {};
+                    const orderNumber = savedOrders.map(savedOrder => savedOrder._id);
+                    order(email, UserName, items, orderNumber);
+                    return user.save();
+                } else {
+                    throw new Error('No orders were created');
+                }
+            })
+            .then(() => {
+                console.log('Order processing completed successfully for user ID:', userId);
+                res.status(200).end();
+            })
+            .catch(error => {
+                console.error('Error processing order:', error);
+                res.status(500).send('Internal Server Error');
             });
-    })
-    .then(() => {
-        console.log('Order processing completed successfully for user ID:', userId);
-        res.status(200).end();
-    })
-    .catch(error => {
-        console.error('Error processing order:', error);
-        res.status(500).send('Internal Server Error');
-    });
     } else {
         res.status(200).end();
     }
@@ -149,6 +188,8 @@ const webhook =  (req, res) => {
 
 
 async function order(email, UserName,items,orderNumber) {
+    console.log(email)
+    console.log(orderNumber)
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465,
