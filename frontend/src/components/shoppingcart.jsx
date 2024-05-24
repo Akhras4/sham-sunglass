@@ -96,6 +96,7 @@ export default function Shoppingcartuser() {
         )}
         <p>Lens: {product.lens}</p>
         <p>Count: {product.count}</p>
+        <p>Delever At: {product.deleveryAt}</p>
         </div>
         <div>
         <MdRemoveShoppingCart  style={{color:'red',fontSize: '30px',marginLeft:'40px'}} onClick={()=> removeFromCart(product._id)}/>
