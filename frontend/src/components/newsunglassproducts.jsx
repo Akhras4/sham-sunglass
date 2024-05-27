@@ -22,7 +22,7 @@ export default function Newsunglassproducts() {
   },[favorites])
   const navigate = useNavigate()
   const hadelnavgaiton=(product)=>{               
-    navigate('/product', { state: { results: product,favorites:selectedFav } });
+    navigate(`/product/${product.sort}?product=${product._id}`, { state: { results: product,favorites:selectedFav } });
   }
   const handleCloseOffcanvas = () => setShowOffcanvas(false);
   const handleShowOffcanvas = (productItem) => {

@@ -70,7 +70,7 @@ function App() {
           <Routes>
           <Route path="/" element={<Homepage />} />
             <Route path="/products" element={<Allproduct />} />
-            <Route path="/product" element={<Product />} /> 
+            <Route path="/product/:sort" element={<Product />} /> 
             <Route path="/signup" element={ isAuthenticated ? <User /> : <Signup /> } />
             <Route path="/creataccount" element={<Createaccount />} />
             <Route path="/wait" element={< Waitingpage />} />

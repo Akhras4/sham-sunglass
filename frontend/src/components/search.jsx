@@ -43,7 +43,7 @@ export default function Search({ favoritesch }) {
         navigate('/products', { state: { results: relatedProduct ,favorites:Fav } });
       } else {
        console.log("fav from serch",Fav)
-        navigate('/product', { state: { results: specificProductObject ,favorites:Fav} });
+        navigate(`/product/${product.sort}?product=${product._id}`, { state: { results: specificProductObject ,favorites:Fav} });
       }
       
       setInput('');
@@ -61,9 +61,9 @@ export default function Search({ favoritesch }) {
     setResults(ProductsRelated)
   }
 }
-  const handelClick=(Prouduct)=>{
-    if (Prouduct) {
-      navigate('/product', { state: { results: Prouduct ,favorites:Fav } });
+  const handelClick=(product)=>{
+    if (product) {
+      navigate(`/product/${product.sort}?product=${product._id}`, { state: { results: product ,favorites:Fav } });
       setResults("")
       setInput("")
   }
