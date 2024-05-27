@@ -3,7 +3,7 @@ import Nav from './nav';
 import Video from './video';
 import Sale from './sale';
 import Newsunglassproducts from './newsunglassproducts';
-import Sunglasses from './sunglasses';
+import SunglassesMan from './sunglasses';
 import Showmore from './showmore';
 import '../App.css';
 import Usericone from './usericon'
@@ -13,6 +13,7 @@ import Text from './text'
 import axios from 'axios'
 import App from '../App'
 import Footer from './footer'
+import SunglasesWomen from './womenbar'
 
 
 
@@ -58,8 +59,11 @@ export default function Homepage() {
       <Showmore />
       <Sale baseVelocity={-5}>Sale UP TO 50%</Sale>
       <Sale baseVelocity={5}>Sale UP TO 50%</Sale>
-      <Sunglasses  />
+      <SunglassesMan  />
       <Showmore />
+    </section>
+    <section>
+    <SunglasesWomen />
     </section>
     <Footer />
     </favContext.Provider>

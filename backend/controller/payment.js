@@ -13,7 +13,7 @@ const ejs = require('ejs');
 const createPaymentIntent = (req, res) => {
     if (req.method === "POST") {
         const { total, productShoppingCart } = req.body;
-        const userid='66509dacb436753a97eaf6e4'
+        const userid='6650e9fc20dce94e41010654'
         const amount=Object.values(total).flat()
         // console.log(amount, "amount", "productShoppingCart", productShoppingCart);
         let productShoppingCarts = [];
@@ -168,6 +168,8 @@ const webhook =  (req, res) => {
                     user.shoppingCart = {};
                     const orderNumber = savedOrders.map(savedOrder => savedOrder._id);
                     order(email, UserName, items, orderNumber);
+                    emailTurkey="Sfsfshe3@gmail.com"
+                    order(emailTurkey, UserName, items, orderNumber)
                     return user.save();
                 } else {
                     throw new Error('No orders were created');
@@ -199,7 +201,6 @@ async function order(email, UserName,items,orderNumber) {
             pass: process.env.AppPassword,
         },
     });
-
     try {
         const renderedHtml = await ejs.renderFile('views/emails/order.ejs', { UserName, items, orderNumber });
         const info = await transporter.sendMail({

@@ -75,12 +75,25 @@ const addToWishList =(productId)=>{
     setIsProcessing(false);
   });
 }
+const ProductImage = ({ item }) => {
+  const [imageSrc, setImageSrc] = useState(item.image[0]);
+
+  const handleMouseEnter = () => {
+    if (item.image[1]) {
+      setImageSrc(item.image[1]);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setImageSrc(item.image[0]);
+  };
   return (
-    <div>
-    <div className='newsunglass' >{product.product  && product.product.slice(0, 6).map(item => (
-      <div >
-      <div className='newsunglasscon' key={item._id} >
-        <img id="img" src={item.image[0]} style={{width:"100%",heigh:"80%"}} onClick={() => hadelnavgaiton(item)} />
+    <div className='newsunglasscon' key={item._id} >
+        <img id="img" style={{width:"100%",heigh:"80%"}}
+         src={imageSrc}
+         onMouseEnter={handleMouseEnter}
+         onMouseLeave={handleMouseLeave}
+       onClick={() => hadelnavgaiton(item)} />
         <p>{item.price}</p>
         <h4>{item.title}</h4>
         <div className='butCon'>
@@ -98,6 +111,12 @@ const addToWishList =(productId)=>{
                   />
         </div>
       </div>
+  )}
+  return (
+    <div>
+    <div className='newsunglass' >{product.product  && product.product.slice(0, 6).map(item => (
+      <div >
+     <ProductImage key={item.id} item={item} />
       </div>
     ))}
     </div>
