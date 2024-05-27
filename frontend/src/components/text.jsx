@@ -31,7 +31,32 @@ export default function Text() {
             <span className='span1'>SAM</span>
             {/* <span className='span2'><img src='https://i.postimg.cc/D03CmyDG/Untitled-1.png'/></span> */}
             <span className='span3'>OPTIK</span>
-            
+            <div className="button-Flex">
+            <button type="submit" className="mt-3">
+            <div>
+              <div className="highlight-bg"></div>
+              <div className="button-text">
+                Man
+              </div>
+            </div>
+            </button>
+            <button type="submit" className="mt-3">
+            <div>
+              <div className="highlight-bg"></div>
+              <div className="button-text">
+                WOMEN
+              </div>
+            </div>
+            </button>
+            <button type="submit" className="mt-3">
+            <div>
+              <div className="highlight-bg"></div>
+              <div className="button-text">
+                CHILDREN
+              </div>
+            </div>
+            </button>
+            </div>
         </div>
         </motion.div>
         <p>Explore Trendy Sunglasses Styles</p>
