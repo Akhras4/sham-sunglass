@@ -305,7 +305,7 @@ section {
     justify-content: center;
   align-items: center;
   }
-.sunglasscon{
+.sunglassconMan,.sunglassconWomen{
   display:flex;
   flex-direction: row;
   width: 95vw;
@@ -319,6 +319,8 @@ section {
   justify-content: center;
   align-items: center;
 scroll-behavior: smooth;
+justify-content: flex-start;
+padding-left: 20px;
 }
 
 .sunglass ,.sunglasscontent{
@@ -335,8 +337,9 @@ scroll-behavior: smooth;
     gap:10px;
   }
   & .butCon{
-    display: flex;
-    flex-direction: row;
+    position: absolute;
+    bottom: 0;
+    right: 0;
   }
    /* & .imageflex{
     position: relative;

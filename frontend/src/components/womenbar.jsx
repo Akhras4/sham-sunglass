@@ -11,7 +11,8 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { MdFavorite } from "react-icons/md";
 import { GoArrowLeft } from "react-icons/go";
 
-export default function SunglasesMan() {
+
+export default function SunglasesWomen() {
   const { product, loading, userid, isAuthenticated } = useContext(productContext);
   const { favorites, getFav } = useContext(favContext);
   const [isVisible, setIsVisible] = useState(false);
@@ -99,7 +100,7 @@ export default function SunglasesMan() {
   };
 
   const handleMove = (direction) => {
-    const container = document.querySelector('.sunglassconMan');
+    const container = document.querySelector('.sunglassconWomen');
     const scrollStep = container.offsetWidth / 1;
     if (direction === 'left') {
       container.scrollLeft -= scrollStep;
@@ -111,13 +112,13 @@ export default function SunglasesMan() {
   const ProductImage = ({ productItem }) => {
     const [imageSrc, setImageSrc] = useState(productItem.image[0]);
 
-    const handleMouseEnterImg = () => {
+    const handleMouseEnter = () => {
       if (productItem.image[1]) {
         setImageSrc(productItem.image[1]);
       }
     };
 
-    const handleMouseLeaveImg = () => {
+    const handleMouseLeave = () => {
       setImageSrc(productItem.image[0]);
     };
 
@@ -128,8 +129,8 @@ export default function SunglasesMan() {
             className='imageflex'
             src={imageSrc}
             style={{ width: "100%", height: "80%" }}
-            onMouseEnter={handleMouseEnterImg}
-            onMouseLeave={handleMouseLeaveImg}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           />
           <h5>{productItem.title}</h5>
           {productItem.isOnSale ? (
@@ -175,8 +176,8 @@ export default function SunglasesMan() {
         animate={{ x: isVisible ? 0 : -1500 }}
         transition={{ duration: 0.5 }}
       >
-        <div className='sunglassconMan'>
-          {!loading && product.product && product.product.filter(sort => sort.sort === "man").map(productItem => (
+        <div className='sunglassconWomen'>
+          {!loading && product.product && product.product.filter(sort => sort.sort === "women").map(productItem => (
             <ProductImage key={productItem.id} productItem={productItem} />
           ))}
         </div>
@@ -212,5 +213,3 @@ export default function SunglasesMan() {
     </div>
   );
 }
-
-
