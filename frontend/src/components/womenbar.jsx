@@ -166,6 +166,7 @@ export default function SunglasesWomen() {
   };
 
   return (
+    <div>
     <div className='sunglassMainCo'>
       <div className="arrowButtons">
         <button onClick={() => handleMove('left')}>{'<'}</button>
@@ -210,6 +211,7 @@ export default function SunglasesWomen() {
           )}
         </Offcanvas.Body>
       </Offcanvas>
+    </div>
     </div>
   );
 }
