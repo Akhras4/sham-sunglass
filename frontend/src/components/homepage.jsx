@@ -15,6 +15,7 @@ import App from '../App'
 import Footer from './footer'
 import SunglasesWomen from './womenbar'
 import ManWomanChild from './manWomenChildren'
+import TopButton from './topbutton'
 
 
 
@@ -116,6 +117,7 @@ export default function Homepage() {
     <SunglasesWomen />
     <Showmore />
     </section> 
+    <TopButton />
     <Footer />
     </favContext.Provider>
   </div>
