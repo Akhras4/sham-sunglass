@@ -14,6 +14,7 @@ import axios from 'axios'
 import App from '../App'
 import Footer from './footer'
 import SunglasesWomen from './womenbar'
+import ManWomanChild from './manWomenChildren'
 
 
 
@@ -62,9 +63,59 @@ export default function Homepage() {
       <SunglassesMan  />
       <Showmore />
     </section>
-    <section>
+    
+    <section >
+    <ManWomanChild 
+      titel={'WOMAN'} 
+      discrishion={'Wide skies, soft sand and warm air: we have captured the Sicilian summer for you in a limited edition sunglasses collection. Discover three of our favourite sunnies in a fresh and unique colourway.'} 
+      sunglasses={'sunglasses'} 
+      glasses={'sunglasses'} 
+      lens={'Lens'} 
+      imgSrc={'http://localhost:8080/public/images/womanbar.jpeg'} 
+      background={'#ddbbb9'}
+    />
+    <Sale baseVelocity={5}>
+      <span style={{ color: 'pink' }}>WOMAN : SUNGLASSES OPTIC LENSS</span>
+    </Sale>
     <SunglasesWomen />
+    <Showmore />
     </section>
+    <section >
+    <ManWomanChild 
+      titel={'MAN'} 
+      discrishion={'Wide skies, soft sand and warm air: we have captured the Sicilian summer for you in a limited edition sunglasses collection. Discover three of our favourite sunnies in a fresh and unique colourway.'} 
+      sunglasses={'sunglasses'} 
+      glasses={'sunglasses'} 
+      lens={'Lens'} 
+      imgSrc={'http://localhost:8080/public/images/manbar.jpeg'} 
+      background={'#8bb9d1'}
+    />
+    <Sale baseVelocity={5}>
+      <span style={{ color: '#95a8b2' }}>MAN : SUNGLASSES OPTIC LENSS</span>
+    </Sale>
+    <SunglassesMan  />
+    <Showmore />
+    </section>
+    <section >
+    <ManWomanChild 
+      titel={'KIDS'} 
+      discrishion={'Wide skies, soft sand and warm air: we have captured the Sicilian summer for you in a limited edition sunglasses collection. Discover three of our favourite sunnies in a fresh and unique colourway.'} 
+      sunglasses={'sunglasses'} 
+      glasses={'sunglasses'}  
+      imgSrc={'http://localhost:8080/public/images/kidsbar.jpeg'} 
+      background={'#f4c770'}
+    />
+    <Sale baseVelocity={5}>
+    <span >
+      <span style={{ color: '#f2d7a4' }}>KIDS</span>
+      <span style={{ color: '#e5d1e2' }}>:</span>
+      <span style={{ color: '#fdc0c8' }}>SUNGLASSES</span>
+      <span style={{ color: '#eded9a' }}>OPTIC</span>
+    </span>
+    </Sale>
+    <SunglasesWomen />
+    <Showmore />
+    </section> 
     <Footer />
     </favContext.Provider>
   </div>

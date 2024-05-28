@@ -54,7 +54,7 @@ export default function Text() {
               <div className="button-text">
                 CHILDREN
               </div>
-            </div>
+            </div> 
             </button>
             </div>
         </div>

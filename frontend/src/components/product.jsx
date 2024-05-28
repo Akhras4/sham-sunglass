@@ -124,7 +124,17 @@ export default function Product() {
             <div className='rightcon'>
                 <div className="rightcontop">
                      <h5>{product.brand}:{product.title}</h5>
-                     <p>{product.price}</p>
+                     {product.isOnSale ? (
+                      <>
+                        <div className='saleinfo'>
+                          <p>Price:</p>
+                          <p style={{ textDecoration: 'line-through', color: 'red' }}>{product.price}</p>
+                          <p style={{ backgroundColor: 'yellow' }}>{product.salePrice}</p>
+                        </div>
+                      </>
+                    ) : (
+                      <p>Price: {product.price}</p>
+                    )}
                      <div>
                         <h5>Color :{product.color}</h5>
                         <h5>Lens :{product.lens}</h5>

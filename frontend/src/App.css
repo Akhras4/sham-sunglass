@@ -136,7 +136,7 @@ h2 {
   position: absolute;
 }
 section {
-  padding-bottom: 85vh;
+  padding-bottom: 5vh;
   position: relative;
 }
 #img {
@@ -177,7 +177,7 @@ section {
 }
 
 .parallax span {
-  display: block;
+  display: inline-block;
   margin-right: 30px;
   color: yellow;
 }
