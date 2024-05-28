@@ -102,11 +102,16 @@ export default function Homepage() {
       discrishion={'Wide skies, soft sand and warm air: we have captured the Sicilian summer for you in a limited edition sunglasses collection. Discover three of our favourite sunnies in a fresh and unique colourway.'} 
       sunglasses={'sunglasses'} 
       glasses={'sunglasses'}  
-      imgSrc={'http://localhost:8080/public/images/womanbar.jpeg'} 
-      background={'#ddbbb9'}
+      imgSrc={'http://localhost:8080/public/images/kidsbar.jpeg'} 
+      background={'#f4c770'}
     />
     <Sale baseVelocity={5}>
-      <span style={{ color: 'pink' }}>KIDS : SUNGLASSES OPTIC LENSS</span>
+    <span >
+      <span style={{ color: '#f2d7a4' }}>KIDS</span>
+      <span style={{ color: '#e5d1e2' }}>:</span>
+      <span style={{ color: '#fdc0c8' }}>SUNGLASSES</span>
+      <span style={{ color: '#eded9a' }}>OPTIC</span>
+    </span>
     </Sale>
     <SunglasesWomen />
     <Showmore />

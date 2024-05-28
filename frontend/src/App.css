@@ -177,7 +177,7 @@ section {
 }
 
 .parallax span {
-  display: block;
+  display: inline-block;
   margin-right: 30px;
   color: yellow;
 }
