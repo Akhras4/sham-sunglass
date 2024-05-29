@@ -12,6 +12,8 @@ import axios from 'axios';
 import Usericon from './usericon';
 import { MdFavorite } from "react-icons/md";
 import Footer from './footer'
+import AllproductEyewear from './allproducteyewear'
+import AllproductContact from './allproductcontact'
 export default function Allproduct() {
     const [showOffcanvas, setShowOffcanvas] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -21,11 +23,30 @@ export default function Allproduct() {
     const [isProcessing, setIsProcessing] = useState(false);
     const location = useLocation();
     const [products, setproducts] = useState([])
+    const [sort,setSort]=useState()
     const navigate = useNavigate()
+    
+    const gridAreaNames = [
+      'a', 'b',  
+      'c', 'd', 'e', 
+      'f', 'g', 'h',
+      'i', 'j', 'k',
+      'l', 'm', 'n',
+      'o','p', 'q',
+      'r', 's', 't',
+      'u', 'v', 'w',
+      'x', 'y', 'z',
+      'aa', 'ab', 'ac',
+      'ad', 'ae','af',
+      'ag', 'ah', 'ai',
+      'aj', 'ak', 'al',
+      'am'
+  ];
     useEffect(() => {
       if (location.state && location.state.results) {
         setproducts(location.state.results);
         setSelectedToFav(location.state.favorites)
+        setSort(location.state.sort)
         console.log(selectedFav,"location.state.favorites")
       } else {
         setproducts(product.product);
@@ -37,15 +58,15 @@ export default function Allproduct() {
     //   setSelectedToFav(favorites)
     //   console.log('favorites from product',favorites)
     // },[favorites])
-  const hadelnavgaiton=(product)=>{               
+const hadelnavgaiton=(product)=>{               
     navigate('/product', { state: { results: product ,favorites:selectedFav } });
-  }
-  const handleCloseOffcanvas = () => setShowOffcanvas(false);
-  const handleShowOffcanvas = (productItem) => {
+}
+const handleCloseOffcanvas = () => setShowOffcanvas(false);
+const handleShowOffcanvas = (productItem) => {
     setSelectedProduct(productItem);
     setShowOffcanvas(true);
-  };
-  const handleAddToCart = (productId) => {
+};
+const handleAddToCart = (productId) => {
     const size = "M";
     axios.post(`http://localhost:8080/cart/${userid}`,{productId,size })
     .then(response => {
@@ -90,16 +111,26 @@ const addToWishList =(productId)=>{
     // Operation completed, set isProcessing to false
     setIsProcessing(false);
   });
-}
+};
+const [showMore, setShowMore] = useState(false);
+
+    const handleShowMore = () => {
+        setShowMore(!showMore);
+    };
   return (
     <div > 
-    
       <Nav favorites={selectedFav}/>
       <div className='allproductcon'> 
       { isAuthenticated ? <Usericon /> : null }
       <div className='continer'>
-        <div className='newsunglassAll' >{products  && products.slice(0, 40).map(item => (
-            <div className='newsunglassconAll' key={product._id} >
+        <div className='newsunglassAll' >
+          {sort == "Man" && (
+                <img className="grid-image"  src='http://localhost:8080/public/images/manimggrid.jpeg' />
+            )}
+          {products  && products.slice(0, 40).map((item, index) => (
+        
+            <div key={item._id} style={{ gridArea: gridAreaNames[index % gridAreaNames.length],display: (showMore || index < 4) ? 'block' : 'none'  }}  >
+              <div className='newsunglassconAll'>
               <img id="img" src={item.image[0]} style={{ width: "100%", heigh: "80%" }} onClick={()=>hadelnavgaiton(item)} />
               {item.isOnSale ? (
                 <>
@@ -119,11 +150,18 @@ const addToWishList =(productId)=>{
                     onClick={() => { handleAddToWishList(item._id) }}
                     style={{fontSize: '30px',cursor: isProcessing ? "" : 'pointer', color: selectedFav && selectedFav.items.some(items => items.productId === item._id) ? 'red' : 'black' }}
                 />
+                </div>
               </div>
             </div>
+            
       ))}
       </div>
       </div>
+      {products.length > 4 && (
+                <button onClick={handleShowMore}>
+                    {showMore ? 'Show Less' : 'Show More'}
+                </button>
+            )}
       <Offcanvas show={showOffcanvas} onHide={handleCloseOffcanvas}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Product Details</Offcanvas.Title>
@@ -142,7 +180,28 @@ const addToWishList =(productId)=>{
           )}
         </Offcanvas.Body>
       </Offcanvas>
+      <AllproductEyewear
+        products={products}
+        handleShowOffcanvas={handleShowOffcanvas}
+        handleAddToCart={handleAddToCart}
+        handleAddToWishList={handleAddToWishList}
+        hadelnavgaiton={hadelnavgaiton}
+        isProcessing={isProcessing}
+        selectedFav={selectedFav}
+        isAuthenticated={isAuthenticated}
+      />
+      <AllproductContact
+        products={products}
+        handleShowOffcanvas={handleShowOffcanvas}
+        handleAddToCart={handleAddToCart}
+        handleAddToWishList={handleAddToWishList}
+        hadelnavgaiton={hadelnavgaiton}
+        isProcessing={isProcessing}
+        selectedFav={selectedFav}
+        isAuthenticated={isAuthenticated}
+      />
       </div>
+     
       <Footer />
       </div>
   )

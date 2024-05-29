@@ -9,7 +9,7 @@ export default function ManWomenChild({titel,discrishion,sunglasses,glasses,lens
         function handleScroll() {
          const threshold = 3300; 
           const currentScrollY = window.scrollY;
-          console.log('Scroll Y:', currentScrollY);
+          // console.log('Scroll Y:', currentScrollY);
           setScrollY(currentScrollY); // Update scroll position
           if (currentScrollY > threshold) {
             setIsVisible(true);

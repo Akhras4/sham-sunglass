@@ -69,9 +69,9 @@ export default function Homepage() {
     <ManWomanChild 
       titel={'WOMAN'} 
       discrishion={'Wide skies, soft sand and warm air: we have captured the Sicilian summer for you in a limited edition sunglasses collection. Discover three of our favourite sunnies in a fresh and unique colourway.'} 
-      sunglasses={'sunglasses'} 
-      glasses={'sunglasses'} 
-      lens={'Lens'} 
+      sunglasses={'SUNGLASSES'} 
+      glasses={'EYEWEAR'} 
+      lens={'CONTACT LENSES'} 
       imgSrc={'http://localhost:8080/public/images/womanbar.jpeg'} 
       background={'#ddbbb9'}
     />
@@ -85,9 +85,9 @@ export default function Homepage() {
     <ManWomanChild 
       titel={'MAN'} 
       discrishion={'Wide skies, soft sand and warm air: we have captured the Sicilian summer for you in a limited edition sunglasses collection. Discover three of our favourite sunnies in a fresh and unique colourway.'} 
-      sunglasses={'sunglasses'} 
-      glasses={'sunglasses'} 
-      lens={'Lens'} 
+      sunglasses={'SUNGLASSES'} 
+      glasses={'EYEWEAR'} 
+      lens={'CONTACT LENSES'} 
       imgSrc={'http://localhost:8080/public/images/manbar.jpeg'} 
       background={'#8bb9d1'}
     />
@@ -101,8 +101,8 @@ export default function Homepage() {
     <ManWomanChild 
       titel={'KIDS'} 
       discrishion={'Wide skies, soft sand and warm air: we have captured the Sicilian summer for you in a limited edition sunglasses collection. Discover three of our favourite sunnies in a fresh and unique colourway.'} 
-      sunglasses={'sunglasses'} 
-      glasses={'sunglasses'}  
+      sunglasses={'SUNGLASSES'} 
+      glasses={'EYEWEAR'}  
       imgSrc={'http://localhost:8080/public/images/kidsbar.jpeg'} 
       background={'#f4c770'}
     />

@@ -1,10 +1,26 @@
 import React from 'react'
-import { useState ,useEffect } from 'react'
+import { productContext } from '../App'
+import { useContext,useState,useEffect } from 'react';
 import {motion} from 'framer-motion'
 import './text.css'
 import Vertically from './verticallybar';
+import { useNavigate } from 'react-router-dom';
+import { favContext } from './homepage'
 export default function Text() {
+  const {product ,isAuthenticated ,userid } = useContext(productContext);
     const [isVisible, setIsVisible] = useState(false);
+    const{favorites}=useContext(favContext)|| []
+    const navigate =useNavigate()
+    const [selectedFav, setSelectedToFav] = useState(favorites)
+    useEffect(()=>{
+        setSelectedToFav(favorites)
+    },[favorites])
+    const handleNavigation=(productMan,sort)=>{
+      console.log(productMan) 
+      console.log("sort",sort)              
+      navigate(`/products/${sort}`, { state: { results: productMan,favorites:selectedFav,sort:sort } });
+    } 
+    
     useEffect(() => {
         function handleScroll() {
           const threshold = 50;
@@ -32,7 +48,7 @@ export default function Text() {
             {/* <span className='span2'><img src='https://i.postimg.cc/D03CmyDG/Untitled-1.png'/></span> */}
             <span className='span3'>OPTIK</span>
             <div className="button-Flex">
-            <button type="submit" className="mt-3">
+            <button type="submit" className="mt-3" onClick={()=>{ console.log(product);handleNavigation(product.product.filter(product=>product.sort=="man"),"Man")}}>
             <div>
               <div className="highlight-bg"></div>
               <div className="button-text">
@@ -40,7 +56,7 @@ export default function Text() {
               </div>
             </div>
             </button>
-            <button type="submit" className="mt-3">
+            <button type="submit" className="mt-3"onClick={()=>{ console.log(product);handleNavigation(product.product.filter(product=>product.sort=="women"),"Woman")}}>
             <div>
               <div className="highlight-bg"></div>
               <div className="button-text">
@@ -48,7 +64,7 @@ export default function Text() {
               </div>
             </div>
             </button>
-            <button type="submit" className="mt-3">
+            <button type="submit" className="mt-3"onClick={()=>{ console.log(product);handleNavigation(product.product.filter(product=>product.sort=="man"),"kids")}}>
             <div>
               <div className="highlight-bg"></div>
               <div className="button-text">

@@ -11,13 +11,26 @@ body{
     display: grid;
     padding-bottom: 50px;
     padding-top: 15%;
-    grid-template-areas: " a a a " 
-                         " a a a ";
-                         justify-items: center;
+    grid-template-areas:  " a b img " 
+                          " c d img "
+                          " e f g " ;
+                          /* " h i j " 
+                          " k l m " 
+                          " n o p " 
+                          " q r s " 
+                          " t u v " 
+                          " w x y " 
+                          " z aa ab " 
+                          " ac ad ae " 
+                          " af ag ah " 
+                          " ai aj ak " 
+                          " al am "; */ 
+                         justify-items: start;
                          justify-content: center;
                          
-      gap:40px;
+      gap:22px;
   }
+ 
   .newsunglassconAll{
       display:flex;
       width: 350px;
@@ -50,6 +63,11 @@ body{
         right: 0;
       }
     }
+img.grid-image {
+    grid-area: img ;
+    width: 500px;
+      height:800px;
+}
     .newsunglassconAll:after {
       content: '';
       position: absolute;
