@@ -69,7 +69,7 @@ function App() {
         <productContext.Provider value={{product, loading,token ,isAuthenticated,userid }} >
           <Routes>
           <Route path="/" element={<Homepage />} />
-            <Route path="/products" element={<Allproduct />} />
+            <Route path="/products/:sort" element={<Allproduct />} />
             <Route path="/product/:sort" element={<Product />} /> 
             <Route path="/signup" element={ isAuthenticated ? <User /> : <Signup /> } />
             <Route path="/creataccount" element={<Createaccount />} />
