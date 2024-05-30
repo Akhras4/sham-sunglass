@@ -86,7 +86,7 @@ export default function Text() {
             <img src="https://i.postimg.cc/nrLTFWGF/Photo-by-Toa-Heftiba-on-Unsplash.jpg" alt='image' />
         </div>
         </motion.div>
-        <Vertically baseVelocity={-5}>
+        {/* <Vertically baseVelocity={-5}>
          <img src="https://i.postimg.cc/ydYVdgdg/image-54-2.png" />
          <img src="https://i.postimg.cc/hvnbCDNc/image-54-8.png" />
          <img src="https://i.postimg.cc/P5fLSpxS/image-54-9.png" />
@@ -94,7 +94,7 @@ export default function Text() {
          <img src="https://i.postimg.cc/d17M788f/image-54-3.png" />
          <img src="https://i.postimg.cc/MHQ8LyHB/image-54-7.png" />
          <img src="https://i.postimg.cc/7647hV8H/image-54-6.png" />
-         </Vertically>
+         </Vertically> */}
         {/* <Vertically baseVelocity={5}>Sale UP TO 50%</Vertically> */}
     </div>
   )

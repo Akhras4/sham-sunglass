@@ -4,19 +4,10 @@ import { useNavigate } from 'react-router-dom'
 import { favContext } from './homepage'
 import { useContext,useEffect,useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDoubleDown} from '@fortawesome/free-solid-svg-icons';
 
-
-export default function Showmore() {
-    const{favorites}=useContext(favContext)|| []
-    const [selectedFav, setSelectedToFav] = useState(favorites)
-useEffect(()=>{
-    setSelectedToFav(favorites)
-},[favorites])
-    const navigate = useNavigate()
-    const hadelnavgaiton=()=>{              
-        navigate('/products', { state: { favorites:selectedFav } });
-      }
+export default function ShowmoreDown({state,handleShowMore}) {
   return (
       <div>
           <div class="contact-fp-wrap">
@@ -37,7 +28,17 @@ useEffect(()=>{
                   
                   <rect class="booton" height="60" width="320"  />
               </svg>
-              <div class="booton-text"  onClick={hadelnavgaiton}>Show More<FontAwesomeIcon icon={faAngleDoubleRight} /></div>
+              <div class="booton-text"onClick={handleShowMore} >
+              {state === 'Show More' ? (
+                        <>
+                        {state} <FontAwesomeIcon icon={faAngleDoubleDown} />
+                        </>
+                    ) : (
+                        <>
+                        {state} <FontAwesomeIcon icon={faAngleDoubleUp} />
+                        </>
+                    )}
+              </div>
           </div>
       </div>
   )

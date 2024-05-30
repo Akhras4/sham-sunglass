@@ -52,7 +52,7 @@ export default function Homepage() {
     <section>
       <Text />
       <Sale baseVelocity={5}>
-      <span style={{ color: 'black' }}>ALL THE NEW</span>
+      <span style={{ color: 'black', }}>ALL NEW</span>
       </Sale>
       <Sale baseVelocity={-5}>
         <span style={{ color: 'black',marginBottom:'40px' }}>SAM OPTIK</span>
