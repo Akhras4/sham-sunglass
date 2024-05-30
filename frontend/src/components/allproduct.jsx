@@ -115,7 +115,6 @@ const addToWishList =(productId)=>{
   });
 };
 const [itemsToShow, setItemsToShow] = useState(4);
-console.log(products.length,"products.length")
 const handleShowMore = () => {
   if (itemsToShow === 4) {
     setItemsToShow(10);
@@ -174,7 +173,7 @@ const handleShowLess = () => {
             )}
       </div>
       </div>
-      {products.length > 4 && (
+      {29 > 4 && (
         <div className='but-allprouduct-showmore'>
           {itemsToShow < 29 && (
             <ShowmoreDown state={`Show More`} handleShowMore={handleShowMore} />

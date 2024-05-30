@@ -56,7 +56,7 @@ export default function Text() {
               </div>
             </div>
             </button>
-            <button type="submit" className="mt-3"onClick={()=>{ console.log(product);handleNavigation(product.product.filter(product=>product.sort=="women"),"Woman")}}>
+            <button type="submit" className="mt-3"onClick={()=>{ handleNavigation(product.product.filter(product=>product.sort=="women"),"Woman")}}>
             <div>
               <div className="highlight-bg"></div>
               <div className="button-text">

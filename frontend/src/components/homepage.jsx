@@ -17,12 +17,10 @@ import SunglasesWomen from './womenbar'
 import ManWomanChild from './manWomenChildren'
 import TopButton from './topbutton'
 
-
-
 export  const favContext = createContext()
 
 export default function Homepage() {
- const {isAuthenticated,userid} = useContext(productContext)
+ const {isAuthenticated,userid,product} = useContext(productContext)
  const[favorites,setFavorites]=useState(null)
  useEffect(()=>{
   getFav(userid)
@@ -41,6 +39,7 @@ export default function Homepage() {
     console.error("Error fetching favorites:", err);
   });
 };
+ console.log(product,"for sowmore")
  
 
   return (
@@ -51,18 +50,24 @@ export default function Homepage() {
     <Video />
     <section>
       <Text />
+      </section>
+      <section>
       <Sale baseVelocity={5}>
       <span style={{ color: 'black', }}>ALL NEW</span>
       </Sale>
       <Sale baseVelocity={-5}>
         <span style={{ color: 'black',marginBottom:'40px' }}>SAM OPTIK</span>
       </Sale>
+      </section>
+      <section>
       <Newsunglassproducts />
       <Showmore />
+      </section>
+      <section>
       <Sale baseVelocity={-5}>Sale UP TO 50%</Sale>
       <Sale baseVelocity={5}>Sale UP TO 50%</Sale>
       <SunglassesMan  />
-      <Showmore />
+      <Showmore product={Object.values(product).flat().filter(product=>product.sort=="man")} sort={"Man"} />
     </section>
     
     <section >
