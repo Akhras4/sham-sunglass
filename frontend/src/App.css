@@ -124,6 +124,7 @@ h1 {
   line-height: 1.2;
   text-align: center;
   margin: 100px 0;
+  
 }
 h2 {
   margin: 0;
@@ -174,12 +175,14 @@ section {
   white-space: nowrap;
   display: flex;
   flex-wrap: nowrap;
+  
 }
 
 .parallax span {
   display: inline-block;
   margin-right: 30px;
-  color: yellow;
+  color: rgb(216, 202, 8);
+  font-family:"";
 }
 
 .parallaxV {

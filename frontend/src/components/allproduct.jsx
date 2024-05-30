@@ -14,6 +14,8 @@ import { MdFavorite } from "react-icons/md";
 import Footer from './footer'
 import AllproductEyewear from './allproducteyewear'
 import AllproductContact from './allproductcontact'
+import ShowmoreDown from './ahowmoredown';
+import Showmore from './showmore';
 export default function Allproduct() {
     const [showOffcanvas, setShowOffcanvas] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -40,7 +42,7 @@ export default function Allproduct() {
       'ad', 'ae','af',
       'ag', 'ah', 'ai',
       'aj', 'ak', 'al',
-      'am'
+      'am','an'
   ];
     useEffect(() => {
       if (location.state && location.state.results) {
@@ -112,11 +114,23 @@ const addToWishList =(productId)=>{
     setIsProcessing(false);
   });
 };
-const [showMore, setShowMore] = useState(false);
+const [itemsToShow, setItemsToShow] = useState(4);
+console.log(products.length,"products.length")
+const handleShowMore = () => {
+  if (itemsToShow === 4) {
+    setItemsToShow(10);
+  } else {
+    setItemsToShow(itemsToShow + 10 > 29 ? 29 : itemsToShow + 10);
+  }
+};
 
-    const handleShowMore = () => {
-        setShowMore(!showMore);
-    };
+const handleShowLess = () => {
+  if (itemsToShow <= 10) {
+    setItemsToShow(4);
+  } else {
+    setItemsToShow(itemsToShow - 10);
+  }
+};
   return (
     <div > 
       <Nav favorites={selectedFav}/>
@@ -127,9 +141,8 @@ const [showMore, setShowMore] = useState(false);
           {sort == "Man" && (
                 <img className="grid-image"  src='http://localhost:8080/public/images/manimggrid.jpeg' />
             )}
-          {products  && products.slice(0, 40).map((item, index) => (
-        
-            <div key={item._id} style={{ gridArea: gridAreaNames[index % gridAreaNames.length],display: (showMore || index < 4) ? 'block' : 'none'  }}  >
+          {products  && products.slice(0, 29).map((item, index) => (
+            <div key={item._id} style={{ gridArea: gridAreaNames[index % gridAreaNames.length],display: (itemsToShow > index || itemsToShow === 29) ? 'block' : 'none'   }}  >
               <div className='newsunglassconAll'>
               <img id="img" src={item.image[0]} style={{ width: "100%", heigh: "80%" }} onClick={()=>hadelnavgaiton(item)} />
               {item.isOnSale ? (
@@ -152,16 +165,28 @@ const [showMore, setShowMore] = useState(false);
                 />
                 </div>
               </div>
-            </div>
-            
+            </div> 
       ))}
+  {sort == "Man" && (
+                <img className="grid-vid" 
+                 src='http://localhost:8080/public/images/manimggrid.jpeg'
+                 style={{ display: (itemsToShow > 25 ) ? 'block' : 'none'   }} />
+            )}
       </div>
       </div>
       {products.length > 4 && (
-                <button onClick={handleShowMore}>
-                    {showMore ? 'Show Less' : 'Show More'}
-                </button>
-            )}
+        <div className='but-allprouduct-showmore'>
+          {itemsToShow < 29 && (
+            <ShowmoreDown state={`Show More`} handleShowMore={handleShowMore} />
+          )}
+          {itemsToShow == 29 && (
+            <Showmore />
+          )}
+          {itemsToShow > 4 && (
+            <ShowmoreDown state="Show Less" handleShowMore={handleShowLess} />
+          )}
+        </div>
+      )}
       <Offcanvas show={showOffcanvas} onHide={handleCloseOffcanvas}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Product Details</Offcanvas.Title>
