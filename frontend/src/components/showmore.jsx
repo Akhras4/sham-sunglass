@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 
 
-export default function Showmore() {
+export default function Showmore({product,sort}) {
     const{favorites}=useContext(favContext)|| []
     const [selectedFav, setSelectedToFav] = useState(favorites)
 useEffect(()=>{
@@ -15,7 +15,7 @@ useEffect(()=>{
 },[favorites])
     const navigate = useNavigate()
     const hadelnavgaiton=()=>{              
-        navigate('/products', { state: { favorites:selectedFav } });
+        navigate(`/products/${sort}`, { state: { results: product,favorites:selectedFav,sort:sort } });
       }
   return (
       <div>
@@ -37,7 +37,7 @@ useEffect(()=>{
                   
                   <rect class="booton" height="60" width="320"  />
               </svg>
-              <div class="booton-text"  onClick={hadelnavgaiton}>Show More<FontAwesomeIcon icon={faAngleDoubleRight} /></div>
+              <div class="booton-text"  onClick={()=>{hadelnavgaiton()}}>Show More<FontAwesomeIcon icon={faAngleDoubleRight} /></div>
           </div>
       </div>
   )
