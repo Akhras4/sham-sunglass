@@ -84,7 +84,7 @@ export default function Homepage() {
       <span style={{ color: 'pink' }}>WOMAN : SUNGLASSES OPTIC LENSS</span>
     </Sale>
     <SunglasesWomen />
-    <Showmore />
+    <Showmore product={Object.values(product).flat().filter(product=>product.sort=="women")} sort={"Woman"} />
     </section>
     <section >
     <ManWomanChild 
@@ -100,7 +100,7 @@ export default function Homepage() {
       <span style={{ color: '#95a8b2' }}>MAN : SUNGLASSES OPTIC LENSS</span>
     </Sale>
     <SunglassesMan  />
-    <Showmore />
+    <Showmore product={Object.values(product).flat().filter(product=>product.sort=="man")} sort={"Man"} />
     </section>
     <section >
     <ManWomanChild 
@@ -120,7 +120,7 @@ export default function Homepage() {
     </span>
     </Sale>
     <SunglasesWomen />
-    <Showmore />
+    <Showmore product={Object.values(product).flat().filter(product=>product.sort=="man")} sort={"Man"} />
     </section> 
     <TopButton />
     <Footer />

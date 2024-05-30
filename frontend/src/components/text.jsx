@@ -16,8 +16,7 @@ export default function Text() {
         setSelectedToFav(favorites)
     },[favorites])
     const handleNavigation=(productMan,sort)=>{
-      console.log(productMan) 
-      console.log("sort",sort)              
+                   
       navigate(`/products/${sort}`, { state: { results: productMan,favorites:selectedFav,sort:sort } });
     } 
     
