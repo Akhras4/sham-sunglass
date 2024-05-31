@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.use('/public/images', express.static(path.join(__dirname, 'public/images')))
-
+app.use('/public/video', express.static(path.join(__dirname, 'public/video')))
 app.set("view engine","ejs");
 app.use(cors(
   {

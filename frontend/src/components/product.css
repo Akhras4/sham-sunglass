@@ -77,12 +77,15 @@
     justify-content: center;
     overflow-clip-box: auto;
     width: 70%;
+    gap: 2%;
     & .bigimage{  
+        /* max-width: 50vw; */
         width: 50vw;
         height: 70vh;
         & img{
-            width: 50vw;
+            width: 50vw;;
             height: 70vh;
+            object-fit:cover;
         }
         
     }

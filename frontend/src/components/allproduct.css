@@ -68,13 +68,18 @@ img.grid-image {
     grid-area: img ;
     width: 450px;
     height:800px;
+    border:2px solid black;
+    border-radius: 20px;
 }
-img.grid-vid {
+video.grid-vid {
   position: absolute;
     grid-area: vid ;
     width: 450px;
     height:700px;
     justify-self: end !important; 
+    object-fit: cover;
+    border:2px solid black;
+    border-radius: 20px;
 }
 
     .newsunglassconAll:after {
