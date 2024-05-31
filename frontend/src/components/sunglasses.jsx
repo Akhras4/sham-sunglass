@@ -1,6 +1,6 @@
 import React from 'react'
-import { useState,useEffect,useContext } from 'react'
-import {motion} from 'framer-motion'
+import { useState, useEffect, useContext } from 'react'
+import { motion } from 'framer-motion'
 import { productContext } from '../App'
 import { favContext } from './homepage'
 import { useNavigate } from "react-router-dom";
@@ -120,7 +120,6 @@ export default function SunglasesMan() {
     const handleMouseLeaveImg = () => {
       setImageSrc(productItem.image[0]);
     };
-
     return (
       <div className='sunglass'>
         <div className='sunglasscontent' onClick={() => hadelnavgaiton(productItem)}>
@@ -156,9 +155,9 @@ export default function SunglasesMan() {
           />
         </div>
         <div className='butCon'>
-        <Button variant="primary" onClick={() => handleShowOffcanvas(productItem)}>
-          <FaShoppingCart />ADD to Cart
-        </Button>
+          <Button variant="primary" onClick={() => handleShowOffcanvas(productItem)}>
+            <FaShoppingCart />ADD to Cart
+          </Button>
         </div>
       </div>
     );
