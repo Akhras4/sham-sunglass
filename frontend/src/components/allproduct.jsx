@@ -27,7 +27,6 @@ export default function Allproduct() {
     const [products, setproducts] = useState([])
     const [sort,setSort]=useState()
     const navigate = useNavigate()
-    
     const gridAreaNames = [
       'a', 'b',  
       'c', 'd', 'e', 
@@ -56,10 +55,6 @@ export default function Allproduct() {
         console.log(location.state.favorites,"location")
       }
     }, [location.state, product]);
-    // useEffect(()=>{
-    //   setSelectedToFav(favorites)
-    //   console.log('favorites from product',favorites)
-    // },[favorites])
 const hadelnavgaiton=(product)=>{               
     navigate('/product', { state: { results: product ,favorites:selectedFav } });
 }
@@ -122,7 +117,6 @@ const handleShowMore = () => {
     setItemsToShow(itemsToShow + 10 > 29 ? 29 : itemsToShow + 10);
   }
 };
-
 const handleShowLess = () => {
   if (itemsToShow <= 10) {
     setItemsToShow(4);
@@ -130,8 +124,47 @@ const handleShowLess = () => {
     setItemsToShow(itemsToShow - 10);
   }
 };
-  return (
-    <div > 
+useEffect(() => {
+    const video = document.querySelector('.grid-vid');
+    if (video) {
+      video.muted = true;
+      video.loop = true;
+      video.autoplay = true;
+
+      // Log to confirm the video element is correctly selected
+      console.log('Video element:', video);
+
+      // Check if the video can be played
+      video.play().catch(error => {
+        console.error('Error trying to play the video:', error);
+      });
+    }
+  }, []);
+  const ProductImage = ({ item }) => {
+    const [imageSrc, setImageSrc] = useState(item.image[0]);
+
+    const handleMouseEnterImg = () => {
+      if (item.image[1]) {
+        setImageSrc(item.image[1]);
+      }
+    };
+
+    const handleMouseLeaveImg = () => {
+      setImageSrc(item.image[0]);
+    };
+    return (
+      <img
+        id="img"
+        src={imageSrc}
+        style={{ width: "100%", height: "80%" }}
+        onClick={() => hadelnavgaiton(item)}
+        onMouseEnter={handleMouseEnterImg}
+        onMouseLeave={handleMouseLeaveImg}
+      />
+    );
+  };
+return (
+    <div> 
       <Nav favorites={selectedFav}/>
       <div className='allproductcon'> 
       { isAuthenticated ? <Usericon /> : null }
@@ -143,7 +176,7 @@ const handleShowLess = () => {
           {products  && products.slice(0, 29).map((item, index) => (
             <div key={item._id} style={{ gridArea: gridAreaNames[index % gridAreaNames.length],display: (itemsToShow > index || itemsToShow === 29) ? 'block' : 'none'   }}  >
               <div className='newsunglassconAll'>
-              <img id="img" src={item.image[0]} style={{ width: "100%", heigh: "80%" }} onClick={()=>hadelnavgaiton(item)} />
+              <ProductImage item={item} />
               {item.isOnSale ? (
                 <>
                   <div className='saleinfo'><p>Price:</p><p style={{ textDecoration: 'line-through', color: 'red' }}> {item.price}</p>
@@ -166,11 +199,13 @@ const handleShowLess = () => {
               </div>
             </div> 
       ))}
-  {sort == "Man" && (
-                <img className="grid-vid" 
-                 src='http://localhost:8080/public/images/manimggrid.jpeg'
-                 style={{ display: (itemsToShow > 25 ) ? 'block' : 'none'   }} />
-            )}
+      {sort == "Man" && (
+                <video className="grid-vid"   autoPlay muted loop 
+                 style={{ display: (itemsToShow > 25 ) ? 'block' : 'none'   }} >
+                  <source src="http://localhost:8080/public/video/rb-hp-hero-icons-d-data.mp4" type="video/mp4" />
+                     Your browser does not support the video tag.
+                  </video>
+      )}
       </div>
       </div>
       {29 > 4 && (
@@ -213,6 +248,12 @@ const handleShowLess = () => {
         isProcessing={isProcessing}
         selectedFav={selectedFav}
         isAuthenticated={isAuthenticated}
+        handleShowMore={handleShowMore}
+        handleShowLess={handleShowLess}
+        gridAreaNames={gridAreaNames}
+        itemsToShow={itemsToShow}
+        sort={sort}
+        ProductImage={ProductImage}
       />
       <AllproductContact
         products={products}
@@ -223,9 +264,14 @@ const handleShowLess = () => {
         isProcessing={isProcessing}
         selectedFav={selectedFav}
         isAuthenticated={isAuthenticated}
+        handleShowMore={handleShowMore}
+        handleShowLess={handleShowLess}
+        gridAreaNames={gridAreaNames}
+        itemsToShow={itemsToShow}
+        sort={sort}
+        ProductImage={ProductImage}
       />
       </div>
-     
       <Footer />
       </div>
   )
