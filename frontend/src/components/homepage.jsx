@@ -7,7 +7,7 @@ import SunglassesMan from './sunglasses';
 import Showmore from './showmore';
 import '../App.css';
 import Usericone from './usericon'
-import {useContext,useEffect,createContext,useState} from'react'
+import {useContext,useEffect,createContext,useState, useRef} from'react'
 import {productContext} from '../App'
 import Text from './text'
 import axios from 'axios'
@@ -22,6 +22,9 @@ export  const favContext = createContext()
 export default function Homepage() {
  const {isAuthenticated,userid,product} = useContext(productContext)
  const[favorites,setFavorites]=useState(null)
+ const womanSectionRef = useRef(null);
+ const kidsSectionRef = useRef(null);
+ const [currentSection, setCurrentSection] = useState('woman');
  useEffect(()=>{
   getFav(userid)
  },[userid  ])
@@ -39,7 +42,21 @@ export default function Homepage() {
     console.error("Error fetching favorites:", err);
   });
 };
- console.log(product,"for sowmore")
+useEffect(() => {
+  const handleScroll = () => {
+    const womanSectionRect = womanSectionRef.current.getBoundingClientRect();
+    const kidsSectionRect = kidsSectionRef.current.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    if (womanSectionRect.top >= 0 && womanSectionRect.bottom <= windowHeight) {
+      setCurrentSection('woman');
+    }
+    else if (kidsSectionRect.top >= 0 && kidsSectionRect.bottom <= windowHeight) {
+      setCurrentSection('kids');
+    }
+  };
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, []);
 
   return (
     <div>
@@ -70,6 +87,7 @@ export default function Homepage() {
     </section>
     
     <section >
+    <div ref={womanSectionRef}>Woman Section</div>
     <ManWomanChild 
       titel={'WOMAN'} 
       discrishion={'Wide skies, soft sand and warm air: we have captured the Sicilian summer for you in a limited edition sunglasses collection. Discover three of our favourite sunnies in a fresh and unique colourway.'} 
@@ -85,7 +103,8 @@ export default function Homepage() {
     <SunglasesWomen />
     <Showmore product={Object.values(product).flat().filter(product=>product.sort=="women")} sort={"Woman"} />
     </section>
-    <section >
+    <section  >
+    
     <ManWomanChild 
       titel={'MAN'} 
       discrishion={'Wide skies, soft sand and warm air: we have captured the Sicilian summer for you in a limited edition sunglasses collection. Discover three of our favourite sunnies in a fresh and unique colourway.'} 
@@ -101,7 +120,8 @@ export default function Homepage() {
     <SunglassesMan  />
     <Showmore product={Object.values(product).flat().filter(product=>product.sort=="man")} sort={"Man"} />
     </section>
-    <section >
+    <section  >
+    <div ref={kidsSectionRef}>Kids Section</div>
     <ManWomanChild 
       titel={'KIDS'} 
       discrishion={'Wide skies, soft sand and warm air: we have captured the Sicilian summer for you in a limited edition sunglasses collection. Discover three of our favourite sunnies in a fresh and unique colourway.'} 
@@ -121,7 +141,7 @@ export default function Homepage() {
     <SunglasesWomen />
     <Showmore product={Object.values(product).flat().filter(product=>product.sort=="man")} sort={"Man"} />
     </section> 
-    <TopButton />
+    <TopButton setCurrentSection={setCurrentSection} currentSection={currentSection} womanSectionRef={womanSectionRef}/>
     <Footer />
     </favContext.Provider>
   </div>
