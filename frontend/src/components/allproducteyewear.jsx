@@ -16,7 +16,8 @@ export default function AllproductEyewear({
   handleShowMore,
   handleShowLess,
   gridAreaNames,
-  itemsToShow,
+  itemsToShowEyewear,
+  setItemsToShowEyewear,
   sort,
   ProductImage,
 }) {
@@ -28,7 +29,7 @@ export default function AllproductEyewear({
             <img className="grid-image" src='http://localhost:8080/public/images/maneyeweargrid.jpeg' />
           )}
           {products && products.slice(0, 29).map((item, index) => (
-            <div key={item._id} style={{ gridArea: gridAreaNames[index % gridAreaNames.length], display: (itemsToShow > index || itemsToShow === 29) ? 'block' : 'none' }}  >
+            <div key={item._id} style={{ gridArea: gridAreaNames[index % gridAreaNames.length], display: (itemsToShowEyewear > index || itemsToShowEyewear === 29) ? 'block' : 'none' }}  >
               <div className='newsunglassconAll' key={item._id} >
                 <ProductImage item={item} />
                 {item.isOnSale ? (
@@ -55,7 +56,7 @@ export default function AllproductEyewear({
           ))}
           {sort == "Man" && (
             <video className="grid-vid" autoPlay muted loop
-              style={{ display: (itemsToShow > 25) ? 'block' : 'none' }} >
+              style={{ display: (itemsToShowEyewear > 25) ? 'block' : 'none' }} >
               <source src="http://localhost:8080/public/video/maneyewear.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
@@ -64,14 +65,14 @@ export default function AllproductEyewear({
       </div>
       {29 > 4 && (
         <div className='but-allprouduct-showmore'>
-          {itemsToShow < 29 && (
-            <ShowmoreDown state={`Show More`} handleShowMore={handleShowMore} />
+          {itemsToShowEyewear < 29 && (
+            <ShowmoreDown state={`Show More`} handleShowMore={() => {handleShowMore(itemsToShowEyewear,setItemsToShowEyewear)}} />
           )}
-          {itemsToShow == 29 && (
+          {itemsToShowEyewear == 29 && (
             <Showmore />
           )}
-          {itemsToShow > 4 && (
-            <ShowmoreDown state="Show Less" handleShowMore={handleShowLess} />
+          {itemsToShowEyewear > 4 && (
+            <ShowmoreDown state="Show Less" handleShowMore={() => {handleShowLess(itemsToShowEyewear,setItemsToShowEyewear)}} />
           )}
         </div>
       )}

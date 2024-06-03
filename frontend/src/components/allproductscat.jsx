@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { productContext } from '../App'
 import { useContext, useState, useEffect ,useRef } from 'react';
@@ -17,7 +18,7 @@ import ShowmoreDown from './ahowmoredown';
 import Showmore from './showmore';
 import TopButton from './topbutton'
 import Bar from './bar'
-export default function Allproduct() {
+export default function AllproductsCat() {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const { product, isAuthenticated, userid } = useContext(productContext);
@@ -44,9 +45,6 @@ export default function Allproduct() {
     'aj', 'ak', 'al',
     'am', 'an'
   ];
-  const Section1Ref = useRef(null);
-  const Section2Ref = useRef(null);
-  const [currentSection, setCurrentSection] = useState('Eyewear');
   useEffect(() => {
     if (location.state && location.state.results) {
       setproducts(location.state.results);
@@ -113,59 +111,43 @@ export default function Allproduct() {
         setIsProcessing(false);
       });
   };
-  const [itemsToShowSunglass, setItemsToShowSunglass] = useState(4);
-  const [itemsToShowEyewear, setItemsToShowEyewear] = useState(4);
-  const [itemsToShowContactlens, setItemsToShowContactlens] = useState(4);
-  const handleShowMore = (itemsToShow, setItemsToShow) => {
-    setItemsToShow(prevItems => (prevItems === 4 ? 10 : Math.min(prevItems + 10, 29)));
-  };
-
-  const handleShowLess = (itemsToShow, setItemsToShow) => {
-    setItemsToShow(prevItems => (prevItems <= 10 ? 4 : prevItems - 10));
-  };
-  useEffect(() => {
-    const video = document.querySelector('.grid-vid');
-    if (video) {
-      video.muted = true;
-      video.loop = true;
-      video.autoplay = true;
-
-      // Log to confirm the video element is correctly selected
-      console.log('Video element:', video);
-
-      // Check if the video can be played
-      video.play().catch(error => {
-        console.error('Error trying to play the video:', error);
-      });
+  const [itemsToShow, setItemsToShow] = useState(10);
+  const handleShowMore = () => {
+    if (itemsToShow === 10) {
+      setItemsToShow(20);
+    } else {
+      setItemsToShow(itemsToShow + 10 );
     }
-  }, []);
+  };
+  const handleShowLess = () => {
+    if (itemsToShow <= 20) {
+      setItemsToShow(10);
+    } else {
+      setItemsToShow(itemsToShow - 10);
+    }
+  };
+//   useEffect(() => {
+//     const video = document.querySelector('.grid-vid');
+//     if (video) {
+//       video.muted = true;
+//       video.loop = true;
+//       video.autoplay = true;
+//       console.log('Video element:', video);
+//       video.play().catch(error => {
+//         console.error('Error trying to play the video:', error);
+//       });
+//     }
+//   }, []);
   const ProductImage = ({ item }) => {
     const [imageSrc, setImageSrc] = useState(item.image[0]);
-
     const handleMouseEnterImg = () => {
       if (item.image[1]) {
         setImageSrc(item.image[1]);
       }
     };
-
     const handleMouseLeaveImg = () => {
       setImageSrc(item.image[0]);
-    };
-  useEffect(() => {
-    const handleScroll = () => {
-    const EyewearSectionRect = Section1Ref.current.getBoundingClientRect();
-    const ContactLensSectionRect = Section2Ref.current.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-    if (EyewearSectionRect.top >= 0 && EyewearSectionRect.bottom <= windowHeight) {
-          setCurrentSection('Eyewear');
-    }
-    else if (ContactLensSectionRect.top >= 0 && ContactLensSectionRect.bottom <= windowHeight) {
-          setCurrentSection('ContactLens');
-    }
-    };
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
-  }, []);   
+    };   
     return (
       <img
         id="img"
@@ -179,7 +161,7 @@ export default function Allproduct() {
   };
   return (
     <div>
-      <Bar
+        <Bar
       product={product}
       selectedFav={selectedFav}
        />
@@ -191,8 +173,8 @@ export default function Allproduct() {
             {sort === "Man" && (
               <img className="grid-image" src='http://localhost:8080/public/images/manimggrid.jpeg' />
             )}
-            {products && products.slice(0, 29).filter(product=>product.category==="Sunglass").map((item, index) => (
-              <div key={item._id} style={{ gridArea: gridAreaNames[index % gridAreaNames.length], display: (itemsToShowSunglass > index || itemsToShowSunglass === 29) ? 'block' : 'none' }}  >
+            {products && products.slice(0, 29).map((item, index) => (
+              <div key={item._id} style={{ gridArea: gridAreaNames[index % gridAreaNames.length], display: (itemsToShow > index || itemsToShow === 29) ? 'block' : 'none' }}  >
                 <div className='newsunglassconAll'>
                   <ProductImage item={item} />
                   {item.isOnSale ? (
@@ -219,7 +201,7 @@ export default function Allproduct() {
             ))}
             {sort === "Man" && (
               <video className="grid-vid" autoPlay muted loop
-                style={{ display: (itemsToShowSunglass > 25) ? 'block' : 'none' }} >
+                style={{ display: (itemsToShow > 25) ? 'block' : 'none' }} >
                 <source src="http://localhost:8080/public/video/rb-hp-hero-icons-d-data.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
@@ -228,14 +210,11 @@ export default function Allproduct() {
         </div>
         {29 > 4 && (
           <div className='but-allprouduct-showmore'>
-            {itemsToShowSunglass < 29 && (
-              <ShowmoreDown state={`Show More`} handleShowMore={() => {handleShowMore(itemsToShowSunglass,setItemsToShowSunglass)}} />
+            {itemsToShow && (
+              <ShowmoreDown state={`Show More`} handleShowMore={handleShowMore} />
             )}
-            {itemsToShowSunglass === 29 && (
-              <Showmore />
-            )}
-            {itemsToShowSunglass > 4 && (
-              <ShowmoreDown state="Show Less" handleShowMore={() => {handleShowLess(itemsToShowSunglass,setItemsToShowSunglass)}} />
+            {itemsToShow > 10 && (
+              <ShowmoreDown state="Show Less" handleShowMore={handleShowLess} />
             )}
           </div >
         )}
@@ -257,46 +236,7 @@ export default function Allproduct() {
             )}
           </Offcanvas.Body>
         </Offcanvas>
-        <div ref={Section1Ref}>Eyewear Section</div>
-        <AllproductEyewear
-          products={products}
-          handleShowOffcanvas={handleShowOffcanvas}
-          handleAddToCart={handleAddToCart}
-          handleAddToWishList={handleAddToWishList}
-          hadelnavgaiton={hadelnavgaiton}
-          isProcessing={isProcessing}
-          selectedFav={selectedFav}
-          isAuthenticated={isAuthenticated}
-          handleShowMore={handleShowMore}
-          handleShowLess={handleShowLess}
-          gridAreaNames={gridAreaNames}
-          itemsToShowEyewear={itemsToShowEyewear}
-          setItemsToShowEyewear={setItemsToShowEyewear}
-          sort={sort}
-          ProductImage={ProductImage}
-          
-        />
-        <div ref={Section2Ref}>ContactLens Section</div>
-        <AllproductContact
-          products={products}
-          handleShowOffcanvas={handleShowOffcanvas}
-          handleAddToCart={handleAddToCart}
-          handleAddToWishList={handleAddToWishList}
-          hadelnavgaiton={hadelnavgaiton}
-          isProcessing={isProcessing}
-          selectedFav={selectedFav}
-          isAuthenticated={isAuthenticated}
-          handleShowMore={handleShowMore}
-          handleShowLess={handleShowLess}
-          gridAreaNames={gridAreaNames}
-          itemsToShowContactlens={itemsToShowContactlens}
-          setItemsToShowContactlens={setItemsToShowContactlens}
-          sort={sort}
-          ProductImage={ProductImage} 
-        />
-      </div>
-      <TopButton setCurrentSection={setCurrentSection} currentSection={currentSection} Section1Ref={Section1Ref}/>
-      <Footer  />
+    </div>
     </div>
   )
 }

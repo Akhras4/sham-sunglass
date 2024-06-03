@@ -1,0 +1,14 @@
+.nav-sort{
+ display: flex;
+ gap: 30px;
+ border-top: 2px solid black;
+ border-bottom: 2px solid black;
+ margin-top: 10%;
+ z-index: 5;
+ flex-direction: row-reverse;
+ justify-content: center;
+ & div{
+    font-size: 30px;
+    padding-right: 2%;
+ }
+}
