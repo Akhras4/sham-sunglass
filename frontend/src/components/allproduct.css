@@ -11,7 +11,7 @@ body{
     display: grid;
     position: relative;
     padding-bottom: -40px;
-    padding-top: 15%;
+    padding-top: 5%;
     grid-template-areas:  " a b img " 
                           " c d img "
                           " e f g " 

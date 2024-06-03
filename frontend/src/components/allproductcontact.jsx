@@ -16,7 +16,8 @@ export default function AllproductContact({
   handleShowMore,
   handleShowLess,
   gridAreaNames,
-  itemsToShow,
+  itemsToShowContactlens,
+  setItemsToShowContactlens,
   ProductImage,
   sort,
 }) {
@@ -29,7 +30,7 @@ export default function AllproductContact({
             <img className="grid-image" src='http://localhost:8080/public/images/mancontactlens.jpeg' />
           )}
           {products && products.slice(0, 29).map((item, index) => (
-            <div key={item._id} style={{ gridArea: gridAreaNames[index % gridAreaNames.length], display: (itemsToShow > index || itemsToShow === 29) ? 'block' : 'none' }}  >
+            <div key={item._id} style={{ gridArea: gridAreaNames[index % gridAreaNames.length], display: (itemsToShowContactlens > index || itemsToShowContactlens === 29) ? 'block' : 'none' }}  >
               <div className='newsunglassconAll' key={item._id} >
                 <ProductImage item={item} />
                 {item.isOnSale ? (
@@ -56,7 +57,7 @@ export default function AllproductContact({
           ))}
           {sort == "Man" && (
             <video className="grid-vid" autoPlay muted loop
-              style={{ display: (itemsToShow > 25) ? 'block' : 'none' }} >
+              style={{ display: (itemsToShowContactlens > 25) ? 'block' : 'none' }} >
               <source src="http://localhost:8080/public/video/rb-hp-hero-icons-d-data.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
@@ -65,14 +66,14 @@ export default function AllproductContact({
       </div>
       {29 > 4 && (
         <div className='but-allprouduct-showmore'>
-          {itemsToShow < 29 && (
-            <ShowmoreDown state={`Show More`} handleShowMore={handleShowMore} />
+          {itemsToShowContactlens < 29 && (
+            <ShowmoreDown state={`Show More`} handleShowMore={()=>{handleShowMore(itemsToShowContactlens,setItemsToShowContactlens)}} />
           )}
-          {itemsToShow == 29 && (
+          {itemsToShowContactlens == 29 && (
             <Showmore />
           )}
-          {itemsToShow > 4 && (
-            <ShowmoreDown state="Show Less" handleShowMore={handleShowLess} />
+          {itemsToShowContactlens > 4 && (
+            <ShowmoreDown state="Show Less" handleShowMore={()=>{handleShowLess(itemsToShowContactlens,setItemsToShowContactlens)}} />
           )}
         </div>
       )}

@@ -15,8 +15,7 @@ export default function Text() {
     useEffect(()=>{
         setSelectedToFav(favorites)
     },[favorites])
-    const handleNavigation=(productMan,sort)=>{
-                   
+    const handleNavigation=(productMan,sort)=>{             
       navigate(`/products/${sort}`, { state: { results: productMan,favorites:selectedFav,sort:sort } });
     } 
     

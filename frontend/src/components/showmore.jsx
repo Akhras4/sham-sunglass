@@ -7,16 +7,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 
 
-export default function Showmore({product,sort}) {
+export default function Showmore({product,sort,cat}) {
     const{favorites}=useContext(favContext)|| []
     const [selectedFav, setSelectedToFav] = useState(favorites)
-useEffect(()=>{
-    setSelectedToFav(favorites)
-},[favorites])
+    useEffect(()=>{
+       setSelectedToFav(favorites)
+    },[favorites])
     const navigate = useNavigate()
-    const hadelnavgaiton=()=>{              
+    const hadelnavgaiton=()=>{ 
+        if (cat){
+            navigate(`/products/${sort}/${cat}`, { state: { results: product,favorites:selectedFav,sort:sort } });
+         }else{             
         navigate(`/products/${sort}`, { state: { results: product,favorites:selectedFav,sort:sort } });
-      }
+         }
+        }
   return (
       <div>
           <div class="contact-fp-wrap">

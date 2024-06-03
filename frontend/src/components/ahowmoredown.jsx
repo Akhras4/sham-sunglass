@@ -1,8 +1,6 @@
 import React from 'react'
 import "./showmore.css"
 import { useNavigate } from 'react-router-dom'
-import { favContext } from './homepage'
-import { useContext,useEffect,useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons';
 import { faAngleDoubleDown} from '@fortawesome/free-solid-svg-icons';

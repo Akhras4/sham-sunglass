@@ -15,6 +15,7 @@ import Cookies from 'js-cookie';
 import Usericon from './components/usericon';
 import {jwtDecode} from 'jwt-decode';
 import Logout from './components/logout'
+import AllproductsCat from './components/allproductscat';
 
 
 
@@ -70,6 +71,7 @@ function App() {
           <Routes>
           <Route path="/" element={<Homepage />} />
             <Route path="/products/:sort" element={<Allproduct />} />
+            <Route path="/products/:sort/:cat" element={<AllproductsCat />} />
             <Route path="/product/:sort" element={<Product />} /> 
             <Route path="/signup" element={ isAuthenticated ? <User /> : <Signup /> } />
             <Route path="/creataccount" element={<Createaccount />} />

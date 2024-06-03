@@ -1,10 +1,20 @@
 import React from 'react'
-import { useState ,useEffect } from 'react'
+import { useState ,useEffect,useContext } from 'react'
+import { useNavigate } from 'react-router-dom';
 import {motion} from 'framer-motion'
 import './manWomanChild.css'
-export default function ManWomenChild({titel,discrishion,sunglasses,glasses,lens,imgSrc,background}) {
+import { favContext } from './homepage'
+
+export default function ManWomenChild({titel,discrishion,sunglasses,glasses,lens,imgSrc,background,product,sort}) {
     const [isVisible, setIsVisible] = useState(false);
     const [scrollY, setScrollY] = useState(0);
+    const{favorites}=useContext(favContext)|| []
+    const navigate =useNavigate()
+    const [selectedFav, setSelectedToFav] = useState(favorites)
+    let cat=''
+    useEffect(()=>{
+        setSelectedToFav(favorites)
+    },[favorites])
     useEffect(() => {
         function handleScroll() {
          const threshold = 3300; 
@@ -17,12 +27,21 @@ export default function ManWomenChild({titel,discrishion,sunglasses,glasses,lens
             setIsVisible(false);
           }
         }
-    
         window.addEventListener('scroll', handleScroll);
         return () => {
           window.removeEventListener('scroll', handleScroll);
         };
       }, []);
+      const handleNavigation=(cat)=>{
+        console.log(product) 
+        console.log(sort)
+        console.log(cat) 
+        const productcat=Object.values(product).flat().filter(product=>product.category===cat);
+        console.log(productcat)      
+        navigate(`/products/${sort}/${cat}`, { state: { results: productcat,
+          favorites:selectedFav,
+          sort:sort } });
+      }
   return (
     <div className='man-woman-child-textcon'style={{backgroundColor:background}}>
       
@@ -37,7 +56,8 @@ export default function ManWomenChild({titel,discrishion,sunglasses,glasses,lens
             {/* <span className='span2'><img src='https://i.postimg.cc/D03CmyDG/Untitled-1.png'/></span> */}
             <p >{discrishion}</p>
             <div className="man-woman-child-button-Flex">
-            <button type="submit" className="man-woman-child-mt-3">
+            <button type="submit" className="man-woman-child-mt-3"
+            onClick={()=>{ handleNavigation(cat="Sunglass")}}>
             <div>
               <div className="man-woman-child-highlight-bg"></div>
               <div className="man-woman-child-button-text">
@@ -45,7 +65,8 @@ export default function ManWomenChild({titel,discrishion,sunglasses,glasses,lens
               </div>
             </div>
             </button>
-            <button type="submit" className="man-woman-child-mt-3">
+            <button type="submit" className="man-woman-child-mt-3"
+            onClick={()=>{ handleNavigation(cat="Eyewear")}}>
             <div>
               <div className="man-woman-child-highlight-bg"></div>
               <div className="man-woman-child-button-text">
@@ -54,7 +75,8 @@ export default function ManWomenChild({titel,discrishion,sunglasses,glasses,lens
             </div>
             </button>
             {lens ? (
-            <button type="submit" className="man-woman-child-mt-3">
+            <button type="submit" className="man-woman-child-mt-3"
+            onClick={()=>{ handleNavigation(cat="contactlens")}}>
             <div>
               <div className="man-woman-child-highlight-bg"></div>
               <div className="man-woman-child-button-text">
