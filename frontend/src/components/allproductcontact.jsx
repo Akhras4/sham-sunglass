@@ -73,7 +73,7 @@ export default function AllproductContact({
             <Showmore />
           )}
           {itemsToShowContactlens > 4 && (
-            <ShowmoreDown state="Show Less" handleShowMore={()=>{handleShowLess(itemsToShowContactlens,setItemsToShowContactlens)}} />
+            <ShowmoreDown state={"Show Less"} handleShowMore={()=>{handleShowLess(itemsToShowContactlens,setItemsToShowContactlens)}} />
           )}
         </div>
       )}

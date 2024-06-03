@@ -4,6 +4,7 @@ import { productContext } from '../App'
 import { useContext, useState, useEffect ,useRef } from 'react';
 import Nav from './nav';
 import './allproduct.css'
+import './allproductcat.css'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import Button from 'react-bootstrap/Button';
@@ -29,22 +30,6 @@ export default function AllproductsCat() {
   const [products, setproducts] = useState([])
   const [sort, setSort] = useState()
   const navigate = useNavigate()
-  const gridAreaNames = [
-    'a', 'b',
-    'c', 'd', 'e',
-    'f', 'g', 'h',
-    'i', 'j', 'k',
-    'l', 'm', 'n',
-    'o', 'p', 'q',
-    'r', 's', 't',
-    'u', 'v', 'w',
-    'x', 'y', 'z',
-    'aa', 'ab', 'ac',
-    'ad', 'ae', 'af',
-    'ag', 'ah', 'ai',
-    'aj', 'ak', 'al',
-    'am', 'an'
-  ];
   useEffect(() => {
     if (location.state && location.state.results) {
       setproducts(location.state.results);
@@ -126,18 +111,6 @@ export default function AllproductsCat() {
       setItemsToShow(itemsToShow - 10);
     }
   };
-//   useEffect(() => {
-//     const video = document.querySelector('.grid-vid');
-//     if (video) {
-//       video.muted = true;
-//       video.loop = true;
-//       video.autoplay = true;
-//       console.log('Video element:', video);
-//       video.play().catch(error => {
-//         console.error('Error trying to play the video:', error);
-//       });
-//     }
-//   }, []);
   const ProductImage = ({ item }) => {
     const [imageSrc, setImageSrc] = useState(item.image[0]);
     const handleMouseEnterImg = () => {
@@ -159,6 +132,16 @@ export default function AllproductsCat() {
       />
     );
   };
+  const generateClassName = (index) => {
+    let className = 'grid-item'; 
+    if ((index + 1) % 20 === 0) {
+      className += ' special-right'; 
+    } else if ((index + 1) % 10 === 0) {
+      className += ' special'; 
+    }
+    return className;
+  };
+
   return (
     <div>
         <Bar
@@ -169,12 +152,14 @@ export default function AllproductsCat() {
       <div className='allproductcon'>
         {isAuthenticated ? <Usericon /> : null}
         <div className='continer'>
-          <div className='newsunglassAll' >
+          <div  id="gridContainer" >
             {sort === "Man" && (
               <img className="grid-image" src='http://localhost:8080/public/images/manimggrid.jpeg' />
             )}
             {products && products.slice(0, 29).map((item, index) => (
-              <div key={item._id} style={{ gridArea: gridAreaNames[index % gridAreaNames.length], display: (itemsToShow > index || itemsToShow === 29) ? 'block' : 'none' }}  >
+              <div key={item._id}
+              className={generateClassName(index)} 
+              style={{  display: (itemsToShow > index || itemsToShow === 29) ? 'block' : 'none' }}  >
                 <div className='newsunglassconAll'>
                   <ProductImage item={item} />
                   {item.isOnSale ? (
