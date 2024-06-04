@@ -161,11 +161,12 @@ div .highlight-bg {
             padding-left: -10%;
         }
         & .span3{
-            padding-left: 40%;
+            padding-left: 30%;
         }
         }
         .textcon{
         height: 100vh;
+        width: 100vw;
             
         }
         & .span1{
@@ -177,6 +178,11 @@ div .highlight-bg {
         }
         .text-right{
         padding-top: 20px;
+        & img{
+            width: 400px;
+            height: 300px;
+            
+        }
     }
     .button-text {
         font-size: 0.8rem;
@@ -223,12 +229,6 @@ div .highlight-bg {
     }
     .button-Flex{
         margin-top: 2%;
-        
-    }
-    .button-Flex{
-        margin-top: 10%;
-        display: flex;
-        flex-direction:row;
         gap:1rem;
         width: 70vw;
     }
