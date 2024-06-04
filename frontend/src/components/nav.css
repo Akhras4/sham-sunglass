@@ -120,3 +120,80 @@ nav{
     cursor: pointer;
 
   }
+  @media screen and (max-width:991px) {
+   #helpco{
+    display: block;
+   }
+  }
+  @media screen and (max-width: 769px) {
+    nav{
+      display: flex;
+      width:100vw;
+      height: 50px;
+      
+    }
+    #helpco{
+      display: none;
+     }
+     #LOGINcon{
+      display: inline-block;
+  }
+  #SHOPPING{
+      display: inline-block;
+  }
+     .RightSideContiner{
+      display: inline;
+      
+    }
+     .search-container{
+      position: fixed;
+        bottom: 0;
+        right: 15px;
+        left: 15px;
+        width: 80vw;
+       margin-right: 30px;
+       height: 30px;
+     }
+     .search-input{
+      font-size: 20px;
+        border: 1px solid black;
+        border-radius: 5px;
+        width: 100vw;
+        height: 30px;
+     }
+     .search-button {
+      display: none;
+     }
+    }
+  @media screen and (max-width:475px) {
+    #LOGINcon{
+      width:80px !important;
+    }
+      .logo{
+        width: fit-content !important;
+        margin-left: 0px !important;  
+    }
+    .logo svg{
+      width: 180px !important;
+      height: fit-content;
+      margin-left:-40px !important;  
+  }
+  
+    }
+    @media screen and (max-width:320px) {
+      .logo{
+        width: fit-content !important;
+        margin-left: 0px !important;  
+    }
+    .logo svg{
+      width: 180px !important;
+      height: fit-content;
+      margin-left:-40px !important;  
+  }
+  .search-container{
+      width: 250px;
+     
+   }
+
+      }
+        

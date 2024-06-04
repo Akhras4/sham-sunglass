@@ -6,10 +6,14 @@ import { Link ,useNavigate } from 'react-router-dom';
 import './nav.css'
 import {productContext} from '../App'
 import { favContext } from './homepage';
+import { useMediaQuery } from 'react-responsive'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function Nav({ favorites }) {
     const { isAuthenticated,userId } = useContext(productContext);
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width:475px)'})
     // const {favorites }=useContext(favContext)|| []
     // // console.log(favContextFavorites,"favContextFavorites nav")
     // // console.log(favorites,"favorites nav")
@@ -212,6 +216,7 @@ export default function Nav({ favorites }) {
                 </svg>
         </div>
         </Link>
+        {isTabletOrMobile ?(<FontAwesomeIcon icon={faCartShopping} size="68px" style={{ marginLeft:'20px' }}  onClick={()=>{handelclick()}} />): (
         <div id="SHOPPING" onClick={()=>{handelclick()}}>
             <svg width="117" height="33" viewBox="0 0 117 33" fill="none">
                 <g id="Frame 1" clip-path="url(#clip0_1_2)">
@@ -242,10 +247,12 @@ export default function Nav({ favorites }) {
                 </defs>
                 </svg>
         </div>
-</div>
+)
+}
+ </div>
 
-    </nav>
-      </div>
+</nav>
+</div>
     );
   
 }

@@ -107,10 +107,26 @@ video.grid-vid {
                          justify-items: center;
                          justify-content: center;
       }}
-      @media screen and (max-width: 800px) {
-        .newsunglassAll{
-          grid-template-areas: " a  " 
-                               " a  ";
-                           justify-items: center;
-                           justify-content: center;
-        }}
+      @media screen and (max-width: 1024px) {
+        .newsunglassconAll{
+          width: 300px;
+          height:350px;
+      }}
+        @media screen and (max-width:991px) {
+   
+        }
+        @media screen and (max-width: 769px) {
+          .newsunglassAll{
+            gap:2px
+          }
+          .newsunglassconAll{
+            width: 40vw;
+            height:60vh;
+        }
+      }
+        @media screen and (max-width:550) {
+          .newsunglassconAll{
+           width:40vw;
+            height:40vh;
+        }
+      }

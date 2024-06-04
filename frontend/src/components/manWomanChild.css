@@ -130,3 +130,12 @@ div.man-woman-child-highlight-bg:after {
         transform: skew(0deg);
     }
 }
+@media screen and (max-width:991px) {
+   
+}
+@media screen and (max-width: 767px) {
+	
+  }
+@media screen and (max-width:576px) {
+   
+  }
