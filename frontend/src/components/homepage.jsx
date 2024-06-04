@@ -62,6 +62,8 @@ useEffect(() => {
   window.addEventListener('scroll', handleScroll);
   return () => window.removeEventListener('scroll', handleScroll);
 }, []);
+let y=0
+
 
   return (
     <div>

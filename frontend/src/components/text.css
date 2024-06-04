@@ -152,6 +152,94 @@ div .highlight-bg {
         transform: skew(0deg);
     }
 }
+@media screen and (max-width:1025px) {
+    .text-leftcon{
+        & span{
+            font-size: 6rem;  
+        }
+        & .span1{
+            padding-left: -10%;
+        }
+        & .span3{
+            padding-left: 40%;
+        }
+        }
+        .textcon{
+        height: 100vh;
+            
+        }
+        & .span1{
+            padding-left: -5%;
+        }
 
+        & .span3{
+            padding-left: 30%;
+        }
+        .text-right{
+        padding-top: 20px;
+    }
+    .button-text {
+        font-size: 0.8rem;
+        
+    }
+    .button-Flex{
+        margin-top: 0%;
+        
+    }
+    
+}
+@media screen and (max-width:426px) {
+    .text-leftcon{
+        & span{
+            font-size: 4rem;  
+        }
+        & .span1{
+            padding-left: -5%;
+        }
+        & .span3{
+            padding-left: 20%;
+        }
+        }
+        .textcon{
+        height: 100vh;
+        & p{
+         font-size: 0.8rem;
+        }
+            
+        }
+        & .span1{
+            padding-left: -5%;
+        }
+
+        & .span3{
+            padding-left: 20%;
+        }
+        .text-right{
+        padding-top: 10px;
+    }
+    .button-text {
+        font-size: 0.6rem;
+        
+    }
+    .button-Flex{
+        margin-top: 2%;
+        
+    }
+    .button-Flex{
+        margin-top: 10%;
+        display: flex;
+        flex-direction:row;
+        gap:1rem;
+        width: 70vw;
+    }
+    
+} 
+
+@media screen and (max-width: 769px) {
+    
+  }
+@media screen and (max-width:576px) {
+   
+  }
 
   

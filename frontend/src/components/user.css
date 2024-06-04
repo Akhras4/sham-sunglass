@@ -83,3 +83,12 @@ padding-top: 10%;
 .mahesh{
   padding: 20px;
 }
+@media screen and (max-width:991px) {
+   
+}
+@media screen and (max-width: 767px) {
+    
+  }
+@media screen and (max-width:576px) {
+   
+  }

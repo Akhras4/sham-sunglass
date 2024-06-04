@@ -6,12 +6,14 @@ import './text.css'
 import Vertically from './verticallybar';
 import { useNavigate } from 'react-router-dom';
 import { favContext } from './homepage'
+import { useMediaQuery } from 'react-responsive'
 export default function Text() {
   const {product ,isAuthenticated ,userid } = useContext(productContext);
     const [isVisible, setIsVisible] = useState(false);
     const{favorites}=useContext(favContext)|| []
     const navigate =useNavigate()
     const [selectedFav, setSelectedToFav] = useState(favorites)
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width:769px)'})
     useEffect(()=>{
         setSelectedToFav(favorites)
     },[favorites])
@@ -21,7 +23,10 @@ export default function Text() {
     
     useEffect(() => {
         function handleScroll() {
-          const threshold = 50;
+          let threshold = 50;
+          if(isTabletOrMobile){
+            threshold = 0;
+          }
           if (window.scrollY > threshold) {
             setIsVisible(true);
           } else {
@@ -32,11 +37,12 @@ export default function Text() {
         return () => {
           window.removeEventListener('scroll', handleScroll);
         };
-      }, []);
+      }, [isTabletOrMobile]);
+      const initialX = isTabletOrMobile ? -1000 : -1500;
   return (
     <div className='textcon'>
          <motion.div
-        initial={{ x: -1500 }}
+        initial={{ x: initialX  }}
         animate={{ x: isVisible ? 0 : -1200 }}
         transition={{ duration: 0.5 }}
         className='text-leftcon'
@@ -74,6 +80,7 @@ export default function Text() {
         </div>
         </motion.div>
         <p>Explore Trendy Sunglasses Styles</p>
+        {isTabletOrMobile ?(null):(
         <motion.div
         initial={{ x: 1500 }}
         animate={{ x: isVisible ? 0 : 1200 }}
@@ -84,6 +91,7 @@ export default function Text() {
             <img src="https://i.postimg.cc/nrLTFWGF/Photo-by-Toa-Heftiba-on-Unsplash.jpg" alt='image' />
         </div>
         </motion.div>
+        )}
         {/* <Vertically baseVelocity={-5}>
          <img src="https://i.postimg.cc/ydYVdgdg/image-54-2.png" />
          <img src="https://i.postimg.cc/hvnbCDNc/image-54-8.png" />
