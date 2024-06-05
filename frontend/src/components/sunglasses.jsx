@@ -10,6 +10,9 @@ import axios from 'axios'
 import { FaShoppingCart } from 'react-icons/fa';
 import { MdFavorite } from "react-icons/md";
 import { GoArrowLeft } from "react-icons/go";
+import { useMediaQuery } from 'react-responsive'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 export default function SunglasesMan() {
   const { product, loading, userid, isAuthenticated } = useContext(productContext);
@@ -19,6 +22,7 @@ export default function SunglasesMan() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedFav, setSelectedToFav] = useState(favorites);
   const [isProcessing, setIsProcessing] = useState(false);
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width:426px)'})
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -99,7 +103,7 @@ export default function SunglasesMan() {
   };
 
   const handleMove = (direction) => {
-    const container = document.querySelector('.sunglassconMan');
+    const container = document.querySelector('.sunglassconSale');
     const scrollStep = container.offsetWidth / 1;
     if (direction === 'left') {
       container.scrollLeft -= scrollStep;
@@ -155,9 +159,11 @@ export default function SunglasesMan() {
           />
         </div>
         <div className='butCon'>
+        {isTabletOrMobile ?(<FontAwesomeIcon icon={faCartShopping} size="68px"   onClick={() => handleShowOffcanvas(productItem)} />):(
           <Button variant="primary" onClick={() => handleShowOffcanvas(productItem)}>
             <FaShoppingCart />ADD to Cart
           </Button>
+        )}
         </div>
       </div>
     );
@@ -165,16 +171,19 @@ export default function SunglasesMan() {
 
   return (
     <div className='sunglassMainCo'>
-      <div className="arrowButtons">
-        <button onClick={() => handleMove('left')}>{'<'}</button>
-        <button onClick={() => handleMove('right')}>{'>'}</button>
-      </div>
+      
       <motion.div
         initial={{ x: -1600 }}
         animate={{ x: isVisible ? 0 : -1500 }}
         transition={{ duration: 0.5 }}
       >
-        <div className='sunglassconMan'>
+        <div className='sunglassconSale'>
+        <div className="arrowButtons-left">
+        <button onClick={() => handleMove('left')}>{'<'}</button>
+      </div>
+      <div className="arrowButtons-right">
+        <button onClick={() => handleMove('right')}>{'>'}</button>
+      </div>
           {!loading && product.product && product.product.filter(sort => sort.sort === "man").map(productItem => (
             <ProductImage key={productItem.id} productItem={productItem} />
           ))}

@@ -10,7 +10,9 @@ import axios from 'axios'
 import { FaShoppingCart } from 'react-icons/fa';
 import { MdFavorite } from "react-icons/md";
 import { GoArrowLeft } from "react-icons/go";
-
+import { useMediaQuery } from 'react-responsive'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 export default function SunglasesWomen() {
   const { product, loading, userid, isAuthenticated } = useContext(productContext);
@@ -21,6 +23,8 @@ export default function SunglasesWomen() {
   const [selectedFav, setSelectedToFav] = useState(favorites);
   const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
+  const isLaptop = useMediaQuery({ query: '(max-width:1025px)'})
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width:426px)'})
 
   useEffect(() => {
     setSelectedToFav(favorites);
@@ -144,6 +148,17 @@ export default function SunglasesWomen() {
           ) : (
             <p>Price: {productItem.price}</p>
           )}
+           <div className='butCon'>
+           {isTabletOrMobile ?(<FontAwesomeIcon icon={faCartShopping} size="68px"   onClick={() => handleShowOffcanvas(productItem)} />
+           ): (
+                <Button 
+                  variant="primary" 
+                  onClick={() => handleShowOffcanvas(productItem)}
+                >
+                  <FaShoppingCart /> ADD to Cart
+                </Button>
+            )}
+          </div>
         </div>
         <div id="fav" onClick={() => { handleAddToWishList(productItem._id) }}>
           <MdFavorite
@@ -156,11 +171,7 @@ export default function SunglasesWomen() {
             }}
           />
         </div>
-        <div className='butCon'>
-        <Button variant="primary" onClick={() => handleShowOffcanvas(productItem)}>
-          <FaShoppingCart />ADD to Cart
-        </Button>
-        </div>
+       
       </div>
     );
   };
@@ -168,16 +179,18 @@ export default function SunglasesWomen() {
   return (
     <div>
     <div className='sunglassMainCo'>
-      <div className="arrowButtons">
-        <button onClick={() => handleMove('left')}>{'<'}</button>
-        <button onClick={() => handleMove('right')}>{'>'}</button>
-      </div>
       <motion.div
         initial={{ x: -1600 }}
         animate={{ x: isVisible ? 0 : -1500 }}
         transition={{ duration: 0.5 }}
       >
         <div className='sunglassconWomen'>
+        <div className="arrowButtons-left">
+          <button onClick={() => handleMove('left')}>{'<'}</button>
+        </div>
+        <div className="arrowButtons-right">
+          <button onClick={() => handleMove('right')}>{'>'}</button>
+        </div>
           {!loading && product.product && product.product.filter(sort => sort.sort === "women").map(productItem => (
             <ProductImage key={productItem.id} productItem={productItem} />
           ))}
@@ -211,6 +224,7 @@ export default function SunglasesWomen() {
           )}
         </Offcanvas.Body>
       </Offcanvas>
+      
     </div>
     </div>
   );
