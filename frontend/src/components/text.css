@@ -167,6 +167,7 @@ div .highlight-bg {
         .textcon{
         height: 100vh;
         width: 100vw;
+        margin-bottom: 1rem;
             
         }
         & .span1{
@@ -235,11 +236,5 @@ div .highlight-bg {
     
 } 
 
-@media screen and (max-width: 769px) {
-    
-  }
-@media screen and (max-width:576px) {
-   
-  }
 
   

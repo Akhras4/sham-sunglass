@@ -8,6 +8,9 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { FaShoppingCart } from 'react-icons/fa';
 import axios from 'axios';
 import { MdFavorite } from "react-icons/md";
+import { useMediaQuery } from 'react-responsive'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 export default function Newsunglassproducts() {
   const [isVisible, setIsVisible] = useState(false);
   const [showOffcanvas, setShowOffcanvas] = useState(false);
@@ -16,6 +19,7 @@ export default function Newsunglassproducts() {
   const { favorites, getFav } = useContext(favContext) || { favorites: null }
   const [selectedFav, setSelectedToFav] = useState(favorites)
   const [isProcessing, setIsProcessing] = useState(false);
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width:426px)'})
   console.log(favorites, "favorites fromm home")
   useEffect(() => {
     setSelectedToFav(favorites)
@@ -87,6 +91,8 @@ export default function Newsunglassproducts() {
     const handleMouseLeave = () => {
       setImageSrc(item.image[0]);
     };
+    let fontSizeMobile = isTabletOrMobile ?'20px':'30px'
+    console.log(fontSizeMobile)
     return (
       <div className='newsunglasscon' key={item._id} >
         <img id="img" style={{ width: "100%", heigh: "80%" }}
@@ -97,15 +103,17 @@ export default function Newsunglassproducts() {
         <p>{item.price}</p>
         <h4>{item.title}</h4>
         <div className='butCon'>
+        {isTabletOrMobile ?(<FontAwesomeIcon icon={faCartShopping} size="68px"   onClick={() => handleShowOffcanvas(item)} />): (
           <Button variant="dark" onClick={() => handleShowOffcanvas(item)}>
             <FaShoppingCart />ADD to Cart
           </Button>
+        )}
         </div>
         <div id="fav" onClick={() => { handleAddToWishList(item._id) }}>
           <MdFavorite
             className="hoverEffect"
             style={{
-              fontSize: '30px',
+              fontSize:`${fontSizeMobile}`,
               cursor: isProcessing ? "" : 'pointer',
               color: selectedFav && selectedFav.items && selectedFav.items.some(items => items.productId === item._id) ? 'red' : 'white'
             }}

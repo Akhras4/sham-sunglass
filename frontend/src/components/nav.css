@@ -167,7 +167,10 @@ nav{
     }
   @media screen and (max-width:475px) {
     #LOGINcon{
-      width:80px !important;
+      width:70px !important;
+      & svg{
+        width: 90px;
+      }
     }
       .logo{
         width: fit-content !important;
@@ -183,10 +186,13 @@ nav{
     @media screen and (max-width:320px) {
       .logo{
         width: fit-content !important;
-        margin-left: 0px !important;  
+        margin-left: 0px !important;
+        & svg{
+          width: 70px;
+        }  
     }
     .logo svg{
-      width: 180px !important;
+      width: 160px !important;
       height: fit-content;
       margin-left:-40px !important;  
   }

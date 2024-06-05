@@ -137,7 +137,6 @@ h2 {
   position: absolute;
 }
 section {
-  padding-bottom: 5vh;
   position: relative;
 }
 #img {
@@ -307,8 +306,9 @@ section {
     display:flex;
     justify-content: center;
   align-items: center;
+  position: relative;
   }
-.sunglassconMan,.sunglassconWomen{
+.sunglassconMan,.sunglassconWomen,.sunglassconSale{
   display:flex;
   flex-direction: row;
   width: 95vw;
@@ -324,8 +324,21 @@ section {
 scroll-behavior: smooth;
 justify-content: flex-start;
 padding-left: 20px;
-}
 
+
+}
+.arrowButtons-left{
+  position:absolute;
+  top:50;
+  left: 0;
+  z-index: 2;
+}
+.arrowButtons-right{
+  position: absolute;
+  top:50;
+  right: 0;
+  z-index: 2;
+}
 .sunglass ,.sunglasscontent{
   width: 22vw;
   height:500px;
@@ -344,9 +357,6 @@ padding-left: 20px;
     bottom: 0;
     right: 0;
   }
-   /* & .imageflex{
-    position: relative;
-  } */
   & #fav{
     position: absolute ;
     top:0;
@@ -363,12 +373,137 @@ padding-left: 20px;
   display: flex;
   gap:10px;
 }
-@media screen and (max-width:991px) {
-   
+@media screen and (max-width:1025px) {
+  .newsunglass{
+    grid-template-areas: " a a " 
+                         " a a "
+                         " a a ";
+                
+      gap:40px;
+  }
+  .sunglassconMan,.sunglassconWomen,.sunglassconSale,.sunglassconKids{
+    display:flex;
+    flex-direction: row;
+    width: 95vw;
+    height: 420px;
+    overflow-y: hidden;
+    column-gap: 10px;
+    padding-left: 0.5rem;
+  }
+  .sunglass ,.sunglasscontent{
+    width: 22vw;
+    height:380px;
+    font-size:1rem;
+    & h5,p{
+      font-size: 1rem;
+    }
+    & .saleinfo{
+      gap:5px;
+    }&.butCon{
+      margin: 0.5rem;
+      bottom: 2;
+      right: 2;
+    }
+  }
 }
-@media screen and (max-width: 767px) {
-    
+@media screen and (max-width: 789px) {
+  .newsunglass{          
+      gap:20px;
   }
-@media screen and (max-width:576px) {
-   
+  .newsunglasscon{
+    width: 300px;
+    height:350px;
+    & h4, p{
+      font-size:15px;
+      margin-bottom:8px;
+    }
   }
+  .sunglassconMan,.sunglassconWomen,.sunglassconSale{
+    height: 450px;
+  }
+  .arrowButtons-left,.arrowButtons-right{
+    display: none;
+  }
+  .sunglass ,.sunglasscontent{
+    width: 43vw;
+    height:430px;
+    font-size:50px;
+    & .saleinfo{
+      display: flex;
+      gap:10px;
+    }
+  }
+  }
+@media screen and (max-width:426px) {
+  .newsunglass{          
+    gap:10px;
+}
+.newsunglasscon{
+  width: 45vw;
+  height:250px;
+ 
+  & h4, p{
+    z-index: 1;
+    font-size:12px;
+    margin-bottom:4px;
+  }& .butCon{
+      bottom: 2;
+      right: 2;
+      margin: 0.5rem;
+    }& #fav{
+      position: absolute ;
+      top:0;
+      right: 0;
+      z-index: 2;
+      padding: 0rem;
+      height: 35px;
+      width: 25px;
+
+}
+}
+.parallax .scroller {
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 40px;
+}
+.parallax span {
+  margin-right: 10px;
+
+}
+.sunglassconMan,.sunglassconWomen,.sunglassconSale{
+  height: 300px;
+}
+.sunglass ,.sunglasscontent{
+  width: 45vw;
+  height:270px;
+  font-size: 15px;
+  column-gap: 10px;
+  & .saleinfo{
+    display: flex;
+    gap:5px; 
+  }
+}
+.sunglass h5,.sunglass p{
+  font-size: 12px;
+}
+.butCon{
+  margin: 0.5rem;
+}
+}
+@media screen and (max-width:321px) {
+ 
+  .newsunglasscon h4,.newsunglasscon p{
+      font-size:12px;
+  }
+  .sunglass h5,.sunglass p{
+    font-size: 12px;
+  }
+  .parallax .scroller {
+    font-weight: 400;
+    font-size: 30px;
+  }
+  .parallax span {
+    margin-right: 7px;
+  
+  }
+}
