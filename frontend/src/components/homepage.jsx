@@ -100,7 +100,7 @@ let y=0
       discrishion={'Wide skies, soft sand and warm air: we have captured the Sicilian summer for you in a limited edition sunglasses collection. Discover three of our favourite sunnies in a fresh and unique colourway.'} 
       sunglasses={'Sunglass'} 
       glasses={'EYEWEAR'} 
-      lens={'CONTACT LENSES'} 
+      lens={'LENSE'} 
       imgSrc={'http://localhost:8080/public/images/womanbar.jpeg'} 
       background={'#ddbbb9'}
       product={Object.values(product).flat().filter(product=>product.sort==="women")}
@@ -119,7 +119,7 @@ let y=0
       discrishion={'Wide skies, soft sand and warm air: we have captured the Sicilian summer for you in a limited edition sunglasses collection. Discover three of our favourite sunnies in a fresh and unique colourway.'} 
       sunglasses={'SUNGLASSES'} 
       glasses={'EYEWEAR'} 
-      lens={'CONTACT LENSES'} 
+      lens={'LENSES'} 
       imgSrc={'http://localhost:8080/public/images/manbar.jpeg'} 
       background={'#8bb9d1'}
       product={Object.values(product).flat().filter(product=>product.sort==="man")}

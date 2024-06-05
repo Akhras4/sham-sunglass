@@ -92,7 +92,6 @@ export default function Newsunglassproducts() {
       setImageSrc(item.image[0]);
     };
     let fontSizeMobile = isTabletOrMobile ?'20px':'30px'
-    console.log(fontSizeMobile)
     return (
       <div className='newsunglasscon' key={item._id} >
         <img id="img" style={{ width: "100%", heigh: "80%" }}

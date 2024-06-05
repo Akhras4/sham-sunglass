@@ -1,9 +1,10 @@
 .man-woman-child-textcon{
     display:flex;
     flex-direction: row;
-    margin-bottom: 50px;
+    margin-bottom: 3%;
     gap: 0.5%;
-    height: 85vh;
+    height: 90vh;
+	
     & p{
         color: white;
         margin-top: 30px;
@@ -38,7 +39,7 @@ padding-top: 2%;
 }
 
 .man-woman-child-button-Flex{
-    margin-top: 10%;
+    margin-top: 15%;
     display: flex;
     flex-direction:row;
     gap:2rem;
@@ -99,7 +100,6 @@ div.man-woman-child-button-text {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-    
 }
 
 div.man-woman-child-highlight-bg:after {
@@ -136,6 +136,32 @@ div.man-woman-child-highlight-bg:after {
 @media screen and (max-width: 767px) {
 	
   }
-@media screen and (max-width:576px) {
-   
+@media screen and (max-width:426px) {
+	.man-woman-child-text-left p{ 
+      font-size: 15px;
+	  margin-top: 2%;
+	}
+	.man-woman-child-text-leftcon{
+		width: 50vw;
+	}
+	.man-woman-child-text-right img{
+		width: 50vw;
+		height: 50vh;
+		overflow: visible;
+	}
+	.man-woman-child-button-Flex{
+        gap:0.3rem;
+        width: 85vw;
+		margin-top: 10%;
+		font-size: 15px;
+		overflow: visible;
+	}
+
+     div .man-woman-child-button-text{
+		font-size: 0.7rem;
+		font-weight: bold;
+        text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
   }

@@ -124,6 +124,7 @@ export default function SunglasesMan() {
     const handleMouseLeaveImg = () => {
       setImageSrc(productItem.image[0]);
     };
+    let fontSizeMobile = isTabletOrMobile ?'23px':'30px'
     return (
       <div className='sunglass'>
         <div className='sunglasscontent' onClick={() => hadelnavgaiton(productItem)}>
@@ -151,7 +152,7 @@ export default function SunglasesMan() {
           <MdFavorite
             className="hoverEffect"
             style={{
-              fontSize: '30px',
+              fontSize:`${fontSizeMobile}`,
               borderColor: 'black',
               cursor: isProcessing ? "" : 'pointer',
               color: selectedFav && selectedFav.items.some(items => items.productId === productItem._id) ? 'red' : 'white'
