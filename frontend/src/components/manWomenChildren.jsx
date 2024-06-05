@@ -33,9 +33,6 @@ export default function ManWomenChild({titel,discrishion,sunglasses,glasses,lens
         };
       }, []);
       const handleNavigation=(cat)=>{
-        console.log(product) 
-        console.log(sort)
-        console.log(cat) 
         const productcat=Object.values(product).flat().filter(product=>product.category===cat);
         console.log(productcat)      
         navigate(`/products/${sort}/${cat}`, { state: { results: productcat,
@@ -76,6 +73,7 @@ export default function ManWomenChild({titel,discrishion,sunglasses,glasses,lens
             </button>
             {lens ? (
             <button type="submit" className="man-woman-child-mt-3"
+            id="man-woman-child-mt-3-lens"
             onClick={()=>{ handleNavigation(cat="contactlens")}}>
             <div>
               <div className="man-woman-child-highlight-bg"></div>

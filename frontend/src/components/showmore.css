@@ -44,12 +44,21 @@
     -webkit-animation: 0.5s draw linear forwards;
     animation: 0.5s draw linear forwards;
   }
-  @media screen and (max-width:991px) {
-   
-  }
-  @media screen and (max-width: 767px) {
-      
-    }
+
   @media screen and (max-width:576px) {
-     
+    .contact-fp-wrap {
+      height: 60px;
+      width: 320px;
+      margin-top:10px;
+      margin-bottom:30px; 
+    }
+    .booton-text {
+      font-family: 'Lato';
+      font-size: 17px;
+      letter-spacing: 2px;
+      line-height: 32px;
+      position: relative;
+      top: -40px;
+      margin-left: 96px;
+    }
     }
