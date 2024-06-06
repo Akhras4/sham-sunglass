@@ -17,6 +17,9 @@ import ShowmoreDown from './ahowmoredown';
 import Showmore from './showmore';
 import TopButton from './topbutton'
 import Bar from './bar'
+import { useMediaQuery } from 'react-responsive'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 export default function Allproduct() {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -28,6 +31,12 @@ export default function Allproduct() {
   const [products, setproducts] = useState([])
   const [sort, setSort] = useState()
   const navigate = useNavigate()
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width:666px)'})
+  const isMobile = useMediaQuery({ query: '(max-width:426px)'})
+  let fontSizeMobile = isMobile ?'20px':'30px'
+  let size = isMobile ?('20px'):(isTabletOrMobile ? ('30px') : ('20px'))
+
+
   const gridAreaNames = [
     'a', 'b',
     'c', 'd', 'e',
@@ -91,7 +100,6 @@ export default function Allproduct() {
           })
           .catch(err => { console.log(err) })
           .finally(() => {
-            // Operation completed, set isProcessing to false
             setIsProcessing(false);
           });
       } else { addToWishList(productId) }
@@ -109,7 +117,6 @@ export default function Allproduct() {
         console.log(err);
       })
       .finally(() => {
-        // Operation completed, set isProcessing to false
         setIsProcessing(false);
       });
   };
@@ -129,11 +136,7 @@ export default function Allproduct() {
       video.muted = true;
       video.loop = true;
       video.autoplay = true;
-
-      // Log to confirm the video element is correctly selected
       console.log('Video element:', video);
-
-      // Check if the video can be played
       video.play().catch(error => {
         console.error('Error trying to play the video:', error);
       });
@@ -205,15 +208,19 @@ export default function Allproduct() {
                   )}
                   <h4>{item.title}</h4>
                   <div className='butCon'>
+                  {isTabletOrMobile ?(<FontAwesomeIcon icon={faCartShopping} style={{ fontSize: size }}    onClick={() => handleShowOffcanvas(item)} />): (
                     <Button variant="dark" onClick={() => handleShowOffcanvas(item)} >
                       <FaShoppingCart />ADD to Cart
                     </Button>
-                    <MdFavorite
+                  )}
+                  </div>
+                  <div id="fav" onClick={() => { handleAddToWishList(item._id) }}>
+                  <MdFavorite
                       className="hoverEffect"
                       onClick={() => { handleAddToWishList(item._id) }}
-                      style={{ fontSize: '30px', cursor: isProcessing ? "" : 'pointer', color: selectedFav && selectedFav.items.some(items => items.productId === item._id) ? 'red' : 'black' }}
+                      style={{ fontSize:`${fontSizeMobile}`, cursor: isProcessing ? "" : 'pointer', color: selectedFav && selectedFav.items.some(items => items.productId === item._id) ? 'red' : 'black' }}
                     />
-                  </div>
+                    </div>
                 </div>
               </div>
             ))}
@@ -274,6 +281,10 @@ export default function Allproduct() {
           setItemsToShowEyewear={setItemsToShowEyewear}
           sort={sort}
           ProductImage={ProductImage}
+          size={size}
+          fontSizeMobile={fontSizeMobile}
+          isTabletOrMobile={isTabletOrMobile}
+          isMobile={isMobile}
           
         />
         <div ref={Section2Ref}>ContactLens Section</div>
@@ -293,6 +304,10 @@ export default function Allproduct() {
           setItemsToShowContactlens={setItemsToShowContactlens}
           sort={sort}
           ProductImage={ProductImage} 
+          size={size}
+          fontSizeMobile={fontSizeMobile}
+          isTabletOrMobile={isTabletOrMobile}
+          isMobile={isMobile}
         />
       </div>
       <TopButton setCurrentSection={setCurrentSection} currentSection={currentSection} Section1Ref={Section1Ref}/>

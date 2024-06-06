@@ -42,6 +42,7 @@ color: white;
     background-color: inherit;
     height: 50vh;
    background-color: black;
+   z-index:  100;
 
 }
   .footerCon.menu-open {

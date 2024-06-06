@@ -4,6 +4,8 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { MdFavorite } from 'react-icons/md';
 import ShowmoreDown from './ahowmoredown';
 import Showmore from './showmore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 export default function AllproductEyewear({
   products,
   handleShowOffcanvas,
@@ -20,6 +22,10 @@ export default function AllproductEyewear({
   setItemsToShowEyewear,
   sort,
   ProductImage,
+  size,
+  fontSizeMobile,
+  isTabletOrMobile,
+  isMobile,
 }) {
   return (
     <div>
@@ -28,7 +34,7 @@ export default function AllproductEyewear({
           {sort == "Man" && (
             <img className="grid-image" src='http://localhost:8080/public/images/maneyeweargrid.jpeg' />
           )}
-          {products && products.slice(0, 29).map((item, index) => (
+          {products && products.slice(0, 28).map((item, index) => (
             <div key={item._id} style={{ gridArea: gridAreaNames[index % gridAreaNames.length], display: (itemsToShowEyewear > index || itemsToShowEyewear === 29) ? 'block' : 'none' }}  >
               <div className='newsunglassconAll' key={item._id} >
                 <ProductImage item={item} />
@@ -42,15 +48,19 @@ export default function AllproductEyewear({
                 )}
                 <h4>{item.title}</h4>
                 <div className='butCon'>
+                {isTabletOrMobile ?(<FontAwesomeIcon icon={faCartShopping} style={{ fontSize: size }}    onClick={() => handleShowOffcanvas(item)} />): (
                   <Button variant="dark" onClick={() => handleShowOffcanvas(item)}>
                     <FaShoppingCart />ADD to Cart
                   </Button>
-                  <MdFavorite
-                    className="hoverEffect"
-                    onClick={() => { handleAddToWishList(item._id); }}
-                    style={{ fontSize: '30px', cursor: isProcessing ? "" : 'pointer', color: selectedFav && selectedFav.items.some(items => items.productId === item._id) ? 'red' : 'black' }}
-                  />
+                )}
                 </div>
+                <div id="fav" onClick={() => { handleAddToWishList(item._id) }}>
+                  <MdFavorite
+                      className="hoverEffect"
+                      onClick={() => { handleAddToWishList(item._id) }}
+                      style={{ fontSize:`${fontSizeMobile}`, cursor: isProcessing ? "" : 'pointer', color: selectedFav && selectedFav.items.some(items => items.productId === item._id) ? 'red' : 'black' }}
+                    />
+                    </div>
               </div>
             </div>
           ))}
