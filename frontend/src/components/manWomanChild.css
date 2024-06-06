@@ -3,7 +3,7 @@
     flex-direction: row;
     margin-bottom: 3%;
     gap: 0.5%;
-    height: 100vh;
+    height: fit-content;
 	
     & p{
         color: white;
@@ -39,10 +39,10 @@ padding-top: 2%;
 }
 
 .man-woman-child-button-Flex{
-    margin-top: 15%;
     display: flex;
     flex-direction:row;
     gap:2rem;
+	margin-bottom: 5%;
 }
 
 button.man-woman-child-mt-3 {
@@ -133,9 +133,64 @@ div.man-woman-child-highlight-bg:after {
         transform: skew(0deg);
     }
 }
-@media screen and (max-width:991px) {
+@media screen and (max-width:1025px) {
 	.man-woman-child-text-left p{ 
 		font-size: 20px;
+		margin-top: 7%;
+	  }
+	  .man-woman-child-text-leftcon{
+		  width: 50vw;
+	  }
+	  .man-woman-child-text-right img{
+		  width: 50vw;
+		  height: 60vh;
+		  overflow: visible;
+	  }
+	  .man-woman-child-button-Flex{
+		  gap:0.3rem;
+		  width: 85vw;
+		  font-size: 25px;
+		  overflow: visible;
+	  }
+  
+	   div .man-woman-child-button-text{
+		  font-size: 0.9rem;
+		  font-weight: bold;
+		  text-overflow: ellipsis;
+		  white-space: nowrap;
+	  }
+}
+@media screen and (max-width:991px) {
+	.man-woman-child-text-left p{ 
+		font-size: 19px;
+		margin-top: 10%;
+	  }
+	  .man-woman-child-text-leftcon{
+		  width: 50vw;
+	  }
+	  .man-woman-child-text-right img{
+		  width: 50vw;
+		  height: 60vh;
+		  overflow: visible;
+	  }
+	  .man-woman-child-button-Flex{
+		  gap:0.3rem;
+		  width: 85vw;
+		  margin-top: 15%;
+		  font-size: 20px;
+		  overflow: visible;
+	  }
+  
+	   div .man-woman-child-button-text{
+		  font-size: 0.8rem;
+		  font-weight: bold;
+		  text-overflow: ellipsis;
+		  white-space: nowrap;
+	  }
+}
+@media screen and (max-width:691px) {
+	.man-woman-child-text-left p{ 
+		font-size: 18px;
 		margin-top: 10%;
 	  }
 	  .man-woman-child-text-leftcon{
@@ -149,16 +204,14 @@ div.man-woman-child-highlight-bg:after {
 	  .man-woman-child-button-Flex{
 		  gap:0.3rem;
 		  width: 85vw;
-		  margin-top: 0%;
+		  margin-top: 10%;
 		  font-size: 20px;
 		  overflow: visible;
 	  }
   
 	   div .man-woman-child-button-text{
-		  font-size: 0.7rem;
-		  font-weight: bold;
-		  text-overflow: ellipsis;
-		  white-space: nowrap;
+		  font-size: 0.8rem;
+
 	  }
 }
 

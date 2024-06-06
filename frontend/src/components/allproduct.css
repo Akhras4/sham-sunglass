@@ -101,12 +101,7 @@ video.grid-vid {
       justify-content: center;
     }
     @media screen and (max-width: 1200px) {
-      .newsunglassAll{
-        grid-template-areas: " a a " 
-                             " a a ";
-                         justify-items: center;
-                         justify-content: center;
-      }}
+    }
       @media screen and (max-width: 1024px) {
         .newsunglassconAll{
           width: 300px;
