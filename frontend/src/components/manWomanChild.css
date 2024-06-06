@@ -3,7 +3,7 @@
     flex-direction: row;
     margin-bottom: 3%;
     gap: 0.5%;
-    height: 90vh;
+    height: 100vh;
 	
     & p{
         color: white;
@@ -101,6 +101,9 @@ div.man-woman-child-button-text {
 	justify-content: center;
 	align-items: center;
 }
+.man-woman-child-text-left p{ 
+	font-size: 25px;
+  }
 
 div.man-woman-child-highlight-bg:after {
 	content: "";
@@ -131,15 +134,38 @@ div.man-woman-child-highlight-bg:after {
     }
 }
 @media screen and (max-width:991px) {
-   
+	.man-woman-child-text-left p{ 
+		font-size: 20px;
+		margin-top: 10%;
+	  }
+	  .man-woman-child-text-leftcon{
+		  width: 40vw;
+	  }
+	  .man-woman-child-text-right img{
+		  width: 60vw;
+		  height: 60vh;
+		  overflow: visible;
+	  }
+	  .man-woman-child-button-Flex{
+		  gap:0.3rem;
+		  width: 85vw;
+		  margin-top: 0%;
+		  font-size: 20px;
+		  overflow: visible;
+	  }
+  
+	   div .man-woman-child-button-text{
+		  font-size: 0.7rem;
+		  font-weight: bold;
+		  text-overflow: ellipsis;
+		  white-space: nowrap;
+	  }
 }
-@media screen and (max-width: 767px) {
-	
-  }
-@media screen and (max-width:426px) {
+
+@media screen and (max-width:576px) {
 	.man-woman-child-text-left p{ 
       font-size: 15px;
-	  margin-top: 2%;
+	  margin-top: 20%;
 	}
 	.man-woman-child-text-leftcon{
 		width: 50vw;
@@ -152,7 +178,7 @@ div.man-woman-child-highlight-bg:after {
 	.man-woman-child-button-Flex{
         gap:0.3rem;
         width: 85vw;
-		margin-top: 10%;
+		margin-top: 20%;
 		font-size: 15px;
 		overflow: visible;
 	}
@@ -164,4 +190,22 @@ div.man-woman-child-highlight-bg:after {
 		white-space: nowrap;
 	}
 
+  }
+  @media screen and (max-width: 377px) {
+	.man-woman-child-button-Flex{
+        width: 80vw;
+		margin-top: 0%;
+		font-size: 13px;
+	}
+  }
+  @media screen and (max-width: 320px) {
+	.man-woman-child-text-left p{ 
+		font-size: 13px;
+		margin-top: 0%;
+	  }
+	.man-woman-child-button-Flex{
+        width: 80vw;
+		margin-top: 0%;
+		font-size: 13px;
+	}
   }

@@ -121,11 +121,6 @@ nav{
 
   }
   @media screen and (max-width:991px) {
-   #helpco{
-    display: block;
-   }
-  }
-  @media screen and (max-width: 769px) {
     nav{
       display: flex;
       width:100vw;
@@ -133,7 +128,7 @@ nav{
       
     }
     #helpco{
-      display: none;
+      display: inline-block;
      }
      #LOGINcon{
       display: inline-block;
@@ -142,6 +137,10 @@ nav{
       display: inline-block;
   }
      .RightSideContiner{
+      display: inline;
+      
+    }
+    .RightSideContiner{
       display: inline;
       
     }
@@ -164,7 +163,13 @@ nav{
      .search-button {
       display: none;
      }
+  }
+  @media screen and (max-width: 769px) {
+    #helpco{
+      display: none;
+     
     }
+  }
   @media screen and (max-width:475px) {
     #LOGINcon{
       width:70px !important;

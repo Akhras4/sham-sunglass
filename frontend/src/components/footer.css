@@ -1,7 +1,10 @@
 div .footerCon{
+  position: static;
+  bottom: 0;
     width:100vw;
-    height: 60vh;
+    height: fit-content;
     background-color: purple;
+
 }
 div .footerConMain{
     display:flex;
@@ -9,7 +12,6 @@ div .footerConMain{
     flex-wrap: wrap;
     gap:3%;
     color:white;
-    margin: 6%;
     padding-top: 1%;
 }
 div .img-con-footer{
@@ -22,10 +24,10 @@ padding-top: 1%;
 display:flex;
 justify-content: space-around;
 background-color: black;
-width:100%;
-height: 30%;
-gap:10%
-
+width:100vw;
+height: auto;
+gap:10%;
+color: white;
 }
 @media screen and (max-width:991px) {
    
@@ -34,5 +36,65 @@ gap:10%
     
   }
 @media screen and (max-width:576px) {
-   
+  div .footerCon{
+    position: relative;
+    transition: transform 0.3s ease-out;
+    background-color: inherit;
+    height: 50vh;
+   background-color: black;
+
+}
+  .footerCon.menu-open {
+    transform: translateY(-200px); 
+    
+  }
+  
+  .fixed-dropdown-menu {
+    position: fixed ;
+    top: 0;
+    z-index: 1050;
+    background-color: white;
+    border: 1px solid #ccc;
+  }
+  .fixed-dropdown-menu[data-popper-placement^='top'] {
+    inset: auto auto 0 0 !important; 
+    transform: translate3d(0, 320px, 0) !important; 
+}
+  .dropdown {
+    position: relative;
+  }
+  
+  .footerCon.menu-open .dropdown-menu {
+    position: fixed ;
+    top: 0; 
+    left: 0;
+    opacity: 1;
+    z-index:  100;
+  }
+  .dropdown-row {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .dropdown-item{
+    z-index:  100 !important;
+  }
+  .dropdown-row .dropdown-item {
+    flex: 1 1 auto;
+    text-align: center;
+    margin: 10px;
+    z-index:  100;
+  }
+  div .Privacy {
+    gap:2px;
+    }
+  div .Privacy p{
+    font-size: 13px;
+    }
+    div .img-con-footer{
+      display: flex;
+      gap:2px;
+      flex-wrap: nowrap;
+  }
   }

@@ -14,6 +14,7 @@ import { useMediaQuery } from 'react-responsive'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
+
 export default function SunglasesMan() {
   const { product, loading, userid, isAuthenticated } = useContext(productContext);
   const { favorites, getFav } = useContext(favContext);
