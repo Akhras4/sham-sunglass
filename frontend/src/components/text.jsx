@@ -1,46 +1,52 @@
 import React from 'react'
 import { productContext } from '../App'
-import { useContext,useState,useEffect } from 'react';
+import { useContext,useState,useEffect,useRef } from 'react';
 import {motion} from 'framer-motion'
 import './text.css'
 import Vertically from './verticallybar';
 import { useNavigate } from 'react-router-dom';
 import { favContext } from './homepage'
 import { useMediaQuery } from 'react-responsive'
-export default function Text() {
+import useScrollPosition from '../custom hook/scrollposition';
+export default function Text(
+  {isVisible,
+  setIsVisible,}
+) {
   const {product ,isAuthenticated ,userid } = useContext(productContext);
-    const [isVisible, setIsVisible] = useState(false);
+    // const [isVisible, setIsVisible] = useState(false);
     const{favorites}=useContext(favContext)|| []
     const navigate =useNavigate()
     const [selectedFav, setSelectedToFav] = useState(favorites)
     const isTabletOrMobile = useMediaQuery({ query: '(max-width:769px)'})
+
+    const containerRef = useRef(null);
     useEffect(()=>{
         setSelectedToFav(favorites)
     },[favorites])
     const handleNavigation=(productMan,sort)=>{             
       navigate(`/products/${sort}`, { state: { results: productMan,favorites:selectedFav,sort:sort } });
     } 
-    
     useEffect(() => {
-        function handleScroll() {
-          let threshold = 50;
-          if(isTabletOrMobile){
-            threshold = 0;
-          }
-          if (window.scrollY > threshold) {
-            setIsVisible(true);
-          } else {
-            setIsVisible(false);
-          }
+      const handleScroll = () => {
+        const SectionRect=containerRef.current.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        if (SectionRect.top >= 0) {
+          setIsVisible(true) 
+        } else if( SectionRect.bottom <= 20) {
+          setIsVisible(false);
         }
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-          window.removeEventListener('scroll', handleScroll);
-        };
-      }, [isTabletOrMobile]);
+      };
+      handleScroll();
+      window.addEventListener('scroll', handleScroll);
+  
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, [isVisible]);
+
       const initialX = isTabletOrMobile ? -1000 : -1500;
   return (
-    <div className='textcon'>
+    <div className='textcon'ref={containerRef}  >
          <motion.div
         initial={{ x: initialX  }}
         animate={{ x: isVisible ? 0 : -1200 }}

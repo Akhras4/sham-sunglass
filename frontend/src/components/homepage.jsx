@@ -15,17 +15,20 @@ import Footer from './footer'
 import SunglasesWomen from './womenbar'
 import ManWomanChild from './manWomenChildren'
 import TopButton from './topbutton'
+import useScrollPosition from '../custom hook/scrollposition';
 
 export  const favContext = createContext()
 
 export default function Homepage() {
  const {isAuthenticated,userid,product} = useContext(productContext)
  const[favorites,setFavorites]=useState(null)
+ const homeSectionRef=useRef(null)
  const womanSectionRef = useRef(null);
  const manSectionRef = useRef(null);
  const kidsSectionRef = useRef(null);
  const [currentSection, setCurrentSection] = useState('woman');
-
+ const [isVisible, setIsVisible] = useState(false);
+ const scrollY = useScrollPosition(); 
  useEffect(()=>{
   getFav(userid)
  },[userid  ])
@@ -45,10 +48,14 @@ export default function Homepage() {
 };
 useEffect(() => {
   const handleScroll = () => {
+    const homeSectionRect=homeSectionRef.current.getBoundingClientRect();
     const womanSectionRect = womanSectionRef.current.getBoundingClientRect();
     const kidsSectionRect = kidsSectionRef.current.getBoundingClientRect();
     const manSectionRect = manSectionRef.current.getBoundingClientRect();
     const windowHeight = window.innerHeight;
+    if (homeSectionRect.top >= 0 && homeSectionRect.bottom <= windowHeight ) {
+      setIsVisible(false) 
+    }
     if (womanSectionRect.top >= 0 && womanSectionRect.bottom <= windowHeight) {
       setCurrentSection('woman');
     }
@@ -61,8 +68,9 @@ useEffect(() => {
   };
   window.addEventListener('scroll', handleScroll);
   return () => window.removeEventListener('scroll', handleScroll);
-}, []);
-let y=0
+}, [isVisible]);
+console.log(isVisible,"isVisible")
+
 
 
   return (
@@ -70,9 +78,10 @@ let y=0
     <favContext.Provider value={{favorites,getFav }} >
     <Nav />
     { isAuthenticated ? <Usericone /> : null }
+    <div ref={homeSectionRef}></div>
     <Video />
     <section>
-      <Text />
+      <Text homeSectionRef={homeSectionRef} setIsVisible={setIsVisible} isVisible={isVisible}  />
       </section>
       <section>
       <Sale baseVelocity={5}>
