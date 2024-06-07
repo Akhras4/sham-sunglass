@@ -1,3 +1,8 @@
+.show-more-flex{
+  display: flex;
+  justify-content: center;
+  width:45vw;
+}
 .contact-fp-wrap {
     height: 60px;
     margin: 0 auto;
@@ -48,9 +53,9 @@
   @media screen and (max-width:576px) {
     .contact-fp-wrap {
       height: 60px;
-      width: 320px;
+      width: 100vw;
       margin-top:10px;
-      margin-bottom:30px; 
+      margin-bottom:30px;
     }
     .booton-text {
       font-family: 'Lato';
@@ -61,4 +66,25 @@
       top: -40px;
       margin-left: 96px;
     }
+    .show-more-flex{
+      margin-top: 0%;
     }
+    .booton {
+      animation: none; 
+    }
+    .contact-fp-wrap:hover .booton {
+      cursor: default; 
+      animation: none; 
+    }
+    }
+    @media screen and (max-width:355px) {
+      
+      .booton-text {
+        font-family: 'Lato';
+        font-size: 14px;
+        letter-spacing: 2px;
+        line-height: 36px;
+        margin-left: 100px;
+      }
+
+      }

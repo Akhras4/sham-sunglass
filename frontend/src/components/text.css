@@ -165,7 +165,7 @@ div .highlight-bg {
         }
         }
         .textcon{
-        height: 100vh;
+        height: fit-content;
         width: 100vw;
         margin-bottom: 1rem;
             
@@ -190,7 +190,7 @@ div .highlight-bg {
         
     }
     .button-Flex{
-        margin-top: 0%;
+        margin-bottom: 10%;
         
     }
     

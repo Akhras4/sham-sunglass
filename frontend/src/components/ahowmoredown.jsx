@@ -7,7 +7,7 @@ import { faAngleDoubleDown} from '@fortawesome/free-solid-svg-icons';
 
 export default function ShowmoreDown({state,handleShowMore}) {
   return (
-      <div>
+      <div className='show-more-flex'>
           <div class="contact-fp-wrap">
               <svg height="60" width="320" xmlns="http://www.w3.org/2000/svg">
                   <defs>
