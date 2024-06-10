@@ -23,12 +23,13 @@ export default function Homepage() {
  const {isAuthenticated,userid,product} = useContext(productContext)
  const[favorites,setFavorites]=useState(null)
  const homeSectionRef=useRef(null)
+ const barSectionRef=useRef(null)
  const womanSectionRef = useRef(null);
  const manSectionRef = useRef(null);
  const kidsSectionRef = useRef(null);
  const [currentSection, setCurrentSection] = useState('woman');
- const [isVisible, setIsVisible] = useState(false);
- const scrollY = useScrollPosition(); 
+ const [isVisible, setIsVisible] = useState(true);
+ const prevScrollY = useRef(0); 
  useEffect(()=>{
   getFav(userid)
  },[userid  ])
@@ -48,14 +49,19 @@ export default function Homepage() {
 };
 useEffect(() => {
   const handleScroll = () => {
+    const currentScrollY = window.scrollY;
     const homeSectionRect=homeSectionRef.current.getBoundingClientRect();
+    const barSectionRect=barSectionRef.current.getBoundingClientRect();
     const womanSectionRect = womanSectionRef.current.getBoundingClientRect();
     const kidsSectionRect = kidsSectionRef.current.getBoundingClientRect();
     const manSectionRect = manSectionRef.current.getBoundingClientRect();
     const windowHeight = window.innerHeight;
-    if (homeSectionRect.top >= 0 && homeSectionRect.bottom <= windowHeight ) {
-      setIsVisible(false) 
-    }
+
+      if (homeSectionRect.top >= 0 && homeSectionRect.bottom <= windowHeight) {
+        setIsVisible(false);
+      } 
+     
+    
     if (womanSectionRect.top >= 0 && womanSectionRect.bottom <= windowHeight) {
       setCurrentSection('woman');
     }
@@ -67,7 +73,11 @@ useEffect(() => {
     }
   };
   window.addEventListener('scroll', handleScroll);
-  return () => window.removeEventListener('scroll', handleScroll);
+  window.addEventListener('resize', handleScroll);
+  return () => {
+    window.removeEventListener('scroll', handleScroll);
+    window.removeEventListener('resize', handleScroll);
+  };
 }, [isVisible]);
 console.log(isVisible,"isVisible")
 
@@ -103,7 +113,7 @@ console.log(isVisible,"isVisible")
     </section>
     
     <section >
-    <div ref={womanSectionRef}>Woman Section</div>
+    <div ref={womanSectionRef}>Woman Section
     <ManWomanChild 
       titel={'WOMAN'} 
       discrishion={'Wide skies, soft sand and warm air: we have captured the Sicilian summer for you in a limited edition sunglasses collection. Discover three of our favourite sunnies in a fresh and unique colourway.'} 
@@ -114,7 +124,12 @@ console.log(isVisible,"isVisible")
       background={'#ddbbb9'}
       product={Object.values(product).flat().filter(product=>product.sort==="women")}
       sort="woman"
+      setIsVisible={setIsVisible} 
+      isVisible={isVisible}
+      SectionRef={womanSectionRef}
+       
     />
+    </div>
     <Sale baseVelocity={5}>
       <span style={{ color: 'pink' }}>WOMAN : SUNGLASSES OPTIC LENSS</span>
     </Sale>
@@ -122,7 +137,7 @@ console.log(isVisible,"isVisible")
     <Showmore product={Object.values(product).flat().filter(product=>product.sort==="women")} sort={"Woman"} />
     </section>
     <section  >
-    <div ref={manSectionRef}>man Section</div>
+    <div ref={manSectionRef}>man Section
     <ManWomanChild 
       titel={'MAN'} 
       discrishion={'Wide skies, soft sand and warm air: we have captured the Sicilian summer for you in a limited edition sunglasses collection. Discover three of our favourite sunnies in a fresh and unique colourway.'} 
@@ -133,15 +148,21 @@ console.log(isVisible,"isVisible")
       background={'#8bb9d1'}
       product={Object.values(product).flat().filter(product=>product.sort==="man")}
       sort="man"
+      setIsVisible={setIsVisible}
+       isVisible={isVisible} 
+       SectionRef={manSectionRef}
     />
+    </div>
     <Sale baseVelocity={5}>
       <span style={{ color: '#95a8b2' }}>MAN : SUNGLASSES OPTIC LENSS</span>
     </Sale>
+    <div ref={barSectionRef}>barSectionRef{isVisible}</div>
     <SunglassesMan  />
+    
     <Showmore product={Object.values(product).flat().filter(product=>product.sort==="man")} sort={"Man"} />
     </section>
     <section  >
-    <div ref={kidsSectionRef}>Kids Section</div>
+    <div ref={kidsSectionRef}>Kids Section
     <ManWomanChild 
       titel={'KIDS'} 
       discrishion={'Wide skies, soft sand and warm air: we have captured the Sicilian summer for you in a limited edition sunglasses collection. Discover three of our favourite sunnies in a fresh and unique colourway.'} 
@@ -151,7 +172,11 @@ console.log(isVisible,"isVisible")
       background={'#f4c770'}
       product={Object.values(product).flat().filter(product=>product.sort==="kids")}
       sort="kids"
+      setIsVisible={setIsVisible}
+       isVisible={isVisible}
+       SectionRef={kidsSectionRef} 
     />
+    </div>
     <Sale baseVelocity={5}>
     <span >
       <span style={{ color: '#f2d7a4' }}>KIDS</span>

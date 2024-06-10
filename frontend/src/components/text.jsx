@@ -30,9 +30,9 @@ export default function Text(
       const handleScroll = () => {
         const SectionRect=containerRef.current.getBoundingClientRect();
         const windowHeight = window.innerHeight;
-        if (SectionRect.top >= 0) {
-          setIsVisible(true) 
-        } else if( SectionRect.bottom <= 20) {
+        if (SectionRect.top < windowHeight && SectionRect.bottom > 0) {
+          setIsVisible(true);
+        } else {
           setIsVisible(false);
         }
       };

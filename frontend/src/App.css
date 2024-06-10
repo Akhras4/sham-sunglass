@@ -370,7 +370,7 @@ padding-left: 20px;
   display: flex;
   gap:10px;
 }
-@media screen and (max-width:1025px) {
+@media screen and (max-width:1125px) {
   .newsunglass{
     grid-template-areas: " a a " 
                          " a a "
@@ -378,6 +378,7 @@ padding-left: 20px;
                 
       gap:40px;
   }
+ 
   .sunglassconMan,.sunglassconWomen,.sunglassconSale,.sunglassconKids{
     display:flex;
     flex-direction: row;
@@ -430,6 +431,18 @@ padding-left: 20px;
       gap:10px;
     }
   }
+  }
+  @media screen and (max-width:626px) {
+    .newsunglass{          
+      gap:10px;
+  }
+  .newsunglasscon{
+    width: 45vw;
+    height:350px;
+
+
+  }
+
   }
 @media screen and (max-width:426px) {
   .newsunglass{          

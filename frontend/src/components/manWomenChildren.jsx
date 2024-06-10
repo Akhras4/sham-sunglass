@@ -5,8 +5,18 @@ import {motion} from 'framer-motion'
 import './manWomanChild.css'
 import { favContext } from './homepage'
 
-export default function ManWomenChild({titel,discrishion,sunglasses,glasses,lens,imgSrc,background,product,sort}) {
-    const [isVisible, setIsVisible] = useState(false);
+export default function ManWomenChild({titel,
+  discrishion,
+  sunglasses,
+  glasses,
+  lens,
+  imgSrc,
+  background,
+  product,
+  sort,
+  SectionRef,
+  
+}) {
     const [scrollY, setScrollY] = useState(0);
     const{favorites}=useContext(favContext)|| []
     const navigate =useNavigate()
@@ -15,23 +25,7 @@ export default function ManWomenChild({titel,discrishion,sunglasses,glasses,lens
     useEffect(()=>{
         setSelectedToFav(favorites)
     },[favorites])
-    useEffect(() => {
-        function handleScroll() {
-         const threshold = 3300; 
-          const currentScrollY = window.scrollY;
-          // console.log('Scroll Y:', currentScrollY);
-          setScrollY(currentScrollY); // Update scroll position
-          if (currentScrollY > threshold) {
-            setIsVisible(true);
-          } else {
-            setIsVisible(false);
-          }
-        }
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-          window.removeEventListener('scroll', handleScroll);
-        };
-      }, []);
+  
       const handleNavigation=(cat)=>{
         const productcat=Object.values(product).flat().filter(product=>product.category===cat);
         console.log(productcat)      
@@ -39,6 +33,27 @@ export default function ManWomenChild({titel,discrishion,sunglasses,glasses,lens
           favorites:selectedFav,
           sort:sort } });
       }
+      const [isVisible, setIsVisible] = useState(false);
+
+      useEffect(() => {
+        const handleScroll = () => {
+          const sectionRect = SectionRef.current.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+    
+          if (sectionRect.top < windowHeight && sectionRect.bottom > 0) {
+            setIsVisible(true);
+          } else {
+            setIsVisible(false);
+          }
+        };
+    
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Initial check
+    
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, [SectionRef]);
   return (
     <div className='man-woman-child-textcon'style={{backgroundColor:background}}>
       

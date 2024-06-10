@@ -12,7 +12,7 @@ const TopButton = forwardRef(({ currentSection, Section1Ref,Section2Ref,setCurre
   };
 
   return (
-    <button onClick={scrollToTop} style={{ position: 'fixed', bottom: '20px', right: '20px' }}>
+    <button onClick={scrollToTop} style={{ position: 'fixed', bottom: '20px', right: '20px',zIndex:'4' }}>
       Go back to {currentSection}
     </button>
   );
