@@ -14,6 +14,8 @@ router.use((req, res, next) => {
 
 router.post('/webhook', bodyParser.raw({ type: 'application/json' }),strip.webhook)
 
+router.get(`/Api/:id/validate-address`,account.addressValidation)
+
 router.get("/api",DoThis.redirecttologin)
 
 router.get("/signup",DoThis.singup)
@@ -46,7 +48,6 @@ router.post('/wishList/removeFromWishList/:id',Fav.removeItem)
 router.post('/user/createOrder/:id',DoThis.cookieJWTAuth,strip.createPaymentIntent)
 // router.post('/webhook/:id',DoThis.cookieJWTAuth, express.raw({ type: 'application/json' }),strip.webhook)
 // router.post('/webhook', express.raw({ type: 'application/json' }),strip.webhook)
-
 
 
 module.exports = router;

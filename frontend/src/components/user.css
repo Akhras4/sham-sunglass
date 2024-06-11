@@ -2,13 +2,14 @@
   display:flex;
   flex-direction: row;
   height: 100vh;
-  padding-top: 7%;
-  column-gap: 6%;
+  padding-top: 2%;
+  gap: 4%;
 }
 .LEFT{
 padding-left: 4%;
 width: 50%;
-padding-top: 10%;
+
+
 }
 .leftuser{
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -37,17 +38,27 @@ padding-top: 10%;
   display: flex;
   flex-direction: row;
   align-items: stretch;
+position: relative;
   gap:4%;
+  & h1{
+    font-size: 1.5rem;
+    letter-spacing: normal;
+  }
 } 
+.delet{
+  position: absolute;
+  bottom:5%;
+  left: 1%;
+  align-self:self-end;
+}
 .order-Detail{
   display: flex;
   flex-direction: column;
   height: 40%;
-  margin-left: 10px;
   padding-left: 10px;
-  width: 40%;
+  width: 30%;
 }
-.maincoshitem,.order-Detail-content{
+.maincoshitem,.order-Detail-content,.maincofavitem{
   background-color:rgb(255, 255, 255);
     object-fit: contain;
     --borderWidth: 3px;
@@ -58,12 +69,16 @@ padding-top: 10%;
 .maincoshitem{
   width: 100% ;
 }
+.title{
+  display: flex;
+  justify-content: center;
+}
 .order-Detail-content{
  padding: 10%;
  display: flex;
  flex-direction: column;
 }
-.maincoshitem ::after,.order-Detail-content ::after{
+.maincoshitem ::after,.order-Detail-content ::after,.maincofavitem::after{
   content: '';
   position: absolute;
   top: calc(-1 * var(--borderWidth));
@@ -83,12 +98,120 @@ padding-top: 10%;
 .mahesh{
   padding: 20px;
 }
+.fav-Con{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  & h1{
+    font-size: 2rem;
+    letter-spacing: normal;
+  }
+ 
+}
+.mainFavco{
+  display: grid;
+  grid-template-areas: "a a";
+  gap: 2% 0;
+}
+
+.maincofavitem{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  position: relative;
+  width: 95%;
+  height: fit-content;
+  
+}
+.mahefav{
+  margin:0 1rem 0 1rem;
+}
+
+.addBtn{
+  align-self: stretch;
+}
+.delet-fav{
+  position: absolute;
+  top:5%;
+  right: 1%;
+  align-self:self-end;
+}
+
 @media screen and (max-width:991px) {
    
 }
-@media screen and (max-width: 767px) {
-    
+@media screen and (max-width: 769px) {
+  .main {
+    display:block; 
+    width: 100vw;
+    column-gap: 6%;
+  }
+  .LEFTbtt{
+    display: flex;
+    gap:20px;
+    width:100%;
+    flex-wrap:nowrap;
+    overflow-x: scroll;
+    height: 40px;
+  }
+  .LEFTbtt::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for WebKit browsers */
+  }
+  .LEFT{
+    display: flex;
+    gap:20px;
+    width:100%;
+    flex-wrap:nowrap;
+    overflow-x: hidden;
+    -ms-overflow-x-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    white-space:nowrap ;
+    height: 40px;
+    }
+    .leftuser{
+      margin-bottom: 5%;
+    }
+    .shopping-Con{
+      width: 100vw;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      margin-top: 2%;
+      gap:1%;
+      & p{
+        font-size: 1rem;
+      }& h1{
+        font-size: 1.5rem;
+        letter-spacing: normal;
+      }
+    } 
+    .maincoshitem{
+      margin: 1%;
+    }
+    .content{
+      margin: 2%;
+    }
+    .order-Detail-content{
+      padding: 10%;
+      width: fit-content;
+     }
   }
 @media screen and (max-width:576px) {
-   
+  .content{
+    margin: 1%;
   }
+  }
+  @media screen and (max-width:478px) {
+    .shopping-Con{
+      width: 90vw;
+      display: flex;
+      flex-direction: column;
+
+    } 
+    .content{
+      margin: 1%;
+    }
+    }

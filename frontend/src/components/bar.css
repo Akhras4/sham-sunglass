@@ -16,7 +16,9 @@
    
 }
 @media screen and (max-width: 767px) {
-    
+  .nav-sort{
+    margin-top: 25%;
+   }
   }
 @media screen and (max-width:576px) {
    

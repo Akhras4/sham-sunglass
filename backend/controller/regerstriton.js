@@ -11,14 +11,40 @@ const cookieParser = require('cookie-parser');
 const { render } = require('ejs');
 const ejs = require('ejs');
 
+const SECRET_KEY = process.env.googleApi;
 const redirecttologin =( req,res) =>{
 if(req.method==="GET"){
     product.find()
     .then((product)=>{
-        res.json({product})
+        res.json({product , secretKey: SECRET_KEY })
     })
 }
 }
+const addressValidation =( req,res) =>{
+    if(req.method==="GET"){
+        const address=req.body.address
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+      
+        return axios.get(url)
+          .then(response => {
+            const data = response.data;
+            if (data.status === 'OK') {
+              const addressComponents = data.results[0].address_components;
+              const isInEurope = addressComponents.some(component => 
+                component.types.includes('continent') && component.long_name === 'Europe'
+              );
+      
+              return isInEurope;
+            }
+      
+            return false;
+          })
+          .catch(error => {
+            console.error('Error validating address:', error);
+            return false;
+          });
+    }
+    }
 
 const singup = (req, res) => {
     if (req.method === "GET") {
