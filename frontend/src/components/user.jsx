@@ -14,7 +14,7 @@ export default function User() {
   const[userdetail,setuserdetail]=useState(null)
   const[useraddress,setuseraddress]=useState(null)
   const {userid,token,product}=useContext(productContext)
-  const [activeComponent, setActiveComponent] = useState();
+  const [activeComponent, setActiveComponent] = useState("Component2");
   const [selectedFav, setSelectedToFav] = useState(null)
   const location = useLocation();
   const isTabletOrMobile = useMediaQuery({ query: '(max-width:769px)'})

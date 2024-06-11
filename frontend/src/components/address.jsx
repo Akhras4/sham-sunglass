@@ -103,6 +103,7 @@ export default function Address(value) {
                     <CloseButton onClick={()=>{closeDialog()}} className='closeBtn' />
                     <div id="dilo">
                         <form onSubmit={handleSubmitinfo} >
+                                <div className='dialogFlexContent'>
                                 <div>
                                     <label htmlFor="name">Name</label>
                                     <input
@@ -130,7 +131,7 @@ export default function Address(value) {
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="postal-code">ZIP or postal code (optional)</label>
+                                    <label htmlFor="postal-code">ZIP or postal code </label>
                                     <input
                                         className="postal-code"
                                         id="postal-code"
@@ -168,8 +169,8 @@ export default function Address(value) {
                                     />
                                 </div>
                                 {err && <p>{err}</p>}
-                                <button type="submit" class="btn btn-outline-danger">Save</button>
-                            
+                                <button type="submit" id="btn" className="btn btn-outline-danger">Save</button>
+                            </div>
                         </form>
                         </div>
                         </div>

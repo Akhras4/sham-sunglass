@@ -14,6 +14,8 @@ h1{
 .dialogFlex{
   display: flex;
   gap: 1em;
+  width: 40vw;
+
 }
 #dilo{
     border-color: white;
@@ -22,6 +24,14 @@ h1{
     width: 40vw;
     height:auto;
     margin-right: 2em;
+    & .dialogFlexContent{
+     display: flex;
+     flex-direction: column;
+    }
+    & p{
+      font-size: 1rem;
+      color:red
+    }
     & h1{
         margin: 0;
     }
@@ -53,41 +63,39 @@ h1{
       .postal-code {
         width: 50%;
       }
+      & #btn{
+        margin-bottom: 2%;
+      }
+    }
+
+
  
-}
-@media screen and (max-width:1092px) {
-  #dilo{
-    width: 50vw;
-    height:auto;
-  }
-}
-@media screen and (max-width:991px) {
-}
 @media screen and (max-width: 769px) {
-  #dilo{
-    width: 70vw;
-    height:auto;
-    overflow: scroll;
-    & h1{
-      margin: 0;
+  .dialogFlex{
+    display: flex;
+    gap: 1em;
+    width: auto;
+  
   }
+  #dilo{
+    height:auto;
+    font-size: 0.9rem;
+    p{
+      font-size: 0.8rem;
+    }
   & button {
       margin-top: 1rem;
     }
     
     & input {
-      border: 1px solid;
       padding: 0.3em;
-      width: 100%;
+      max-height: 2.5em;
     }
     
     & textarea {
-      width: 100%;
-      min-height: 3em;
+      max-height: 2.5em;
     }
-    
     & label {
-      display: block;
       font-size: 1rem;
       margin-top: 0.5rem;
     }
@@ -95,32 +103,27 @@ h1{
     & select {
       font-size: 12px;
     }
-    
-    .postal-code {
-      width: 50%;
-    }
   }
   }
+
 @media screen and (max-width:576px) {
   #dilo{
-    width: 100vw;
+    width: 80vw;
     height:auto;
-    & h1{
-      margin: 0;
+    font-size: 0.9rem;
+  & p{
+    font-size: 0.7rem;
   }
   & button {
       margin-top: 1rem;
     }
     
     & input {
-      border: 1px solid;
-      padding: 0.3em;
-      width: 100%;
+      max-height: 2em;
     }
     
     & textarea {
-      width: 100%;
-      min-height: 3em;
+      max-height: 1em;
     }
     
     & label {
@@ -129,14 +132,37 @@ h1{
       margin-top: 0.5rem;
     }
     
-    & select {
-      font-size: 12px;
-    }
-    
-    .postal-code {
-      width: 50%;
-    }
   }
   }
+  @media screen and (max-width:426px) {
+    #dilo{
+      font-size: 0.8rem;
+      & h1{
+        margin: 0;
+    }
+    & p{
+      font-size: 0.6rem;
+      color:red
+    }
+    & button {
+        margin-top: 1rem;
+      }
+      
+      & input {
+        max-height: 2em;
+      }
+      
+      & textarea {
+        width: 100%;
+        max-height: 2em;
+      }
+      
+      & label {
+        font-size: 0.9rem;
+        margin-top: 0.3rem;
+      }
+
+    }
+    }
   
  
