@@ -217,7 +217,6 @@ export default function Allproduct() {
                   <div id="fav" onClick={() => { handleAddToWishList(item._id) }}>
                   <MdFavorite
                       className="hoverEffect"
-                      onClick={() => { handleAddToWishList(item._id) }}
                       style={{ fontSize:`${fontSizeMobile}`, cursor: isProcessing ? "" : 'pointer', color: selectedFav && selectedFav.items.some(items => items.productId === item._id) ? 'red' : 'black' }}
                     />
                     </div>

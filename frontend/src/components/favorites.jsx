@@ -5,7 +5,8 @@ import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import { FaShoppingCart } from 'react-icons/fa';
-
+import './user.css'
+import { MdRemoveShoppingCart } from "react-icons/md";
 export default function Favorites() {
     const { userid, product } = useContext(productContext);
      const [selectedFav, setSelectedToFav] = useState(null)
@@ -71,39 +72,45 @@ export default function Favorites() {
     };
   return (
     <div>
-        <h1>Favorites</h1>
-    { <div className='maincosh'>
-    {productFav && productFav.map(product => (
-      <div key={product._id} className='maincosh'>
-        <div  onClick={() =>  hadelnavgaiton(product)}>
-        <div className='title'>
-        <h2>{product.title}</h2>
-        </div>
-        <div className='mahesh'>
-        <img src={product.image[0]} alt={product.title} style={{width:'80px',height:'80px'}}/>
-        </div> 
-        <div className='det'>
-        <p>Category: {product.category}</p>
-        <p>Lens: {product.lens}</p>
-        {product.isOnSale ? ( 
+      <div className='fav-Con'>
+      <h1>Favorites</h1>
+        <div className='mainFavco'>
+          {productFav && productFav.map(product => (
+            <div key={product._id} className='maincofavitem'>
+                 <div className='title'>
+                  <h4>{product.title}</h4>
+                 </div>
+                <div className='content' onClick={() => hadelnavgaiton(product)}>
+                  <div className='mahefav' >
+                    <img src={product.image[0]} alt={product.title} style={{width:'150px',height:'150px'}} />
+                  </div>
+                  <div className='det'>
+                    <p>Category: {product.category}</p>
+                    <p>Lens: {product.lens}</p>
+                    {product.isOnSale ? ( 
                   <>
-                    <div className='saleinfo'><p style={{ textDecoration: 'line-through', color: 'red' }}> {product.price}</p>
+                    <div className='saleinfo'>
+                    <p>Price:</p>
+                    <p style={{ textDecoration: 'line-through', color: 'red' }}> {product.price}</p>
                     <p style={{  backgroundColor:'yellow'}}> {product.salePrice}</p></div>
                   </>
                 ) : (
                   <p>Price: {product.price}</p>
-        )}
+                  )}
+                  <p>Delever At: {product.deleveryAt}</p>
+                  </div>
+                </div>
+
+                <Button variant="primary" onClick={() => handleAddToCart(product._id)} className="addBtn" >
+                  <FaShoppingCart />ADD to Cart
+                </Button>
+                <div className='delet-fav'>
+                  <MdRemoveShoppingCart style={{ color: 'red', fontSize: '30px', marginLeft: '30px' }} onClick={() => removeFromWishList(product._id)} />
+                </div>
+              </div>
+          ))}
         </div>
-        </div>
-        <Button variant="danger" onClick={()=> removeFromWishList(product._id)} >
-              del
-       </Button>
-       <Button variant="primary" onClick={()=> handleAddToCart(product._id)} >
-       <FaShoppingCart />ADD to Cart
-       </Button>
       </div>
-    ))}
-    </div> }
-  </div>
+    </div>
   )
 }

@@ -3,10 +3,12 @@ import axios from 'axios'
 import { useState, useRef,useContext ,useEffect } from 'react';
 import './address.css'
 import {productContext} from '../App'
-
+import validateAddress from './validateAddress'
+import CloseButton from 'react-bootstrap/CloseButton';
 export default function Address(value) {
     const {token,userid}= useContext(productContext)
     const [address,setaddress]=useState([value])
+    console.log("address",address)
     const dialogRef = useRef(null);
     const [name, setName] = useState('');
     const [streetAddress, setStreetAddress] = useState('');
@@ -17,8 +19,7 @@ export default function Address(value) {
     useEffect(() => {
         if (value) {
             setaddress(value);
-            console.log(value)
-            
+            // console.log(value)   
         }
     }, [value]);
 
@@ -31,6 +32,16 @@ export default function Address(value) {
     };
     const handleSubmitinfo = (e) => {
         e.preventDefault(); 
+        const fullAddress = `${streetAddress}, ${city}, ${postalCode}, ${country}`;
+        console.log("fullAddress",fullAddress)
+        validateAddress(userid,fullAddress)
+        .then(isValidAddress => {
+            // console.log(isValidAddress,"isValidAddress")
+            if (!isValidAddress) {
+              setErr('Please enter a valid address in Europe.');
+              return;
+            }
+           
         axios.post( `http://localhost:8080/${userid}?token=${token}`, {
             name: name,
             street: streetAddress,
@@ -47,17 +58,20 @@ export default function Address(value) {
         .catch(errors => {
             const Errors = errors.response.data.errors;
             setErr(Errors);
-            console.log(Errors);
         });
+    }).catch((err) =>{
+        setErr(err);         
+    })
+    
     };
     return (
-        <div>
+        <div className='addressCon'>
         <h1>Your Address:</h1>
         {(address && address.value && address.value.length > 0) || (address && address.length > 0) ? (
     <>
         {address && address.length > 0 ? (
             address.map(addressItem => (
-                <div key={addressItem._id}>
+                <div key={addressItem._id} className='addressDetail'>
                     <p>Name: {addressItem.name}</p>
                     <p>Street: {addressItem.street}</p>
                     <p>Postal Code: {addressItem.postalCode}</p>
@@ -67,23 +81,27 @@ export default function Address(value) {
             ))
         ) : (
             address.value.map(addressItem => (
-                <div key={addressItem._id}>
+                <div key={addressItem._id} className='addressDetail'>
+                    <p>Name: {addressItem.name}</p>
                     <p>Street: {addressItem.street}</p>
                     <p>City: {addressItem.city}</p>
                     <p>Postal Code: {addressItem.postalCode}</p>
                     <p>Country: {addressItem.country}</p>
                 </div>
-            ))
+            ))  
         )}
-            <button type="button" onClick={() => showDialog()} className="btn btn-primary">update your address</button>
+            <button id="buttonAdress" type="button" onClick={() => showDialog()} className="btn btn-primary">update your address</button>
         </>
          ) : (
                 <div>
                     <p>No Address</p>
-                    <button type="button" onClick={() => showDialog()} className="btn btn-primary" >Add Address</button>
+                    <button id="buttonAdress" type="button" onClick={() => showDialog()} className="btn btn-primary" >Add Address</button>
                     </div>
             )}
-                    <dialog id="dilo" ref={dialogRef} >
+                    <dialog ref={dialogRef} >
+                    <div className='dialogFlex' >
+                    <CloseButton onClick={()=>{closeDialog()}} className='closeBtn' />
+                    <div id="dilo">
                         <form onSubmit={handleSubmitinfo} >
                                 <div>
                                     <label htmlFor="name">Name</label>
@@ -152,6 +170,8 @@ export default function Address(value) {
                                 <button type="submit" class="btn btn-outline-danger">Save</button>
                             {err && <p>{err}</p>}
                         </form>
+                        </div>
+                        </div>
                     </dialog>
         </div>
 )}

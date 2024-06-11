@@ -26,12 +26,13 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token,setToken]=useState('')
   const [userid,setuserId]=useState('')
- 
+
   const fetchData = () => {
     axios.get('http://localhost:8080/api')
       .then(res => {
         setProduct(res.data);
         setLoading(false)
+       
       })
       .catch(err => {
       });
@@ -76,7 +77,7 @@ function App() {
             <Route path="/signup" element={ isAuthenticated ? <User /> : <Signup /> } />
             <Route path="/creataccount" element={<Createaccount />} />
             <Route path="/wait" element={< Waitingpage />} />
-            <Route path='/user' element={isAuthenticated ? <User /> : <Signup />  }/>
+            <Route path='/user' element={isAuthenticated ? <User  /> : <Signup />  }/>
             <Route path='/logout' element={ <Logout /> }/>
           </Routes>
         </productContext.Provider>

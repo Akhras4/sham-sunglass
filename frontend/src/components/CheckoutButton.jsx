@@ -2,13 +2,18 @@ import React, {useState,useContext,useEffect} from 'react';
 import axios from 'axios'; // Import Axios for making HTTP requests
 import Button from 'react-bootstrap/Button';
 import {productContext} from'../App'
-   
+ import Alerts from './alert';  
 
-const Checkout = ({  total,productShoppingCart }) => {
+const Checkout = ({  total,productShoppingCart,useraddress }) => {
     const [loading, setLoading] = useState(false);
     const{token ,userid}=useContext(productContext)
-    console.log(productShoppingCart,"productShoppingCart",userid,"userid")
+    const [showAlert, setShowAlert] = useState(false);
+    // console.log(productShoppingCart,"productShoppingCart",userid,"userid")
     const handleCheckout = () => {
+        if (useraddress) {
+            setShowAlert(true);
+            return;
+        }
         setLoading(true);
         axios.post(`http://localhost:8080/user/createOrder/${userid}?token=${token}`,{ total , productShoppingCart })
         .then(response => {
@@ -28,6 +33,11 @@ const Checkout = ({  total,productShoppingCart }) => {
 
     return (
         <div>
+            <Alerts
+        show={showAlert}
+        text="Please insert your address first."
+        onClose={() => setShowAlert(false)}
+      />
             <Button onClick={handleCheckout} disabled={loading}>
                 {loading ? 'Processing...' : 'Checkout'}
             </Button>

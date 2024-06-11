@@ -1,9 +1,27 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
-
+.addressCon{
+h1{
+  font-size: 1.5rem;
+  letter-spacing: normal;
+}
+}
+.addressDetail{
+  margin: 2rem 0 0 2rem;
+}
+#buttonAdress{
+  margin: 1rem 0 0 2rem;
+}
+.dialogFlex{
+  display: flex;
+  gap: 1em;
+}
 #dilo{
     border-color: white;
     border-radius: 20px;
     z-index: 2;
+    width: 40vw;
+    height:fit-content;
+    margin-right: 2em;
     & h1{
         margin: 0;
     }
@@ -37,14 +55,87 @@
       }
  
 }
-@media screen and (max-width:991px) {
-   
+@media screen and (max-width:1092px) {
+  #dilo{
+    width: 50vw;
+    height:fit-content;
+  }
 }
-@media screen and (max-width: 767px) {
+@media screen and (max-width:991px) {
+}
+@media screen and (max-width: 769px) {
+  #dilo{
+    width: 70vw;
+    height:fit-content;
+    & h1{
+      margin: 0;
+  }
+  & button {
+      margin-top: 1rem;
+    }
     
+    & input {
+      border: 1px solid;
+      padding: 0.3em;
+      width: 100%;
+    }
+    
+    & textarea {
+      width: 100%;
+      min-height: 3em;
+    }
+    
+    & label {
+      display: block;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+    
+    & select {
+      font-size: 12px;
+    }
+    
+    .postal-code {
+      width: 50%;
+    }
+  }
   }
 @media screen and (max-width:576px) {
-   
+  #dilo{
+    width: 100vw;
+    height:fit-content;
+    & h1{
+      margin: 0;
+  }
+  & button {
+      margin-top: 1rem;
+    }
+    
+    & input {
+      border: 1px solid;
+      padding: 0.3em;
+      width: 100%;
+    }
+    
+    & textarea {
+      width: 100%;
+      min-height: 3em;
+    }
+    
+    & label {
+      display: block;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+    
+    & select {
+      font-size: 12px;
+    }
+    
+    .postal-code {
+      width: 50%;
+    }
+  }
   }
   
  

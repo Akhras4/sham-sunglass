@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { MdRemoveShoppingCart } from "react-icons/md";
 import CheckoutButton from './CheckoutButton'
 
-export default function Shoppingcartuser() {
+export default function Shoppingcartuser({useraddress}) {
   const { userid, product } = useContext(productContext);
   const [shoppingcart, setShoppingCart] = useState([]);
   const [productShoppingCart, setProductShoppingCart] = useState([]);
@@ -80,8 +80,8 @@ export default function Shoppingcartuser() {
         <div className='title'>
         <h4>{product.title}</h4>
         </div>
-        <div className='content'>
-        <div className='mahesh' onClick={() =>  hadelnavgaiton(product)}>
+        <div className='content' onClick={() =>  hadelnavgaiton(product)}>
+        <div className='mahesh' >
         <img src={product.image[0]} alt={product.title} style={{width:'150px',height:'150px'}}/>
         </div> 
         <div className='det'>
@@ -98,10 +98,10 @@ export default function Shoppingcartuser() {
         <p>Count: {product.count}</p>
         <p>Delever At: {product.deleveryAt}</p>
         </div>
-        <div>
-        <MdRemoveShoppingCart  style={{color:'red',fontSize: '30px',marginLeft:'40px'}} onClick={()=> removeFromCart(product._id)}/>
-          </div>
         </div>
+        <div className='delet'>
+        <MdRemoveShoppingCart  style={{color:'red',fontSize: '30px',marginLeft:'30px'}} onClick={()=> removeFromCart(product._id)}/>
+          </div>
         </div>
         
       </div>
@@ -114,11 +114,11 @@ export default function Shoppingcartuser() {
     <p>Subtotal : { total }</p>
     <p> Delivery : { total }</p>
     <p>Total (VAT included) : { total }</p>
-    <CheckoutButton total={{ total }}productShoppingCart={{productShoppingCart}}></CheckoutButton>
+    <CheckoutButton total={{ total }}productShoppingCart={{productShoppingCart}}useraddress={useraddress}></CheckoutButton>
     </div>
     </div>
     </div>
-    <CheckoutButton total={{ total }}productShoppingCart={{productShoppingCart}}></CheckoutButton>
+    <CheckoutButton total={{ total }}productShoppingCart={{productShoppingCart}}useraddress={useraddress}></CheckoutButton>
   </div>
   );
 }

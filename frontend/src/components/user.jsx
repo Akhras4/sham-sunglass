@@ -8,13 +8,16 @@ import Address from './address'
 import Shoppingcartuser from './shoppingcart'
 import Favorites from './favorites'
 import {useLocation} from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive'
+import Bar from './bar'
 export default function User() {
   const[userdetail,setuserdetail]=useState(null)
   const[useraddress,setuseraddress]=useState(null)
-  const {userid,token}=useContext(productContext)
+  const {userid,token,product}=useContext(productContext)
   const [activeComponent, setActiveComponent] = useState();
   const [selectedFav, setSelectedToFav] = useState(null)
   const location = useLocation();
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width:769px)'})
   const handleClick = (component) => {
     setActiveComponent(component);
   };
@@ -46,12 +49,13 @@ export default function User() {
   return (
     <div>
       <Nav favorites={selectedFav} />
+      <Bar selectedFav={selectedFav} product={product} />
      <div className='main'>
           <div className='LEFT'>
-            <div className='leftuser'>
+            {/* <div className='leftuser'>
                 <div className='lef-us'>{userdetail && userdetail.username}</div>
                 <div className='lef-us'>{userdetail && userdetail.email}</div>
-             </div>  
+             </div>   */}
           <div className='LEFTbtt'>
             <div className='lef-it'onClick={() => handleClick('userdetail')}>User Details</div>
              <div className='lef-it'onClick={() => handleClick('Component2')}>shoppingbag</div>
@@ -63,10 +67,10 @@ export default function User() {
     </div>
     <div className='Right'>
         {activeComponent === "Component1"  && (
-        <Address value={useraddress}  />
+        <Address value={useraddress}   />
     )}
       {activeComponent === "Component2"  && (
-      <Shoppingcartuser value={useraddress}  />
+      <Shoppingcartuser useraddress={useraddress}  />
     )}
       {activeComponent === "Component3"  && (
       <Favorites value={useraddress}  />
