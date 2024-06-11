@@ -82,52 +82,73 @@ const europeanCountries = [
     "Spain", "Sweden", "Switzerland", "Turkey", "Ukraine", "United Kingdom", "Vatican City"
 ];
 const countryMapping = {
+    // Netherlands
     'Nederland': 'Netherlands',
-    'Verenigd Koninkrijk': 'United Kingdom',
+    'België': 'Belgium',
+    'Belgique': 'Belgium',
+    'Belgien': 'Belgium',
+    'Deutschland': 'Germany',
     'Duitsland': 'Germany',
-    'Spanje': 'Spain',
+    'Österreich': 'Austria',
+    'Oostenrijk': 'Austria'
 };
-const addressValidation =( req,res) =>{
-        if (req.method === "GET") {
-            if (req.method === "GET") {
-                const address = req.query.address;
-                // console.log(address, 'address');
-        
-                const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
-                // console.log(url);
-                axios.get(url)
-                    .then(response => {
-                        const data = response.data;
-                        // console.log(data);
-                        if (data && data.length > 0) {
-                            const displayName = data[0].display_name;
-                            if (displayName) {
-                                const apiCountry = displayName.split(',').pop().trim();
-                                const country = countryMapping[apiCountry] || apiCountry;
-                                const isInEurope = europeanCountries.includes(country);
-        
-                                // console.log(`Address: ${displayName}`);
-                                // console.log(`Is in Europe: ${isInEurope}`);
-        
-                                return res.status(200).json({ isInEurope });
-                            } else {
-                                // console.log('No valid address found in the API response.');
-                                return res.status(400).json({ isInEurope: false });
-                            }
+const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
+const addressValidation = (req, res) => {
+    if (req.method === "GET") {
+        const address = req.query.address;
+        const addressParts = address.split(',').map(part => part.trim());
+        let userCountry = addressParts.pop();
+        userCountry = capitalizeFirstLetter(userCountry);
+        // console.log("userCountry", userCountry);
+
+        if (europeanCountries.includes(userCountry) || countryMapping[userCountry]) {
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+            console.log(url);
+
+            axios.get(url)
+                .then(response => {
+                    const data = response.data;
+                    // console.log(data);
+
+                    if (data && data.length > 0) {
+                        const displayName = data[0].display_name;
+                        // console.log("displayName", displayName);
+                        if (displayName) {
+                            const apiCountry = displayName.split(',').pop().trim();
+                            console.log("apiCountry", apiCountry);
+                            const mappedApiCountry = countryMapping[apiCountry] || apiCountry;
+                            console.log("mappedApiCountry", mappedApiCountry);
+                            const isInEurope = europeanCountries.includes(mappedApiCountry);
+                            const isSameCountry = mappedApiCountry === (countryMapping[userCountry] || userCountry);
+
+                            // console.log(`Address: ${displayName}`);
+                            // console.log(`Is in Europe: ${isInEurope}`);
+                            // console.log(`Is same country: ${isSameCountry}`);
+
+                            return res.status(200).json({ isInEurope, isSameCountry });
                         } else {
-                            // console.log('No data received from the API.');
-                            return res.status(400).json({ isInEurope: false });
+                            // console.log('No valid address found in the API response.');
+                            return res.status(400).json({ error: 'No valid address found in the API response.', isInEurope: false, isSameCountry: false });
                         }
-                    })
-                    .catch(error => {
-                        // console.error('Error fetching data from API:', error);
-                        return res.status(500).json({ error: 'Internal Server Error' });
-                    });
-            } else {
-                return res.status(405).json({ error: 'Method Not Allowed' });
-            }
-        };
+                    } else {
+                        // console.log('No data received from the API.');
+                        return res.status(400).json({ error: 'No data received from the API.', isInEurope: false, isSameCountry: false });
+                    }
+                })
+                .catch(error => {
+                    // console.error('Error fetching data from API:', error);
+                    return res.status(500).json({ error: 'Internal Server Error' });
+                });
+        } else {
+            return res.status(400).json({ error: 'Country not found or not supported. Our services are only available in the Netherlands, Belgium, Germany, and Austria' });
+        }
+    } else {
+        return res.status(405).json({ error: 'Method Not Allowed' });
     }
+};
 
 
 module.exports = {

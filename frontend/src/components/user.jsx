@@ -36,15 +36,30 @@ export default function User() {
         }
     });
 }, []);
+//  useEffect(() => {
+//    if (location.state && location.state.results) {
+//      setSelectedToFav(location.state.favorites)
+//      console.log(location.state.favorites,"location.state.favorites")
+//    } else {
+//      setSelectedToFav(location.state.favorites)
+//      console.log(location.state.favorites,"fromser")
+//    }
+//  }, [location.state])
+
  useEffect(() => {
-   if (location.state && location.state.results) {
-     setSelectedToFav(location.state.favorites)
-     console.log(location.state.favorites,"location.state.favorites")
-   } else {
-     setSelectedToFav(location.state.favorites)
-     console.log(location.state.favorites,"fromser")
-   }
- }, [location.state])
+  axios.get(`http://localhost:8080/wishList/${userid}`)
+  .then(res => {
+    if (res.data && res.data.favorites) {
+      setSelectedToFav(res.data.favorites);
+      console.log("favorites home", res.data.favorites);
+    } else {
+      console.log("No favorites found");
+    }
+  })
+  .catch(err => {
+    console.error("Error fetching favorites:", err);
+  });
+}, []);
 
   return (
     <div>
@@ -70,10 +85,10 @@ export default function User() {
         <Address value={useraddress}   />
     )}
       {activeComponent === "Component2"  && (
-      <Shoppingcartuser useraddress={useraddress}  />
+      <Shoppingcartuser useraddress={useraddress} selectedFav={selectedFav} setSelectedToFav={setSelectedToFav}  />
     )}
       {activeComponent === "Component3"  && (
-      <Favorites value={useraddress}  />
+      <Favorites value={useraddress} selectedFav={selectedFav} setSelectedToFav={setSelectedToFav} />
     )}
 </div>
 </div>
