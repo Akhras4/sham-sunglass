@@ -20,7 +20,7 @@ h1{
     border-radius: 20px;
     z-index: 2;
     width: 40vw;
-    height:fit-content;
+    height:auto;
     margin-right: 2em;
     & h1{
         margin: 0;
@@ -58,7 +58,7 @@ h1{
 @media screen and (max-width:1092px) {
   #dilo{
     width: 50vw;
-    height:fit-content;
+    height:auto;
   }
 }
 @media screen and (max-width:991px) {
@@ -66,7 +66,8 @@ h1{
 @media screen and (max-width: 769px) {
   #dilo{
     width: 70vw;
-    height:fit-content;
+    height:auto;
+    overflow: scroll;
     & h1{
       margin: 0;
   }
@@ -103,7 +104,7 @@ h1{
 @media screen and (max-width:576px) {
   #dilo{
     width: 100vw;
-    height:fit-content;
+    height:auto;
     & h1{
       margin: 0;
   }

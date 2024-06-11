@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { MdRemoveShoppingCart } from "react-icons/md";
 import CheckoutButton from './CheckoutButton'
 
-export default function Shoppingcartuser({useraddress}) {
+export default function Shoppingcartuser({useraddress ,selectedFav, setSelectedToFav}) {
   const { userid, product } = useContext(productContext);
   const [shoppingcart, setShoppingCart] = useState([]);
   const [productShoppingCart, setProductShoppingCart] = useState([]);
@@ -66,7 +66,7 @@ export default function Shoppingcartuser({useraddress}) {
       });
   }
   const hadelnavgaiton=(product)=>{                //waiting to finish
-    navigate('/product', { state: { results: product} });
+    navigate(`/product/${product.sort}?product=${product._id}`, { state: { results: product, favorites: selectedFav } })
   }
 
   return (

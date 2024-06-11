@@ -28,6 +28,7 @@ export default function Address(value) {
     };
 
     const closeDialog = () => {
+        setErr('')
         dialogRef.current.close();
     };
     const handleSubmitinfo = (e) => {
@@ -35,10 +36,9 @@ export default function Address(value) {
         const fullAddress = `${streetAddress}, ${city}, ${postalCode}, ${country}`;
         console.log("fullAddress",fullAddress)
         validateAddress(userid,fullAddress)
-        .then(isValidAddress => {
-            // console.log(isValidAddress,"isValidAddress")
-            if (!isValidAddress) {
-              setErr('Please enter a valid address in Europe.');
+        .then(({ isValid, errorMessage }) => {
+            if (!isValid) {
+              setErr(errorMessage);
               return;
             }
            
@@ -167,8 +167,9 @@ export default function Address(value) {
                                         onChange={(e) => { setCountry(e.target.value) }}
                                     />
                                 </div>
+                                {err && <p>{err}</p>}
                                 <button type="submit" class="btn btn-outline-danger">Save</button>
-                            {err && <p>{err}</p>}
+                            
                         </form>
                         </div>
                         </div>

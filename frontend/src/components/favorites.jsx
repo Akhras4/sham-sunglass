@@ -7,9 +7,9 @@ import Button from 'react-bootstrap/Button';
 import { FaShoppingCart } from 'react-icons/fa';
 import './user.css'
 import { MdRemoveShoppingCart } from "react-icons/md";
-export default function Favorites() {
+export default function Favorites({selectedFav,setSelectedToFav}) {
     const { userid, product } = useContext(productContext);
-     const [selectedFav, setSelectedToFav] = useState(null)
+    //  const [selectedFav, setSelectedToFav] = useState(null)
     const [productFav, setProductFav] = useState([]);
     const navigate = useNavigate()
     useEffect(()=>{
@@ -45,16 +45,17 @@ export default function Favorites() {
         console.log(productDetailsArray,"productDetailsArray");
       }
       const hadelnavgaiton=(product)=>{                //waiting to finish
-        navigate('/product', { state: { results: product ,favorites:selectedFav } });
+        navigate(`/product/${product.sort}?product=${product._id}`, { state: { results: product, favorites: selectedFav } });
       }
       const removeFromWishList=(productId) =>{
         axios.post(`http://localhost:8080/wishList/removeFromWishList/${userid}`,{productId})
         .then(res =>{
-            console.log(res,"res")
+            // console.log(res,"res")
             setProductFav(res.data.favorites)
+            setSelectedToFav(res.data.favorites);
             let productIdsRef = res.data.favorites.items.map(item => item.productId);
             getProductDetails(productIdsRef);
-            console.log(productFav,'productFav')
+            // console.log(productFav,'productFav')
       })
       .catch(err =>{
         console.log(err)
