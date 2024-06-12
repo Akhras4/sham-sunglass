@@ -10,6 +10,7 @@ import Favorites from './favorites'
 import {useLocation} from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import Bar from './bar'
+import Userdetails from './userdetails';
 export default function User() {
   const[userdetail,setuserdetail]=useState(null)
   const[useraddress,setuseraddress]=useState(null)
@@ -22,10 +23,10 @@ export default function User() {
     setActiveComponent(component);
   };
   useEffect(() => {
-    console.log('token',token)
+    // console.log('token',token)
     axios.get(`http://localhost:8080/user/${userid}?token=${token}`)
     .then(res => {
-        console.log(res.data.address);
+        // console.log(res.data.address);
         setuserdetail(res.data);
         setuseraddress(res.data.address);
     })
@@ -89,6 +90,9 @@ export default function User() {
     )}
       {activeComponent === "Component3"  && (
       <Favorites value={useraddress} selectedFav={selectedFav} setSelectedToFav={setSelectedToFav} />
+      )}
+      {activeComponent === "userdetail"  && (
+        <Userdetails userdetail={userdetail} setuserdetail={setuserdetail} />
     )}
 </div>
 </div>
