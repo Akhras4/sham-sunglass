@@ -27,6 +27,7 @@ router.get(`/VerificationEmail`,DoThis.tokenval)
 router.get("/login",DoThis.login)
 router.post("/login",DoThis.login)
 
+
 router.get("/logout",DoThis.cookieJWTAuth,DoThis.logout)
 router.post("/logout",DoThis.cookieJWTAuth,DoThis.logout)
 
@@ -49,5 +50,11 @@ router.post('/user/createOrder/:id',DoThis.cookieJWTAuth,strip.createPaymentInte
 // router.post('/webhook/:id',DoThis.cookieJWTAuth, express.raw({ type: 'application/json' }),strip.webhook)
 // router.post('/webhook', express.raw({ type: 'application/json' }),strip.webhook)
 
-
+router.all('*', (req, res, next) => {
+  res.redirect('http://localhost:3000/404');
+});
+router.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 module.exports = router;

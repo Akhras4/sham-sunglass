@@ -8,6 +8,7 @@ import CloseButton from 'react-bootstrap/CloseButton';
 import { BsArrowLeft } from 'react-icons/bs';
 import { motion } from 'framer-motion';
 import { Icon } from '@iconify/react';
+import EmailRedirect from '../custom hook/emailredirect'
 export default function Signup() {
   const dialogRef = useRef(null);
   const dialogRefForgetPassword = useRef(null);
@@ -18,6 +19,7 @@ export default function Signup() {
   const [type, setType] = useState('password');
   const [icon, setIcon] = useState('mdi:eye-off');
   const [rememberMe, setRememberMe] = useState(false);
+  const [emailProviderURL, setEmailProviderURL] = useState('');
   const location = useLocation();
 
   const handleToggle = () => {
@@ -30,14 +32,14 @@ export default function Signup() {
     };
   }
   useEffect(() => {
-    console.log("Location state:", location.state);
-    if (location.state && location.state.dialogRef ) {
-      console.log("Location state:", location.state);
+    // console.log("Location state:", location.state);
+    if (location.state && location.state.dialogRef) {
+      // console.log("Location state:", location.state);
       showDialog(dialogRef);
     }
   }, [location.state]);
 
-  const showDialog = (dialog,currentdialog) => {
+  const showDialog = (dialog, currentdialog) => {
     currentdialog && closeDialog(currentdialog);
     setErr('')
     dialog.current.showModal();
@@ -68,6 +70,26 @@ export default function Signup() {
         setErr(Errors)
       });
   };
+  const handleForgetPasswordSubmit = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:8080/ForgetPassword', {
+      email: email,
+    })
+      .then(response => {
+        console.log(response)
+        if (response && response.status === 200){
+        showDialog(dialogRefSemdingEmail,dialogRefForgetPassword)
+        }
+      })
+      .catch(errors => {
+        setErr(errors)
+        console.error('Error:', errors);
+      });
+  };
+
+  const handleEmailProviderURL = (url) => {
+    setEmailProviderURL(url);
+  };
   return (
     <div>
       <Nav />
@@ -97,9 +119,9 @@ export default function Signup() {
               <div className="line-bo"></div>
             </div>
             <Link
-             className="but-acc"
-              id="but-acc" 
-              to= "/creataccount" 
+              className="but-acc"
+              id="but-acc"
+              to="/creataccount"
               onClick=''>
               Create account
             </Link>
@@ -149,7 +171,7 @@ export default function Signup() {
                         className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
                         onClick={handleToggle}
                       >
-                        <Icon icon={icon} size={25} />
+                        <Icon icon={icon} size={45} />
                       </span>
                     </div>
                   </div>
@@ -164,7 +186,7 @@ export default function Signup() {
                       />
                       <label htmlFor="rememberMe">Remember Me</label>
                     </div>
-                    <div onClick={()=>{showDialog(dialogRefForgetPassword,dialogRef)}}><p>Forget Your Password ?</p></div>
+                    <div onClick={() => { showDialog(dialogRefForgetPassword, dialogRef) }}><p>Forget Your Password ?</p></div>
                   </div>
                   {err && <p className="text-red-500 mt-2">{err}</p>}
                   <button type="submit" id="btn" className="btn btn-outline-danger mt-3">Login</button>
@@ -176,9 +198,9 @@ export default function Signup() {
         </dialog>
         <dialog id="dialog-co" ref={dialogRefForgetPassword} >
           <div className='dialogFlex' >
-            <BsArrowLeft variant="black" onClick={() =>{showDialog(dialogRef,dialogRefForgetPassword)}} />
+            <BsArrowLeft variant="black" onClick={() => { showDialog(dialogRef, dialogRefForgetPassword) }} />
             <div className="dilo">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleForgetPasswordSubmit}>
                 <div className='dialogFlexContent'>
                   <h1>Forget Your Password ?</h1>
                   <div>
@@ -197,7 +219,7 @@ export default function Signup() {
                     />
                   </div>
                   {err && <p className="text-red-500 mt-2">{err}</p>}
-                  <button type="submit" id="btn" className="btn btn-outline-danger mt-3"onClick={()=>{showDialog(dialogRefSemdingEmail,dialogRefForgetPassword)}}>Next</button>
+                  <button type="submit" id="btn" className="btn btn-outline-danger mt-3" >Next</button>
                 </div>
               </form>
             </div>
@@ -206,19 +228,26 @@ export default function Signup() {
         </dialog>
         <dialog id="dialog-co" ref={dialogRefSemdingEmail} >
           <div className='dialogFlex' >
-            <BsArrowLeft variant="black" onClick={() =>{showDialog(dialogRefForgetPassword,dialogRefSemdingEmail)}} />
+            <BsArrowLeft variant="black" onClick={() => { showDialog(dialogRefForgetPassword, dialogRefSemdingEmail) }} />
             <div className="dilo">
-                <div className='dialogFlexContent'>
-                  <h1>Forget Your Password ?</h1>
-                  {err && <p className="text-red-500 mt-2">{err}</p>}
-                  <button  id="btn" className="btn btn-outline-danger mt-3" onClick={() => { closeDialog(dialogRefSemdingEmail) }}>Ok</button>
+              <div className='dialogFlexContent'>
+                <h1>Forget Your Password ?</h1>
+                <div className='videoco'style={{ width: '60%', maxWidth: '600px', margin: 'auto' }}>
+                  <video id="myVideo" autoPlay muted loop style={{ width: '100%', height: 'auto' }}>
+                    <source src="http://localhost:8080/public/video/sendedemail.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  <Link to={emailProviderURL}  target="_blank">Go to Gmail</Link>
                 </div>
+                {err && <p className="text-red-500 mt-2">{err}</p>}
+                <button id="btn" className="btn btn-outline-danger mt-3" onClick={() => { closeDialog(dialogRefSemdingEmail) }}>Ok</button>
+              </div>
             </div>
             <CloseButton variant="black" onClick={() => { closeDialog(dialogRefSemdingEmail) }} />
           </div>
         </dialog>
       </div>
-
+      <EmailRedirect email={email} onEmailProviderURL={handleEmailProviderURL} />
     </div>
   );
 };

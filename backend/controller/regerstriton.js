@@ -217,7 +217,12 @@ const login = (req,res)=>{
 
 
 const cookieJWTAuth = (req, res, next) => {
+    console.log(req.method)
+    console.log(req.url)
     const token = req.query.token;
+    if (!token) {
+        token = req.headers.authorization; // Check if token is present in the headers
+    }
     if (!token) {
         console.log('tokencheck',token)
         res.clearCookie("token");

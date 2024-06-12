@@ -1,13 +1,19 @@
 nav{
-    display: flex;
     width:100%;
-    height: 50px;
-    justify-content: space-between;
+    height: 100px;
+    background-color: transparent;
+    backdrop-filter: invert(80%);
     position: fixed;
     top: 0;
     z-index: 3;
-    background-color: transparent;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .nav{
+    display: flex;
+    justify-content: space-between;
+ 
   }
   .RightSideContiner{
     display: flex;
@@ -42,6 +48,7 @@ nav{
     position: relative;
     width: 250px;
     margin-right: 20px;
+    margin-top: 20px;
   }
   /* Style for the input field */
   .search-input {
@@ -122,11 +129,19 @@ nav{
   }
   @media screen and (max-width:991px) {
     nav{
-      display: flex;
-      width:100vw;
-      height: 50px;
-      
+      backdrop-filter:none; 
     }
+    .nav{
+      display: flex !important;
+     width: 100vw;
+     height: 100px;
+    justify-content: space-between;
+    backdrop-filter: invert(80%);
+    }
+    #logo{
+      display: block;
+    }
+ 
     #helpco{
       display: inline-block;
      }
@@ -140,18 +155,15 @@ nav{
       display: inline;
       
     }
-    .RightSideContiner{
-      display: inline;
-      
-    }
      .search-container{
       position: fixed;
         bottom: 0;
-        right:15;
-        left: 15;
-        width: 90vw;
+        right:15px;
+        left: 15px;
+        width: 95vw;
        margin-right: 30px;
        height: 30px;
+       display: block;
      }
      .search-input{
         font-size: 20px;
@@ -161,7 +173,8 @@ nav{
         height: 30px;
      }
      .search-button {
-      display: none;
+     display: none;
+
      }
   }
   @media screen and (max-width: 769px) {
