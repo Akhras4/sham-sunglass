@@ -8,7 +8,6 @@ import CloseButton from 'react-bootstrap/CloseButton';
 export default function Address(value) {
     const {token,userid}= useContext(productContext)
     const [address,setaddress]=useState([value])
-    console.log("address",address)
     const dialogRef = useRef(null);
     const [name, setName] = useState('');
     const [streetAddress, setStreetAddress] = useState('');

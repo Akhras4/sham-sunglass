@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Nav from './nav';
 import './creareaccount.css';
 import {motion} from 'framer-motion';
-import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 export default function CreateAccount() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [err,seterr]=useState([])
+  const [dialog,setDialog]= useState(null)
+  const navgat =useNavigate()
+  const handelNavigate=()=>{
+      navgat('/signup',{state:{dialogRef: dialog}})
+    } 
+  useEffect(() => {
+      setDialog("dialogRef");
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,7 +60,7 @@ export default function CreateAccount() {
         <label for="phoneNumber">Phone Number</label>
         <input type="tel" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}class="asd" />
         <input id="btn" type="submit" value="Register Now" class="mainbox"></input>
-        <Link to='/signup'>already have account</Link>
+        <p onClick={()=>{handelNavigate()}}>already have account</p>
       </form>
       <ul>
   {err && err.map((error, index) => (
