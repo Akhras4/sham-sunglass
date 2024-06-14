@@ -17,7 +17,7 @@ import {jwtDecode} from 'jwt-decode';
 import Logout from './components/logout'
 import AllproductsCat from './components/allproductscat';
 import NotFound from './components/404'
-
+import ResetPassword from './components/resetpassword'
 
 
 export  const productContext = createContext()
@@ -80,8 +80,9 @@ function App() {
             <Route path="/wait" element={< Waitingpage />} />
             <Route path='/user' element={isAuthenticated ? <User  /> : <Signup />  }/>
             <Route path='/logout' element={ <Logout /> }/>
-            <Route path="/404" component={NotFound} />
-            <Route path='*' element={<Navigate to="/404" />}  />
+            <Route path='/ResetPassword' element={ <ResetPassword /> }/>
+            <Route path="/NotFound" component={NotFound} />
+            <Route path='*' element={<Navigate to="/NotFound" />}  />
           </Routes>
         </productContext.Provider>
       </Router>

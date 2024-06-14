@@ -55,7 +55,7 @@ export default function Signup() {
     axios.post('http://localhost:8080/login', {
       email: email,
       Password: password,
-
+      rememberMe:rememberMe
     })
       .then(response => {
         const token = response.data.token;
@@ -81,9 +81,12 @@ export default function Signup() {
         showDialog(dialogRefSemdingEmail,dialogRefForgetPassword)
         }
       })
-      .catch(errors => {
-        setErr(errors)
-        console.error('Error:', errors);
+      .catch(error => {
+        if (error.response && error.response.data.errors && error.response.data.errors.message) {
+          setErr(error.response.data.errors.message); 
+        } else {
+          setErr("Something went wrong. Please try again."); 
+        }
       });
   };
 
