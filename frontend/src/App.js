@@ -1,5 +1,5 @@
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route ,Navigate } from 'react-router-dom';
 import Homepage from './components/homepage';
 import Allproduct from './components/allproduct';
 import { useState, useEffect,createContext,useContext } from 'react';
@@ -16,7 +16,8 @@ import Usericon from './components/usericon';
 import {jwtDecode} from 'jwt-decode';
 import Logout from './components/logout'
 import AllproductsCat from './components/allproductscat';
-
+import NotFound from './components/404'
+import ResetPassword from './components/resetpassword'
 
 
 export  const productContext = createContext()
@@ -79,6 +80,9 @@ function App() {
             <Route path="/wait" element={< Waitingpage />} />
             <Route path='/user' element={isAuthenticated ? <User  /> : <Signup />  }/>
             <Route path='/logout' element={ <Logout /> }/>
+            <Route path='/ResetPassword' element={ <ResetPassword /> }/>
+            <Route path="/NotFound" component={NotFound} />
+            <Route path='*' element={<Navigate to="/NotFound" />}  />
           </Routes>
         </productContext.Provider>
       </Router>

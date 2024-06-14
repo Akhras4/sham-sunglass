@@ -71,7 +71,8 @@ const usersSchema = new mongoose.Schema({
           }*/
     },
     isValid: { type: Boolean, default: false },
-    emailtoken: { type: String },
+    emailtoken: { type: String ,default: false },
+    resetPasswordToken: { type: String },
     books:[{ type: mongoose.Schema.Types.ObjectId, ref: 'books' }],
     userinfo: [{ type: mongoose.Schema.Types.ObjectId, ref: 'userinfo' }],
     shoppingCart: { type: mongoose.Schema.Types.ObjectId, ref: 'ShoppingCart' },
