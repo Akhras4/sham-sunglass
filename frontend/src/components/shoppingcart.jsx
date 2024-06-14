@@ -15,7 +15,7 @@ export default function Shoppingcartuser({useraddress ,selectedFav, setSelectedT
     axios.get(`http://localhost:8080/cart/${userid}`)
       .then(res => {
         setShoppingCart(res.data.shoppingCart.items);
-        // console.log(res.data.shoppingCart)
+         console.log(res.data)
         let productIds = res.data.shoppingCart.items.map(item => item.productId);
         getProductDetails(productIds);
         console.log(productIds, "productIds")

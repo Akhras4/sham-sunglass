@@ -75,10 +75,17 @@ const shoppingcart=(req,res)=>{
     if (req.method==="GET"){
     userId=req.params.id;
     console.log(userId)
-    getData(userId)
-    .then(data => {
-      res.status(200).json(data);
-  })
+    users.findById(userId)
+    .populate({
+        path:"shoppingCart",
+        populat:{
+            path:"items.product",
+        }
+    })
+    .then(Data =>{
+        res.status(200).json({shoppingCart:Data.shoppingCart})
+        console.log('shoppingCart',Data.shoppingCart)
+    })
   .catch(error => {
       res.status(500).json({ error: error.message });
   });

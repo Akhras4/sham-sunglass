@@ -30,6 +30,7 @@ router.get("/login",DoThis.login)
 router.post("/login",DoThis.login)
  
 router.post("/ForgetPassword",DoThis.forgetPassword)
+router.post("/:id/ResetPassword",DoThis.cookieJWTAuthResetPassword,DoThis.resetPassword)
 
 router.get("/logout",DoThis.cookieJWTAuth,DoThis.logout)
 router.post("/logout",DoThis.cookieJWTAuth,DoThis.logout)
