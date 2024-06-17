@@ -15,7 +15,7 @@ export default function Shoppingcartuser({useraddress ,selectedFav, setSelectedT
     axios.get(`http://localhost:8080/cart/${userid}`)
       .then(res => {
         setShoppingCart(res.data.shoppingCart.items);
-        // console.log(res.data.shoppingCart)
+         console.log(res.data)
         let productIds = res.data.shoppingCart.items.map(item => item.productId);
         getProductDetails(productIds);
         console.log(productIds, "productIds")
@@ -114,11 +114,11 @@ export default function Shoppingcartuser({useraddress ,selectedFav, setSelectedT
     <p>Subtotal : { total }</p>
     <p> Delivery : { total }</p>
     <p>Total (VAT included) : { total }</p>
-    <CheckoutButton total={{ total }}productShoppingCart={{productShoppingCart}}useraddress={useraddress}></CheckoutButton>
+    <CheckoutButton total={{ total }}productShoppingCart={{productShoppingCart}} useraddress={useraddress}></CheckoutButton>
     </div>
     </div>
     </div>
-    <CheckoutButton total={{ total }}productShoppingCart={{productShoppingCart}}useraddress={useraddress}></CheckoutButton>
+    <CheckoutButton total={{ total }}productShoppingCart={{productShoppingCart}} useraddress={useraddress}></CheckoutButton>
   </div>
   );
 }

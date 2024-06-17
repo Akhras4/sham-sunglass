@@ -13,12 +13,11 @@ const ejs = require('ejs');
 const { error } = require('console');
 
 const SECRET_KEY = process.env.googleApi;
-const RESETPASSWORD_SECRET= process.env.RESETPASSWORD_SECRET;
 const redirecttologin = (req, res) => {
     if (req.method === "GET") {
         product.find()
             .then((product) => {
-                res.json({ product, secretKey: SECRET_KEY })
+                res.json({ product})
             })
     }
 }
@@ -186,7 +185,7 @@ const login = (req, res) => {
         res.json({ errors: null })
     } else if (req.method === "POST") {
         const { email, Password, rememberMe } = req.body;
-        if (!email || !Password) return res.status(404).json({ errors: "passwords or username  uncorrect" })
+        if (!email || !Password) return res.status(404).json({ errors: "passwords or username uncorrect" })
         users.findOne({ email })
             .then((discover) => {
                 if (!discover) {
@@ -219,7 +218,7 @@ const login = (req, res) => {
                             }
                         });
                     } else {
-                        return res.status(400).json({ errors: 'passwords or username  uncorrect' })
+                        return res.status(400).json({ errors: 'passwords or username uncorrect' })
                     }
                 })
             })
@@ -256,6 +255,46 @@ const cookieJWTAuth = (req, res, next) => {
     });
 };
 
+const cookieJWTAuthResetPassword = (req, res, next) => {
+    const tokenResetPassword = req.query.tokenResetPassword;
+    const userId = req.params.id
+    console.log('tokenResetPassword', tokenResetPassword)
+    console.log('userId', userId)
+    if (!tokenResetPassword) {
+        res.clearCookie("tokenResetPassword");
+        return res.json({ redirect: "http://localhost:3000/signup" });
+    }
+    users.findById(userId)
+        .then(user => {
+            console.log('user', user)
+            if (!user) {
+                console.log('User not found for userId:', userId);
+                res.clearCookie("tokenResetPassword");
+                return res.json({ redirect: "http://localhost:3000/signup" });
+            }
+            const resetPasswordToken = user.resetPasswordToken
+            if (!resetPasswordToken) {
+                return res.status(400).json({ error: "ask agin to reset your password " });
+            }
+            console.log("resetPasswordToken :", resetPasswordToken)
+            jwt.verify(tokenResetPassword, resetPasswordToken, { algorithm: 'HS256' }, (err, user) => {
+                if (err) {
+                    console.log(err)
+                    res.clearCookie("token");
+                    return res.json({ redirect: "http://localhost:3000/signup" });
+                } else {
+                    req.user = user;
+                    console.log(user);
+                    next();
+                }
+            });
+        })
+        .catch(err => {
+            console.log('Database error:', err)
+            res.clearCookie("tokenResetPassword");
+            return res.json({ redirect: "http://localhost:3000/signup" });
+        })
+}
 
 const forgetPassword = (req, res) => {
     if (req.method === 'POST') {
@@ -291,7 +330,6 @@ const forgetPassword = (req, res) => {
     }
     if (req.method === "GET") {
         const emailtoken = req.query.emailtoken;
-
         users.findOne({ resetPasswordToken: emailtoken })
             .then(user => {
                 if (!user || !user.resetPasswordToken) {
@@ -305,14 +343,20 @@ const forgetPassword = (req, res) => {
                     userId: user._id,
                     userName: user.UserName
                 };
-                const tokenResetPassword = jwt.sign(payload, process.env.RESETPASSWORD_SECRET, { expiresIn: '1h' });
-                res.cookie("tokenResetPassword", tokenResetPassword, {
-                    path: '/ResetPassword',
-                    domain: 'localhost',
-                    secure: process.env.NODE_ENV === 'production', 
-                    sameSite: 'strict',
-                });
-                res.redirect("http://localhost:3000/ResetPassword");
+                const RESETPASSWORDTOKEN = crypto.randomBytes(64).toString("hex");
+                user.resetPasswordToken = RESETPASSWORDTOKEN;
+                return user.save()
+                    .then(() => {
+                        console.log("user.resetPasswordToken :", user.resetPasswordToken)
+                        const tokenResetPassword = jwt.sign(payload, RESETPASSWORDTOKEN, { expiresIn: '1h' });
+                        res.cookie("tokenResetPassword", tokenResetPassword, {
+                            path: '/ResetPassword',
+                            domain: 'localhost',
+                            secure: process.env.NODE_ENV === 'production',
+                            sameSite: 'strict',
+                        });
+                        res.redirect("http://localhost:3000/ResetPassword");
+                    })
             })
             .catch(error => {
                 console.error(error);
@@ -322,8 +366,71 @@ const forgetPassword = (req, res) => {
 }
 
 
+const resetPassword = (req, res) => {
+    console.log("welkaom :")
+    console.log("req :",req.method)
+    if (req.method === 'POST') {
+        const userId = req.params.id;
+        const password = req.body.password;
+        const confirmPassword = req.body.confirmPassword;
+        if (password !== confirmPassword) {
+            return res.status(400).json({ error: "Password and confirm password do not match" });
+        }
 
+        users.findById(userId)
+            .then(user => {
+                if (!user) {
+                    return res.status(404).json({ error: "User not found" });
+                }
+                console.log("user :",user)
+                user.Password = password
+                return user.save()
+                .then((user) => {
+                bcrypt.hash(password, 12)
+                    .then(hashedPassword => {
+                        user.Password = hashedPassword;
+                        user.resetPasswordToken = null;
+                        return user.save();
+                    })
+                    .then(savedUser => {
+                        const payload = {
+                            userId: savedUser._id,
+                            UserName: savedUser.UserName
+                        };
 
+                        jwt.sign(payload, process.env.MY_SECRET, { algorithm: 'HS256', expiresIn: '3h' }, (err, token) => {
+                            if (err) {
+                                console.error(err);
+                                return res.status(500).json({success: true, error: "Failed to generate token" });
+                            } else {
+                                res.cookie("token", token, {
+                                    path: '/',
+                                    domain: 'localhost',
+                                    secure: process.env.NODE_ENV === 'production',
+                                    sameSite: 'strict',
+                                });
+                                console.log(token);
+                                res.status(200).json({ redirect: "http://localhost:3000/user", token });
+                            }
+                        });
+                    })
+                })
+                    .catch(saveError => {
+                        console.log("saveError:", JSON.stringify(saveError, null, 2));
+                            if (saveError.errors && saveError.errors.Password) {
+                                return res.status(400).json({ error: saveError.errors.Password.message });
+                        } else {
+                            console.error(error);
+                            return res.status(500).json({ error: 'Something went wrong. Please try again' });
+                        }
+                    });
+            })
+            .catch(err => {
+                console.error(err);
+                return res.status(500).json({ error: 'Something went wrong. Please try again' });
+            });
+    }
+}
 
 const logout = (req, res) => {
     if (req.method === "GET") {
@@ -356,4 +463,6 @@ module.exports = {
     user,
     redirecttologin,
     forgetPassword,
+    cookieJWTAuthResetPassword,
+    resetPassword,
 }

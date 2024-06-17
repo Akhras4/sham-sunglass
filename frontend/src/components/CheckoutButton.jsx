@@ -8,14 +8,15 @@ const Checkout = ({  total,productShoppingCart,useraddress }) => {
     const [loading, setLoading] = useState(false);
     const{token ,userid}=useContext(productContext)
     const [showAlert, setShowAlert] = useState(false);
+    console.log("useraddress :",useraddress)
     // console.log(productShoppingCart,"productShoppingCart",userid,"userid")
     const handleCheckout = () => {
-        if (useraddress) {
+        if (!useraddress) {
             setShowAlert(true);
             return;
         }
         setLoading(true);
-        axios.post(`http://localhost:8080/user/createOrder/${userid}?token=${token}`,{ total , productShoppingCart })
+        axios.post(`http://localhost:8080/user/createOrder/${userid}?token=${token}`,{ total , productShoppingCart ,useraddress })
         .then(response => {
             return response.data;
         })

@@ -82,7 +82,7 @@ function App() {
             <Route path='/logout' element={ <Logout /> }/>
             <Route path='/ResetPassword' element={ <ResetPassword /> }/>
             <Route path="/NotFound" component={NotFound} />
-            <Route path='*' element={<Navigate to="/NotFound" />}  />
+            {/* <Route path='*' element={<Navigate to="/NotFound" />}  /> */}
           </Routes>
         </productContext.Provider>
       </Router>

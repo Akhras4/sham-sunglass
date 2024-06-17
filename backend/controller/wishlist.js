@@ -4,6 +4,7 @@ const product = require('../modules/product');
 const users = require('../modules/user');
 
 const addToFavorites = (req,res)=>{
+    if(req.method==="POST"){
      let userId=req.params.id;
     // console.log(userId)
     let {productId}=req.body;
@@ -13,20 +14,20 @@ const addToFavorites = (req,res)=>{
         .then(user=>{
         if(! user){return res.status(500).json({errors:"user not found"})}
         if(!user.favorites){
-            const newFavorites= new favorites({
-                userId : user._id,
-                items: []
-            })
-            return newFavorites.save()
+            const newfavorites = new favorites({ userId: user._id, items: [] });
+            const newItem = { productId };
+            newfavorites.items.push(newItem);
+            
+            return newfavorites.save()
             .then(savedFav => {
                 user.favorites = savedFav._id;
-                return user.save();
+                return user.save().then(() => savedFav);
               })
         }else{
         const newItem = {
             productId
         }
-        // console.log(newItem)
+        console.log(newItem)
         user.favorites.items.push(newItem);
         // console.log(user)
         return  user.favorites.save();
@@ -41,7 +42,7 @@ const addToFavorites = (req,res)=>{
         })
     
 }
-
+}
 const removeItem =(req,res) =>{
   const userId=req.params.id;
   console.log(userId)

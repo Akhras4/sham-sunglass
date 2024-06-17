@@ -5,9 +5,8 @@ import './address.css'
 import {productContext} from '../App'
 import validateAddress from './validateAddress'
 import CloseButton from 'react-bootstrap/CloseButton';
-export default function Address(value) {
+export default function Address({useraddress,setuseraddress}) {
     const {token,userid}= useContext(productContext)
-    const [address,setaddress]=useState([value])
     const dialogRef = useRef(null);
     const [name, setName] = useState('');
     const [streetAddress, setStreetAddress] = useState('');
@@ -15,12 +14,6 @@ export default function Address(value) {
     const [city, setCity] = useState('');
     const [ country, setCountry] = useState('');
     const [err,setErr]=useState('')
-    useEffect(() => {
-        if (value) {
-            setaddress(value);
-            // console.log(value)   
-        }
-    }, [value]);
 
     const showDialog = () => {
         dialogRef.current.showModal();
@@ -50,7 +43,7 @@ export default function Address(value) {
         })
         .then(response => {
             console.log(response);
-            setaddress(response.data.address);
+            setuseraddress(response.data.address);
             closeDialog();
             
         })
@@ -66,10 +59,10 @@ export default function Address(value) {
     return (
         <div className='addressCon'>
         <h1>Your Address:</h1>
-        {(address && address.value && address.value.length > 0) || (address && address.length > 0) ? (
+        {( useraddress && useraddress.length > 0)  ? (
     <>
-        {address && address.length > 0 ? (
-            address.map(addressItem => (
+        {useraddress && useraddress.length > 0 ? (
+            useraddress.map(addressItem => (
                 <div key={addressItem._id} className='addressDetail'>
                     <p>Name: {addressItem.name}</p>
                     <p>Street: {addressItem.street}</p>
@@ -79,7 +72,7 @@ export default function Address(value) {
                 </div>
             ))
         ) : (
-            address.value.map(addressItem => (
+            useraddress.map(addressItem => (
                 <div key={addressItem._id} className='addressDetail'>
                     <p>Name: {addressItem.name}</p>
                     <p>Street: {addressItem.street}</p>
