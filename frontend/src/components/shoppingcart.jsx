@@ -114,11 +114,11 @@ export default function Shoppingcartuser({useraddress ,selectedFav, setSelectedT
     <p>Subtotal : { total }</p>
     <p> Delivery : { total }</p>
     <p>Total (VAT included) : { total }</p>
-    <CheckoutButton total={{ total }}productShoppingCart={{productShoppingCart}}useraddress={useraddress}></CheckoutButton>
+    <CheckoutButton total={{ total }}productShoppingCart={{productShoppingCart}} useraddress={useraddress}></CheckoutButton>
     </div>
     </div>
     </div>
-    <CheckoutButton total={{ total }}productShoppingCart={{productShoppingCart}}useraddress={useraddress}></CheckoutButton>
+    <CheckoutButton total={{ total }}productShoppingCart={{productShoppingCart}} useraddress={useraddress}></CheckoutButton>
   </div>
   );
 }

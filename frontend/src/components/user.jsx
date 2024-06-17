@@ -18,6 +18,7 @@ export default function User() {
   const {userid,token,product}=useContext(productContext)
   const [activeComponent, setActiveComponent] = useState('shoppingbag');
   const [selectedFav, setSelectedToFav] = useState(null)
+  console.log("useraddress",useraddress)
   const location = useLocation();
   const isTabletOrMobile = useMediaQuery({ query: '(max-width:769px)'})
   const handleClick = (component) => {
@@ -90,7 +91,7 @@ export default function User() {
       <Shoppingcartuser useraddress={useraddress} selectedFav={selectedFav} setSelectedToFav={setSelectedToFav}  />
     )}
       {activeComponent === "faverit"  && (
-      <Favorites value={useraddress.address} selectedFav={selectedFav} setSelectedToFav={setSelectedToFav} />
+      <Favorites value={useraddress} selectedFav={selectedFav} setSelectedToFav={setSelectedToFav} />
       )}
       {activeComponent === "Details"  && (
         <Userdetails userdetail={userdetail} setuserdetail={setuserdetail} />

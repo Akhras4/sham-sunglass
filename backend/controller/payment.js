@@ -8,13 +8,13 @@ const product = require('../modules/product')
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 const ejs = require('ejs');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 // Endpoint to create a Stripe Checkout session
 const createPaymentIntent = (req, res) => {
     if (req.method === "POST") {
         const { total, productShoppingCart } = req.body;
         const userid = req.params.id
-        console.log("userid",userid)
         const amount = Object.values(total).flat()
         // console.log(amount, "amount", "productShoppingCart", productShoppingCart);
         let productShoppingCarts = [];
@@ -45,10 +45,11 @@ const createPaymentIntent = (req, res) => {
                         name: item.description || 'Product',
                         images: [item.image[0]],
                     },
-                    unit_amount: item.isOnSale ? Number(item.salePrice) * 100 : Number(item.price) * 100, // price is in cents
+                    unit_amount: item.isOnSale ? Number(item.salePrice) * 100 : Number(item.price) * 100, 
                 },
                 quantity: item.count,
             }))
+          
             stripe.checkout.sessions.create({
                 payment_method_types: ['card', 'ideal'],
                 line_items: lineItems,
@@ -58,6 +59,7 @@ const createPaymentIntent = (req, res) => {
                 metadata: {
                     userId: userid,
                 },
+                
             })
 
                 .then(session => {
@@ -122,52 +124,22 @@ const webhook = (req, res) => {
                     const deliveryAt = product.deleveryAt;
                     console.log(`Product ${product._id} deliveryAt: ${deliveryAt}`);
                     const item = items[index];
+                    const newItem = {
+                        _id: new ObjectId(), // Generate unique ID for each order item
+                        productId: item.productId,
+                        size: item.size,
+                        price: item.price, // Safely access isOnSale
+                    };
                     if (deliveryAt === "3") {
-                        deliveryAt3Items.push(item);
+                        deliveryAt3Items.push(newItem);
                     } else if (deliveryAt === "10") {
-                        deliveryAt10Items.push(item);
+                        deliveryAt10Items.push(newItem);
                     } else {
                         console.error(`Invalid deliveryAt value for Product ${product._id}: ${deliveryAt}`);
-                        return  // Skip this item and continue with next
                     }
                 });
 
-        const getNextBusinessDay = (currentDate) => {
-            const dayOfWeek = currentDate.getDay();
-            let daysToAdd = 1; // Default to the next day
-
-            // If current day is Friday (5), skip to Monday (1)
-            if (dayOfWeek === 5) {
-                daysToAdd = 3;
-            } else if (dayOfWeek === 6) { // If current day is Saturday (6), skip to Monday (1)
-                daysToAdd = 2;
-            }
-
-            const deliveryDate = new Date(currentDate);
-            deliveryDate.setDate(currentDate.getDate() + daysToAdd);
-
-            return deliveryDate;
-        };
-        const calculateExpectedDeliveryDate = (deliveryAt) => {
-            const deliveryDays = parseInt(deliveryAt, 10); // Convert deliveryAt to integer
-
-            if (isNaN(deliveryDays) || deliveryDays <= 0) {
-                throw new Error('Invalid or non-positive delivery days provided');
-            }
-
-            let deliveryDate = new Date();
-            deliveryDate.setDate(deliveryDate.getDate() + deliveryDays);
-
-            while (deliveryDate.getDay() === 0 || deliveryDate.getDay() === 6) {
-                deliveryDate = getNextBusinessDay(deliveryDate);
-            }
-
-            if (!(deliveryDate instanceof Date && !isNaN(deliveryDate))) {
-                throw new Error('Failed to calculate valid delivery date');
-            }
-
-            return deliveryDate;
-        };
+        
                 const createOrder = (orderItems,deliveryAt) => {
                     const isValidOrder = orderItems.every(item => !!item.productId);
                     if (!isValidOrder) {
@@ -175,12 +147,14 @@ const webhook = (req, res) => {
                         return Promise.reject('Invalid order items');
                     }
                     const expectedDeliveryDate = calculateExpectedDeliveryDate(deliveryAt);
+                    const totalPrice = orderItems.reduce((total, item) => total + item.price, 0);
                     const newOrder = new Order({
                         userId: user._id,
                         items: orderItems,
                         shippingStatus: 'pending',
                         trackingNumber: null,
-                        expectedDeliveryDate: expectedDeliveryDate
+                        expectedDeliveryDate: expectedDeliveryDate,
+                        totalPrice: totalPrice
                     });
                     return newOrder.save()
                         .then(savedOrder => {
@@ -258,5 +232,34 @@ async function order(email, UserName, items, orderNumber) {
         console.error("Error sending email:", error);
     }
 }
+const getNextBusinessDay = (currentDate) => {
+    const dayOfWeek = currentDate.getDay();
+    let daysToAdd = 1; 
+    if (dayOfWeek === 5) {
+        daysToAdd = 3;
+    } else if (dayOfWeek === 6) { 
+        daysToAdd = 2;
+    }
 
+    const deliveryDate = new Date(currentDate);
+    deliveryDate.setDate(currentDate.getDate() + daysToAdd);
+
+    return deliveryDate;
+};
+const calculateExpectedDeliveryDate = (deliveryAt) => {
+    const deliveryDays = parseInt(deliveryAt, 10); 
+    if (isNaN(deliveryDays) || deliveryDays <= 0) {
+        throw new Error('Invalid or non-positive delivery days provided');
+    }
+    let deliveryDate = new Date();
+    deliveryDate.setDate(deliveryDate.getDate() + deliveryDays);
+    while (deliveryDate.getDay() === 0 || deliveryDate.getDay() === 6) {
+        deliveryDate = getNextBusinessDay(deliveryDate);
+    }
+    if (!(deliveryDate instanceof Date && !isNaN(deliveryDate))) {
+        throw new Error('Failed to calculate valid delivery date');
+    }
+
+    return deliveryDate;
+};
 module.exports = { createPaymentIntent, webhook };
