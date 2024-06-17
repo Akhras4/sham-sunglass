@@ -38,16 +38,19 @@ export default function ResetPassword() {
         if(password!==confirmPassword){
             return setErr("passwords do not match")
         }
-        axios.post(`http://localhost:8080/${userid}/Resetpassword?tokenResetPassword=${tokenResetPassword}`,{password,confirmPassword})
+        axios.post(`http://localhost:8080/${encodeURIComponent(userid)}/Resetpassword?tokenResetPassword=${tokenResetPassword}`,{password,confirmPassword})
         .then(res=>{
-            if(res.data.success){
+            console.log("res :",res)
+            if(res.status===200 ){
                 setErr("")
-                window.Location.href=res.data.redirect
+                window.location.href=res.data.redirect
             }
         })
         .catch(err=>{
-            if (err.response && err.response.data.errors && err.response.data.errors.message) {
-                setErr(err.response.data.errors.message); 
+            console.log("err :",err)
+            if (err.response && err.response.data.error ) {
+                console.log(err.response.data.error)
+                setErr(err.response.data.error); 
               } else {
                 setErr("Something went wrong. Please try again."); 
               }
@@ -129,7 +132,7 @@ export default function ResetPassword() {
                                     className="block w-full pr-10 p-2 border border-gray-300 rounded asd"
                                 />
                                 <span
-                                     className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                    className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
                                     onClick={()=>handleToggle(confirmPasswordInput,setIconConfirmPasword)}
                                 >
                                     <Icon  icon={iconConfirmPassword} size={45} />

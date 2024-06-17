@@ -22,7 +22,7 @@ const account=(req,res)=>{
                         phoneNumber:user.phoneNumber,
                         address: user.userinfo || null,
                      } ) 
-                    }console.log(user.userinfo )
+                    }console.log("userinfo :",user.userinfo )
                     res.status(200).json(
                      {userid,
                         username:user.UserName,
@@ -58,6 +58,7 @@ if (req.method === "POST") {
                     ).populate('userinfo').exec();
                 })
                 .then(populatedUser => {
+                    console.log("populatedUser :",populatedUser)
                     res.status(200).json({ address: populatedUser.userinfo });
                 })
                 .catch(err => {

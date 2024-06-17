@@ -10,12 +10,15 @@ import axios from 'axios'
 import Usericon from './usericon';
 import { BsBookmark } from "react-icons/bs";
 import Footer from './footer'
+import Imgslide from "./imgslide"
+
 export default function Product() {
   const { userid, token, isAuthenticated } = useContext(productContext)
   const [selectedFav, setSelectedToFav] = useState(null)
   const [isProcessing, setIsProcessing] = useState(false);
   const location = useLocation();
   const [product, setproduct] = useState([])
+  const [show,setShow]=useState(false)
   useEffect(() => {
     if (location.state && location.state.results) {
       if (Array.isArray(location.state.results) && location.state.results.length > 0) {
@@ -97,6 +100,8 @@ export default function Product() {
   }
   return (
     <div>
+      {show ?(<Imgslide product={product} show={show} setShow={setShow} />) : (
+        <>
       <Nav favorites={selectedFav} />
       {isAuthenticated ? <Usericon /> : null}
       <div className='maincon'>
@@ -105,9 +110,13 @@ export default function Product() {
           <p>{product.description}</p>
         </div>
         <div className='imgcon'>
-          <div className='procon' ref={imgContainerRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
-            onWheel={handleWheelChange}>
-            <div className='bigimage'>
+          <div className='procon' 
+          ref={imgContainerRef}
+          onMouseEnter={handleMouseEnter} 
+          onMouseLeave={handleMouseLeave}
+          onWheel={handleWheelChange}>
+            
+            <div className='bigimage' onClick={()=>setShow(true)}>
               {product.image && product.image[currentImage] && (
                 <img src={product.image[currentImage]} id="bigimage" />
               )}
@@ -159,10 +168,11 @@ export default function Product() {
           <Button variant="dark" onClick={() => handleAddToCart(product)}>
             <FaShoppingCart />ADD to Cart
           </Button>
-
         </div>
       </div>
       <Footer />
+      </>
+    )}
     </div>
   )
 }

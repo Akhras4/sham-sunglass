@@ -7,6 +7,7 @@ const CartController = require("../controller/shopping")
 const Fav = require("../controller/wishlist")
 const strip=require("../controller/payment")
 const bodyParser = require('body-parser');
+const order =require('../controller/order')
 router.use((req, res, next) => {
     console.log(`Incoming request: ${req.method} ${req.url}`);
     next();
@@ -51,6 +52,7 @@ router.get('/wishList/:id',Fav.getFav)
 router.post('/wishList/removeFromWishList/:id',Fav.removeItem)
 
 router.post('/user/createOrder/:id',DoThis.cookieJWTAuth,strip.createPaymentIntent)
+router.get('/:id/Order',DoThis.cookieJWTAuth,order.order)
 // router.post('/webhook/:id',DoThis.cookieJWTAuth, express.raw({ type: 'application/json' }),strip.webhook)
 // router.post('/webhook', express.raw({ type: 'application/json' }),strip.webhook)
 

@@ -4,35 +4,36 @@ const ShoppingCart = require('../modules/shoppingcart');
 
 const addToCart = (req, res) => {
     const userId = req.params.id;
-    const {productId, size  } = req.body;
-    console.log(userId ,productId, size)
-    users.findById(userId)
-    .populate('shoppingCart')
+    const { productId, size } = req.body;
+    console.log(userId, productId, size);
+
+    users.findById(userId).populate('shoppingCart')
     .then(user => {
         if (!user) {
-          throw new Error('User not found');
+            throw new Error('User not found');
         }
-      if (!user.shoppingCart) {
-        const newShoppingCart = new ShoppingCart({ userId: user._id, items: [] });
-        return newShoppingCart.save()
-          .then(savedCart => {
-            user.shoppingCart = savedCart._id;
-            return user.save();
-          })
-      } else {
-            const newItem = {
-                productId: productId,
-                size: size
-            };
-            user.shoppingCart.items.push(newItem);  
+
+        if (!user.shoppingCart) {
+            const newShoppingCart = new ShoppingCart({ userId: user._id, items: [] });
+            const newItem = { productId, size };
+            newShoppingCart.items.push(newItem);
+            
+            return newShoppingCart.save()
+                .then(savedCart => {
+                    user.shoppingCart = savedCart._id;
+                    return user.save().then(() => savedCart);
+                });
+        } else {
+            const newItem = { productId, size };
+            user.shoppingCart.items.push(newItem);
+            return user.shoppingCart.save().then(() => user.shoppingCart);
         }
-        return  Promise.all([user.save(), user.shoppingCart.save()]);
     })
-    .then((savedUser) => {
-        res.status(200).json({ user: savedUser });
+    .then(result => {
+        res.status(200).json({ user: result });
     })
     .catch(error => {
-      res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     });
 };
 const removeFromCart = (req, res) => {
@@ -89,7 +90,6 @@ const shoppingcart=(req,res)=>{
   .catch(error => {
       res.status(500).json({ error: error.message });
   });
-
 }
 }
 const getData=(userId)=>{

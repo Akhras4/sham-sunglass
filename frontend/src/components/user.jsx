@@ -11,11 +11,12 @@ import {useLocation} from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import Bar from './bar'
 import Userdetails from './userdetails';
+import Orders from './orders'
 export default function User() {
   const[userdetail,setuserdetail]=useState(null)
   const[useraddress,setuseraddress]=useState(null)
   const {userid,token,product}=useContext(productContext)
-  const [activeComponent, setActiveComponent] = useState("Component2");
+  const [activeComponent, setActiveComponent] = useState('shoppingbag');
   const [selectedFav, setSelectedToFav] = useState(null)
   const location = useLocation();
   const isTabletOrMobile = useMediaQuery({ query: '(max-width:769px)'})
@@ -73,26 +74,29 @@ export default function User() {
                 <div className='lef-us'>{userdetail && userdetail.email}</div>
              </div>   */}
           <div className='LEFTbtt'>
-            <div className='lef-it'onClick={() => handleClick('userdetail')}>User Details</div>
-             <div className='lef-it'onClick={() => handleClick('Component2')}>shoppingbag</div>
-             <div className='lef-it'onClick={() => handleClick('Component3')}>your faverit item</div>
-             <div  className='lef-it' onClick={() => handleClick('Component1')}>Address</div>
-             <div  className='lef-it'>your Order</div>
+            <div className='lef-it'onClick={() => handleClick('Details')}>User Details</div>
+             <div className='lef-it'onClick={() => handleClick('shoppingbag')}>shoppingbag</div>
+             <div className='lef-it'onClick={() => handleClick('faverit')}>your faverit item</div>
+             <div  className='lef-it' onClick={() => handleClick('Address')}>Address</div>
+             <div  className='lef-it'onClick={() => handleClick('Orders')}>your Order</div>
              <div  className='lef-it'>your prushes</div>
           </div>
     </div>
     <div className='Right'>
-        {activeComponent === "Component1"  && (
-        <Address value={useraddress}   />
+        {activeComponent === "Address"  && (
+        <Address useraddress={useraddress}  setuseraddress={setuseraddress}  />
     )}
-      {activeComponent === "Component2"  && (
+      {activeComponent === "shoppingbag"  && (
       <Shoppingcartuser useraddress={useraddress} selectedFav={selectedFav} setSelectedToFav={setSelectedToFav}  />
     )}
-      {activeComponent === "Component3"  && (
-      <Favorites value={useraddress} selectedFav={selectedFav} setSelectedToFav={setSelectedToFav} />
+      {activeComponent === "faverit"  && (
+      <Favorites value={useraddress.address} selectedFav={selectedFav} setSelectedToFav={setSelectedToFav} />
       )}
-      {activeComponent === "userdetail"  && (
+      {activeComponent === "Details"  && (
         <Userdetails userdetail={userdetail} setuserdetail={setuserdetail} />
+    )}
+     {activeComponent === "Orders"  && (
+        <Orders userid={userid} token={token} product={product} selectedFav={selectedFav} setSelectedToFav={setSelectedToFav} />
     )}
 </div>
 </div>

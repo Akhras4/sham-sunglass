@@ -8,7 +8,10 @@ const orderItemSchema = new mongoose.Schema({
 
 const orderSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
-  items: [orderItemSchema]
+  items: [orderItemSchema],
+  shippingStatus:{type:String,default: 'pending'},
+  trackingNumber:{type:String,default: null},
+  expectedDeliveryDate:{type:Date}
 });
 
 const order = mongoose.model('order', orderSchema);

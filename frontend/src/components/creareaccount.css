@@ -83,10 +83,23 @@
 }
 
 @media screen and (max-width:991px) {
+     .maincreatcon,.mainResetPassword {
+        width: 100vw;
+        height: 100vh;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0px;
+    }
+    .rightcreatcon,.rightReset {
+        margin-top: 0px;
+        & img{
+            object-fit: contain;
+        }
+    }
     .leftcreatcon ,.leftReset{
-        margin-top: 30%;
- 
-}
+        margin-top: 0;
+    }
 }
 @media screen and (max-width: 768px) {
     .background {

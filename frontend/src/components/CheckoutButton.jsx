@@ -10,7 +10,7 @@ const Checkout = ({  total,productShoppingCart,useraddress }) => {
     const [showAlert, setShowAlert] = useState(false);
     // console.log(productShoppingCart,"productShoppingCart",userid,"userid")
     const handleCheckout = () => {
-        if (useraddress) {
+        if (!useraddress) {
             setShowAlert(true);
             return;
         }
