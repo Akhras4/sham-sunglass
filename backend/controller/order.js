@@ -7,6 +7,7 @@ const order=(req,res)=>{
     if(req.method==="GET"){
     const userId=req.params.id
     users.findById(userId)
+    .sort({ createdAt: -1 })
     .populate({
         path:'order',
         populate:{

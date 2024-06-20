@@ -147,11 +147,10 @@ const webhook = (req, res) => {
                         return Promise.reject('Invalid order items');
                     }
                     const expectedDeliveryDate = calculateExpectedDeliveryDate(deliveryAt);
-                    const totalPrice = orderItems.reduce((total, item) => total + item.price, 0);
+                    const totalPrice = orderItems.reduce((total, item) => total + item.price, 0).toString();
                     const newOrder = new Order({
                         userId: user._id,
                         items: orderItems,
-                        shippingStatus: 'pending',
                         trackingNumber: null,
                         expectedDeliveryDate: expectedDeliveryDate,
                         totalPrice: totalPrice

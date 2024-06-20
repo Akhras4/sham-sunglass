@@ -121,14 +121,12 @@ video.grid-vid {
             .newsunglassconAll {
             width: 300px;
             height: 350px;
-
             & h4,
             p {
             font-size: 1rem;
             margin-bottom: 10px;
             }
             }
-
             img.grid-image {   
                width: 330px;
                 height: 700px;
@@ -159,8 +157,7 @@ video.grid-vid {
             "w x"
             "y z"
             "vid aa"
-            "vid ab";
-            
+            "vid ab"; 
         }
         }
         @media screen and (max-width:666px) {
