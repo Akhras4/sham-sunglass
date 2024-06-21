@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect} from 'react'
 import { productContext } from '../App'
 import { favContext } from './homepage'
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import { MdFavorite } from "react-icons/md";
 import { useMediaQuery } from 'react-responsive'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+// import { experimental_useOptimistic as useOptimistic } from 'react'
 export default function Newsunglassproducts() {
   const [isVisible, setIsVisible] = useState(false);
   const [showOffcanvas, setShowOffcanvas] = useState(false);
@@ -20,6 +21,7 @@ export default function Newsunglassproducts() {
   const [selectedFav, setSelectedToFav] = useState(favorites)
   const [isProcessing, setIsProcessing] = useState(false);
   const isTabletOrMobile = useMediaQuery({ query: '(max-width:426px)'})
+  // const [favOptimistic,setFavOptimistic]=useOptimistic(selectedFav)
   console.log(favorites, "favorites fromm home")
   useEffect(() => {
     setSelectedToFav(favorites)
@@ -50,6 +52,10 @@ export default function Newsunglassproducts() {
     if (selectedFav !== null) {
       const findIndex = selectedFav.items.findIndex(item => item.productId === productId)
       if (findIndex !== -1) {
+        // setFavOptimistic({
+        //   ...selectedFav,
+        //   items: selectedFav.items.filter(item => item.productId !== productId)
+        // });
         axios.post(`http://localhost:8080/wishList/removeFromWishList/${userid}`, { productId })
           .then(res => {
             setSelectedToFav(res.data.favorites)
@@ -60,12 +66,17 @@ export default function Newsunglassproducts() {
           .finally(() => {
             setIsProcessing(false);
           });
-      } else { addToWishList(productId) }
+      } else { 
+        addToWishList(productId) }
     } else {
       addToWishList(productId)
     }
   }
   const addToWishList = (productId) => {
+    // setFavOptimistic({
+    //   ...selectedFav,
+    //   items: [...selectedFav.items, { productId }]
+    // });
     axios.post(`http://localhost:8080/wishList/${userid}`, { productId })
       .then(res => {
         setSelectedToFav(res.data.favorites)

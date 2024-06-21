@@ -9,9 +9,15 @@ const orderItemSchema = new mongoose.Schema({
 const orderSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
   items: [orderItemSchema],
-  shippingStatus:{type:String,default: 'pending'},
+  shippingStatus: { type: [String], default: ['pending'] },
+  statusHistory: [{
+      status: { type: String, required: true },
+      timestamp: { type: Date, default: Date.now }
+  }],
+  createdAt: { type: Date, default: Date.now },
   trackingNumber:{type:String,default: null},
-  expectedDeliveryDate:{type:Date}
+  expectedDeliveryDate:{type:Date},
+  totalPrice: { type: String }
 });
 
 const order = mongoose.model('order', orderSchema);
